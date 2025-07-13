@@ -1,513 +1,402 @@
-Of course. I have completely redesigned and expanded the Mindxcope website.
-
-This new version introduces a **fresh, spacious, multi-section interface** and features a captivating **horizontal scrolling section** to create a more immersive and memorable user experience. The design is cleaner, the typography is bolder, and the animations are more deeply integrated into the storytelling.
-
-### **Key Upgrades in This Version:**
-
-  * **New Interface & Layout:** We've moved to a more expansive, "pseudo-multi-page" layout. Each major topic occupies its own full-screen section, creating a more structured and grander feel.
-  * **Horizontal Scrolling Section:** The "How It Works" section has been transformed into a top-class horizontal scrolling narrative. As you scroll down, the content moves left, guiding you through the process in a cinematic way. This is a high-impact feature found on award-winning websites.
-  * **Added Sections for Depth:**
-      * **About Us:** A new section to clearly define the company's mission.
-      * **Use Cases:** Demonstrates the platform's value across different industries.
-      * **Our Technology:** Details on the BCI headset and the analytics dashboard.
-      * **Insights:** A section to establish thought leadership (simulating a blog).
-  * **Enhanced Animations & Micro-interactions:** Every new section features custom-tuned entrance animations. New hover effects, like a subtle 3D tilt on the "Use Case" cards, have been added to make the site feel more dynamic and responsive.
-
------
-
-### **The New & Expanded Code**
-
-Here is the complete code. As before, simply copy it into an `index.html` file and open it in your browser.
-
-**Important:** Replace the placeholder `src` attributes in the `<img>` tags with your actual image files. I have used descriptive placeholders (e.g., `...text=Headset`) so you know what image to use.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mindxcope - The Future of Human Potential</title>
+    <title>Mediwell Healthcare - Wholesale Medicine Supplier in Patna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Modern CSS Reset */
-        *, *::before, *::after { box-sizing: border-box; }
-        body, h1, h2, h3, p, figure, blockquote, dl, dd { margin: 0; }
-        ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
-        html:focus-within { scroll-behavior: smooth; }
         body {
-            min-height: 100vh;
-            text-rendering: optimizeSpeed;
-            line-height: 1.6;
-            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #010416;
-            color: #E0E1FF;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
-        img, picture { max-width: 100%; display: block; }
-        input, button, textarea, select { font: inherit; }
+        
+        /* --- Animation Keyframes --- */
+        @keyframes ken-burns {
+            0% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #010416; }
-        ::-webkit-scrollbar-thumb { background: #0A0F38; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #131A5A; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
 
-        /* --- GLOBAL STYLES & LAYOUT --- */
-        .container {
-            width: 90%;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
         }
         
-        /* A full-height section for a grander feel */
-        .fullscreen-section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 120px 0;
-            position: relative;
-            overflow: hidden;
+        @keyframes draw-path {
+            from { stroke-dashoffset: 1000; }
+            to { stroke-dashoffset: 0; }
         }
-        
-        h1, h2, h3 {
-            font-weight: 700;
-            line-height: 1.2;
-            color: #FFFFFF;
-            letter-spacing: -1px;
-        }
-        h1 { font-size: clamp(3rem, 6vw, 5.5rem); }
-        h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 20px; }
-        h3 { font-size: clamp(1.5rem, 2.5vw, 2rem); margin-bottom: 15px; }
-        p { font-size: 1.1rem; color: #B0B3E0; margin-bottom: 20px; max-width: 65ch; }
-        .subheading { font-size: 1.2rem; color: #00FFFF; font-weight: 600; margin-bottom: 10px; }
-        .highlight { color: #00FFFF; }
 
-        /* --- HEADER --- */
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            padding: 25px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(1, 4, 22, 0.5);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        /* --- Animation Classes --- */
+        .hero-section .bg-image {
+            animation: ken-burns 15s ease-out forwards;
         }
-        .logo { font-size: 1.8rem; font-weight: 800; color: #fff; }
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a { color: #E0E1FF; text-decoration: none; font-weight: 500; position: relative; }
-        .nav-links a::after {
-            content: ''; position: absolute; width: 100%; height: 2px;
-            bottom: -5px; left: 0; background-color: #00FFFF;
-            transform: scaleX(0); transform-origin: bottom right; transition: transform 0.3s ease-out;
-        }
-        .nav-links a:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
-        /* --- BUTTON --- */
-        .cta-button {
-            background: linear-gradient(90deg, #00FFFF, #8A2BE2);
-            color: #FFFFFF; padding: 15px 35px; border-radius: 50px;
-            text-decoration: none; font-weight: 700; display: inline-block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; cursor: pointer;
+        /* Text reveal animation */
+        .hero-title span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px) rotate(5deg);
+            animation: reveal-word 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
-        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2); }
+        @keyframes reveal-word {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
 
-        /* --- HERO SECTION --- */
-        #hero .container {
-            display: flex; align-items: center; justify-content: space-between; gap: 40px;
+        .hero-subtitle, .hero-button {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideInUp 1s ease-out forwards;
         }
-        .hero-content { max-width: 55%; z-index: 2; }
-        .hero-visual { max-width: 40%; z-index: 1; }
-        #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.5; }
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        /* --- ABOUT SECTION --- */
-        #about { text-align: center; }
-        #about .container { max-width: 900px; }
+        /* Class to apply to elements that should animate on scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: none !important;
+        }
+        .animate-on-scroll.fade-in { transform: translateY(30px); }
+        .animate-on-scroll.slide-in-left { transform: translateX(-50px); }
+        .animate-on-scroll.slide-in-right { transform: translateX(50px); }
 
-        /* --- HORIZONTAL SCROLL SECTION --- */
-        #horizontal-scroll-section {
-            height: 100vh;
-            overflow: hidden; /* This is crucial for the pinning effect */
-            position: relative;
+        /* Floating elements for background decoration */
+        .floating-shape {
+            position: absolute;
+            background-color: rgba(59, 130, 246, 0.08);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite alternate;
+            z-index: 0;
+            transition: transform 0.5s ease-out; /* For parallax */
         }
-        .horizontal-track {
-            height: 100vh;
-            display: flex;
-            will-change: transform; /* Performance optimization */
-        }
-        .scroll-panel {
-            height: 100vh;
-            width: 100vw;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 10%;
-            gap: 5%;
-        }
-        .panel-content { width: 45%; }
-        .panel-visual { width: 50%; }
-        .panel-visual img { border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .section-intro-panel { flex-direction: column; text-align: center; }
 
-        /* --- USE CASES SECTION --- */
-        .use-cases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            perspective: 1000px; /* For the 3D tilt effect */
-        }
-        .case-card {
-            background: #0A0F38; border: 1px solid #131A5A;
-            padding: 40px; border-radius: 15px;
+        /* 3D Tilt Effect on Cards */
+        .tilt-card {
             transition: transform 0.4s ease, box-shadow 0.4s ease;
-            will-change: transform;
-        }
-        .case-card:hover {
-             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
-        .case-card .icon {
-            width: 40px; height: 40px; margin-bottom: 20px; stroke-width: 1.5;
-            color: #8A2BE2; background-color: rgba(138, 43, 226, 0.1);
-            padding: 8px; border-radius: 8px;
+            transform-style: preserve-3d;
         }
 
-        /* --- TECHNOLOGY SECTION --- */
-        .tech-split {
-            display: flex;
-            align-items: center;
-            gap: 5%;
-            margin-bottom: 100px;
+        /* SVG Path Animation */
+        .animated-svg-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
         }
-        .tech-split:last-child { margin-bottom: 0; }
-        .tech-split.reverse { flex-direction: row-reverse; }
-        .tech-content, .tech-visual { width: 50%; }
-        .tech-visual img { border-radius: 20px; }
-
-        /* --- INSIGHTS SECTION --- */
-        .insights-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+        .animated-svg-path.is-visible {
+            animation: draw-path 2s ease-out forwards;
         }
-        .insight-card {
-            background: #0A0F38; border-radius: 10px; overflow: hidden;
-            transition: transform 0.3s ease; display: flex; flex-direction: column;
-        }
-        .insight-card:hover { transform: translateY(-10px); }
-        .insight-image { height: 200px; background-color: #131A5A; }
-        .insight-content { padding: 25px; flex-grow: 1; }
-        .insight-content h3 { font-size: 1.2rem; }
-        .insight-content a { color: #00FFFF; text-decoration: none; font-weight: bold; }
-        
-        /* --- FOOTER --- */
-        footer {
-            background: #0A0F38; text-align: center; padding: 50px;
-            border-top: 1px solid rgba(0, 255, 255, 0.1);
-        }
-
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800">
 
-    <header>
-        <div class="logo">Mindxcope</div>
-        <nav class="nav-links">
-            <a href="#about">About</a>
-            <a href="#process">The Process</a>
-            <a href="#use-cases">Use Cases</a>
-            <a href="#technology">Technology</a>
-            <a href="#insights">Insights</a>
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-sm shadow-md sticky top-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-extrabold text-blue-700">Mindxcope</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="text-slate-600 hover:text-blue-700 transition-colors duration-300">Home</a>
+                <a href="#about" class="text-slate-600 hover:text-blue-700 transition-colors duration-300">About Us</a>
+                <a href="#products" class="text-slate-600 hover:text-blue-700 transition-colors duration-300">Products</a>
+                <a href="#contact" class="bg-blue-600 text-white px-5 py-2.5 rounded-full hover:bg-blue-700 hover:shadow-lg hover:scale-105 transition-all duration-300">Place an Order</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu"></i>
+            </button>
         </nav>
-        <a href="#" class="cta-button">Request a Demo</a>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pt-2 pb-4">
+            <a href="#home" class="block py-2 text-slate-600 hover:text-blue-700">Home</a>
+            <a href="#about" class="block py-2 text-slate-600 hover:text-blue-700">About Us</a>
+            <a href="#products" class="block py-2 text-slate-600 hover:text-blue-700">Products</a>
+            <a href="#contact" class="block mt-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition duration-300 text-center">Place an Order</a>
+        </div>
     </header>
 
     <main>
-
-        <section id="hero" class="fullscreen-section">
-            <canvas id="hero-canvas"></canvas>
-            <div class="container">
-                <div class="hero-content">
-                    <p class="subheading">THE FUTURE OF HUMAN ANALYTICS</p>
-                    <h1>Quantify Cognition. Unleash Potential.</h1>
-                    <p>Our AI-powered Brain-Computer Interface measures mental performance in real time, providing the objective data you need to hire smarter, train better, and build resilient, high-performing teams.</p>
-                    <a href="#" class="cta-button">Schedule Your Demo</a>
-                </div>
-                <div class="hero-visual">
-                    <img src="https://via.placeholder.com/600x600/FFFFFF/010416?text=Mindxcope+BCI+Headset" alt="Mindxcope BCI Headset">
-                </div>
+        <!-- Hero Section -->
+        <section id="home" class="relative hero-section text-white py-24 md:py-40 overflow-hidden">
+            <div class="absolute inset-0 bg-image" style="background: linear-gradient(rgba(17, 24, 39, 0.6), rgba(17, 24, 39, 0.6)), url('https://placehold.co/1600x900/1e3a8a/ffffff?text=Mindxcope+Pharma') no-repeat center center; background-size: cover;"></div>
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h1 class="hero-title text-4xl md:text-6xl font-extrabold mb-6 leading-tight"></h1>
+                <p class="hero-subtitle text-lg md:text-xl mb-8 max-w-3xl mx-auto text-slate-200" style="animation-delay: 0.8s;">Delivering quality pharmaceuticals from Patna to Bihar and all across India at competitive rates.</p>
+                <a href="#products" class="hero-button bg-white text-blue-700 font-bold py-3 px-8 rounded-full text-lg hover:bg-slate-100 transform hover:scale-105 transition-all duration-300 shadow-lg" style="animation-delay: 1.2s;">Explore Our Products</a>
             </div>
         </section>
 
-        <section id="about" class="fullscreen-section">
-            <div class="container">
-                <p class="subheading">OUR MISSION</p>
-                <h2>We are making the invisible, visible.</h2>
-                <p>For too long, crucial cognitive states like focus, fatigue, and learning ability have been subjective and impossible to measure at scale. Mindxcope was founded by neuroscientists and AI experts to change that. We believe that by understanding the mind, organizations can unlock unprecedented levels of human potential and well-being.</p>
-            </div>
-        </section>
-
-        <section id="process"></section> 
-        <section id="horizontal-scroll-section">
-            <div class="horizontal-track">
-                <div class="scroll-panel section-intro-panel">
-                     <p class="subheading">FROM BRAINWAVES TO BREAKTHROUGHS</p>
-                     <h2>A Four-Step Process</h2>
-                     <p>Scroll to explore how we translate raw neural data into actionable business intelligence.</p>
+        <!-- Why Choose Us Section -->
+        <section id="features" class="py-16 md:py-24 bg-white relative overflow-hidden">
+            <div class="floating-shape w-48 h-48 -top-20 -left-20" data-parallax-speed="0.2"></div>
+            <div class="floating-shape w-32 h-32 -bottom-16 -right-10" style="animation-delay: 2s;" data-parallax-speed="0.1"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-12 animate-on-scroll fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold">Why Partner With Mindxcope?</h2>
+                    <p class="text-slate-600 mt-2">We are committed to providing reliable service and value.</p>
                 </div>
-                <div class="scroll-panel">
-                    <div class="panel-content">
-                        <h3>1. Data Collection</h3>
-                        <p>Our lightweight, comfortable BCI headset uses a combination of EEG and fNIRS sensors to non-invasively capture thousands of neural data points per second during work-simulated tasks or cognitive games.</p>
-                    </div>
-                    <div class="panel-visual">
-                         <img src="https://via.placeholder.com/600x400/FFFFFF/010416?text=Data+Capture" alt="Person wearing BCI headset">
-                    </div>
-                </div>
-                 <div class="scroll-panel">
-                    <div class="panel-content">
-                        <h3>2. AI Analysis</h3>
-                        <p>Proprietary machine learning models, trained on millions of hours of cognitive data, process and clean the raw signals. The AI identifies and tags patterns correlated with specific cognitive states like deep focus, creative problem-solving, and mental fatigue.</p>
-                    </div>
-                    <div class="panel-visual">
-                         <img src="https://via.placeholder.com/600x400/00FFFF/010416?text=AI+Neural+Network" alt="AI analyzing data streams">
-                    </div>
-                </div>
-                 <div class="scroll-panel">
-                    <div class="panel-content">
-                        <h3>3. Insight Generation</h3>
-                        <p>The analyzed data is synthesized into clear, intuitive scores and visualizations on the Mindxcope Dashboard. Track cognitive performance over time, compare team metrics, and identify individuals with unique cognitive strengths.</p>
-                    </div>
-                    <div class="panel-visual">
-                         <img src="https://via.placeholder.com/600x400/8A2BE2/010416?text=Analytics+Dashboard" alt="Mindxcope Analytics Dashboard">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="use-cases" class="fullscreen-section">
-            <div class="container">
-                <div style="text-align: center; max-width: 900px; margin: 0 auto 80px auto;">
-                    <p class="subheading">INDUSTRY APPLICATIONS</p>
-                    <h2>Actionable Intelligence for Every Sector</h2>
-                </div>
-                <div class="use-cases-grid">
-                    <div class="case-card">
-                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        <h3>Smarter Hiring</h3>
-                        <p>Identify top candidates for high-pressure roles by objectively measuring their cognitive resilience, problem-solving skills, and ability to maintain focus under stress.</p>
-                    </div>
-                    <div class="case-card">
-                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.135A1.76 1.76 0 017.166 9.76l6.135 2.147a1.76 1.76 0 01.592 3.417z"></path></svg>
-                        <h3>Optimized Training</h3>
-                        <p>Measure the cognitive load and engagement levels during corporate training to tailor programs, prevent overload, and maximize knowledge retention.</p>
-                    </div>
-                    <div class="case-card">
-                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                        <h3>Workplace Wellness</h3>
-                        <p>Proactively monitor team-wide cognitive fatigue and burnout trends. Implement data-driven wellness initiatives to create a healthier, more productive work environment.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-         <section id="technology" class="fullscreen-section">
-            <div class="container">
-                 <div style="text-align: center; max-width: 900px; margin: 0 auto 80px auto;">
-                    <p class="subheading">OUR PLATFORM</p>
-                    <h2>Seamless Hardware, Powerful Software</h2>
-                </div>
-                <div class="tech-split">
-                    <div class="tech-content">
-                        <h3>The Mindxcope Headset</h3>
-                        <p>Ergonomically designed for long-term comfort, our headset combines dry-contact EEG sensors and state-of-the-art fNIRS emitters in a lightweight, wireless package. It provides research-grade data with a setup time of under two minutes.</p>
-                    </div>
-                    <div class="tech-visual">
-                        <img src="https://via.placeholder.com/600x450/FFFFFF/010416?text=Sleek+Headset+Profile" alt="Mindxcope Headset">
-                    </div>
-                </div>
-                 <div class="tech-split reverse">
-                    <div class="tech-content">
-                        <h3>The Analytics Dashboard</h3>
-                        <p>Our secure, cloud-based platform transforms billions of data points into actionable insights. Featuring intuitive heatmaps, trend analysis, and customizable reports, the dashboard is your command center for cognitive performance management.</p>
-                    </div>
-                    <div class="tech-visual">
-                        <img src="https://via.placeholder.com/600x450/00FFFF/010416?text=Dashboard+UI" alt="Analytics Dashboard">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="insights" class="fullscreen-section">
-             <div class="container">
-                 <div style="text-align: center; max-width: 900px; margin: 0 auto 80px auto;">
-                    <p class="subheading">THOUGHT LEADERSHIP</p>
-                    <h2>From the Forefront of Neuroscience</h2>
-                </div>
-                <div class="insights-grid">
-                    <article class="insight-card">
-                        <div class="insight-image"></div>
-                        <div class="insight-content">
-                            <h3>The Neuroscience of the 'Flow State'</h3>
-                            <a href="#">Read More &rarr;</a>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="tilt-card text-center p-8 border border-slate-200 rounded-xl shadow-sm hover:shadow-2xl bg-white animate-on-scroll fade-in" style="transition-delay: 100ms;">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-blue-700 mx-auto mb-4">
+                            <i data-lucide="package-search"></i>
                         </div>
-                    </article>
-                    <article class="insight-card">
-                        <div class="insight-image"></div>
-                        <div class="insight-content">
-                            <h3>AI in HR: Moving Beyond the Resume</h3>
-                             <a href="#">Read More &rarr;</a>
+                        <h3 class="text-xl font-semibold mb-2">Extensive Product Range</h3>
+                        <p class="text-slate-600">Access a wide variety of genuine medicines, surgical equipment, and healthcare products.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="tilt-card text-center p-8 border border-slate-200 rounded-xl shadow-sm hover:shadow-2xl bg-white animate-on-scroll fade-in" style="transition-delay: 200ms;">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-blue-700 mx-auto mb-4">
+                            <i data-lucide="indian-rupee"></i>
                         </div>
-                    </article>
-                    <article class="insight-card">
-                        <div class="insight-image"></div>
-                        <div class="insight-content">
-                            <h3>Preventing Burnout: A Data-Driven Approach</h3>
-                             <a href="#">Read More &rarr;</a>
+                        <h3 class="text-xl font-semibold mb-2">Competitive Wholesale Rates</h3>
+                        <p class="text-slate-600">We offer highly competitive pricing to help you maximize your margins and stay ahead.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="tilt-card text-center p-8 border border-slate-200 rounded-xl shadow-sm hover:shadow-2xl bg-white animate-on-scroll fade-in" style="transition-delay: 300ms;">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-blue-700 mx-auto mb-4">
+                            <i data-lucide="truck"></i>
                         </div>
-                    </article>
+                        <h3 class="text-xl font-semibold mb-2">Pan-India Delivery Network</h3>
+                        <p class="text-slate-600">Our robust logistics ensure timely and safe delivery of your orders, nationwide.</p>
+                    </div>
                 </div>
-             </div>
+            </div>
         </section>
 
+        <!-- About Us Section -->
+        <section id="about" class="py-16 md:py-24 overflow-hidden">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 animate-on-scroll slide-in-left relative">
+                    <img src="https://placehold.co/600x450/dbeafe/3b82f6?text=Our+Dedicated+Team" alt="Our Team" class="rounded-lg shadow-2xl">
+                    <svg class="absolute -top-8 -left-8 w-24 h-24 text-blue-200 -z-10" viewBox="0 0 100 100">
+                        <path class="animated-svg-path animate-on-scroll" stroke="currentColor" stroke-width="4" fill="none" d="M20,50 L40,50 L45,35 L55,65 L60,50 L80,50" />
+                    </svg>
+                </div>
+                <div class="md:w-1/2 animate-on-scroll slide-in-right">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Your Reliable Health Partner, Based in Patna</h2>
+                    <p class="text-slate-600 mb-4">Founded with the mission to bridge the gap in pharmaceutical supply, Mindxcope has grown to be a trusted name for wholesalers across the region. Our strategic location in Patna allows us to efficiently serve our local and national clients.</p>
+                    <p class="text-slate-600 mb-6">We believe in building long-term relationships based on trust, transparency, and an unwavering commitment to quality.</p>
+                    <a href="#contact" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-full hover:bg-blue-700 transform hover:scale-105 transition-all duration-300">Get in Touch</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Counter Section -->
+        <section id="stats" class="py-16 md:py-24 bg-blue-700 text-white">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="animate-on-scroll fade-in">
+                        <h3 class="text-4xl md:text-5xl font-extrabold" data-count="12000">0</h3>
+                        <p class="mt-2 text-blue-200">Medicines Delivered</p>
+                    </div>
+                    <div class="animate-on-scroll fade-in" style="transition-delay: 150ms;">
+                        <h3 class="text-4xl md:text-5xl font-extrabold" data-count="500">0</h3>
+                        <p class="mt-2 text-blue-200">Happy Clients</p>
+                    </div>
+                    <div class="animate-on-scroll fade-in" style="transition-delay: 300ms;">
+                        <h3 class="text-4xl md:text-5xl font-extrabold" data-count="150">0</h3>
+                        <p class="mt-2 text-blue-200">Cities Covered</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Categories Section -->
+        <section id="products" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12 animate-on-scroll fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold">Our Product Categories</h2>
+                    <p class="text-slate-600 mt-2">A glimpse into our comprehensive inventory.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg animate-on-scroll fade-in" style="transition-delay: 100ms;">
+                        <img src="https://placehold.co/400x400/e0f2fe/0891b2?text=Tablets" alt="Tablets" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-500 flex items-end p-4">
+                            <h3 class="text-white text-xl font-bold transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">Tablets & Capsules</h3>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg animate-on-scroll fade-in" style="transition-delay: 200ms;">
+                        <img src="https://placehold.co/400x400/dcfce7/16a34a?text=Syrups" alt="Syrups" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-500 flex items-end p-4">
+                           <h3 class="text-white text-xl font-bold transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">Syrups & Liquids</h3>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg animate-on-scroll fade-in" style="transition-delay: 300ms;">
+                        <img src="https://placehold.co/400x400/fee2e2/dc2626?text=Injections" alt="Injections" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-500 flex items-end p-4">
+                            <h3 class="text-white text-xl font-bold transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">Injections & Vials</h3>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg animate-on-scroll fade-in" style="transition-delay: 400ms;">
+                        <img src="https://placehold.co/400x400/f3e8ff/8b5cf6?text=Surgicals" alt="Surgicals" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-500 flex items-end p-4">
+                            <h3 class="text-white text-xl font-bold transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">Surgical Supplies</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Order Form Section -->
+        <section id="contact" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 animate-on-scroll fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold">Place an Order or Inquiry</h2>
+                    <p class="text-slate-600 mt-2">Fill out the form below and our team will get back to you shortly.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-2xl animate-on-scroll fade-in">
+                    <form>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-slate-700 mb-1">Your Name / Pharmacy Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="e.g., ABC Pharmacy">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="+91 98765 43210">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="message" class="block text-sm font-medium text-slate-700 mb-1">Your Order / Message</label>
+                                <textarea id="message" rows="6" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Please list the medicines and quantities you require."></textarea>
+                            </div>
+                        </div>
+                        <div class="text-center mt-8">
+                            <button type="submit" class="bg-blue-600 text-white font-bold py-3 px-10 rounded-full text-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300">Submit Inquiry</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
-    
-    <footer>
-        <p>&copy; 2025 Mindxcope. All Rights Reserved.</p>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4">Mindxcope</h3>
+                <p class="text-slate-400 max-w-md mx-auto">Your trusted partner in wholesale pharmaceutical distribution, committed to health and reliability.</p>
+                <div class="flex justify-center space-x-6 mt-6">
+                    <a href="#" class="text-slate-400 hover:text-white"><i data-lucide="facebook"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white"><i data-lucide="twitter"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white"><i data-lucide="linkedin"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 mt-8 pt-6 text-center text-slate-500 text-sm">
+                <p>&copy; 2025 Mindxcope. All Rights Reserved.</p>
+            </div>
+        </div>
     </footer>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Lucide icons
+        lucide.createIcons();
 
-        gsap.registerPlugin(ScrollTrigger);
+        // --- Mobile menu toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-        // --- SMOOTH SCROLLING FOR NAV LINKS ---
-        document.querySelectorAll('.nav-links a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                gsap.to(window, {duration: 1.5, scrollTo: { y: targetId, offsetY: 70 }, ease: "power3.inOut"});
+        // --- Hero Text Animation ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroTitle = document.querySelector('.hero-title');
+            const text = "Mindxcope: Your Trusted Medicine Partner";
+            text.split(' ').forEach((word, index) => {
+                const span = document.createElement('span');
+                span.textContent = word + ' ';
+                span.style.animationDelay = `${index * 0.1}s`;
+                heroTitle.appendChild(span);
             });
         });
 
+        // --- Animate on Scroll Logic ---
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    
+                    // Specific logic for number counters
+                    const counters = entry.target.querySelectorAll('[data-count]');
+                    if (counters.length > 0) {
+                        counters.forEach(counter => {
+                            animateCountUp(counter);
+                        });
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => { observer.observe(el); });
 
-        // --- HERO ANIMATION ---
-        const heroContent = ".hero-content > *";
-        gsap.from(heroContent, {
-            opacity: 0, y: 50, duration: 1, ease: "power3.out", stagger: 0.2, delay: 0.5
-        });
-        gsap.from(".hero-visual img", {
-            opacity: 0, scale: 0.8, duration: 1.5, ease: "power3.out", delay: 0.8
-        });
-        
-        // Hero Canvas Background (Simplified version)
-        const canvas = document.getElementById('hero-canvas');
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            let width = canvas.width = window.innerWidth;
-            let height = canvas.height = window.innerHeight;
-            window.onresize = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; };
-            // A simple animated background could go here if desired
+        // --- Number Count-Up Animation ---
+        function animateCountUp(el) {
+            const target = +el.getAttribute('data-count');
+            let count = 0;
+            const duration = 2000; // 2 seconds
+            const stepTime = Math.abs(Math.floor(duration / target));
+
+            const timer = setInterval(() => {
+                count += Math.ceil(target / (duration / 16));
+                if (count >= target) {
+                    count = target;
+                    clearInterval(timer);
+                }
+                el.innerText = count.toLocaleString();
+            }, 16);
         }
 
-        // --- GENERIC SECTION ENTRANCE ANIMATION ---
-        gsap.utils.toArray('.fullscreen-section:not(#hero)').forEach(section => {
-            gsap.from(section.querySelectorAll("*"), {
-                opacity: 0,
-                y: 40,
-                duration: 1,
-                stagger: 0.1,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 70%",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
-        
-        // --- HORIZONTAL SCROLLING ---
-        const track = document.querySelector('.horizontal-track');
-        const panels = gsap.utils.toArray('.scroll-panel');
-        
-        // Calculate the total width of the track
-        let trackWidth = -100 * (panels.length - 1);
-
-        gsap.to(track, {
-            xPercent: trackWidth,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#horizontal-scroll-section",
-                start: "top top",
-                end: () => "+=" + (track.offsetWidth - window.innerWidth),
-                pin: true,
-                scrub: 1,
-                snap: {
-                    snapTo: 1 / (panels.length - 1),
-                    duration: { min: 0.2, max: 0.5 },
-                    ease: "power1.inOut"
-                }
-            }
-        });
-        
-        // Animate elements inside each panel as they come into view
-        panels.forEach((panel, i) => {
-            gsap.from(panel.querySelectorAll("*"), {
-                opacity: 0,
-                y: 30,
-                duration: 1,
-                stagger: 0.1,
-                scrollTrigger: {
-                    trigger: panel,
-                    containerAnimation: gsap.to(track, {xPercent: trackWidth, ease:"none"}),
-                    start: "left 70%",
-                    toggleActions: "play none none reverse",
-                }
-            });
-        });
-
-        // --- USE CASES 3D TILT EFFECT ---
-        const cards = document.querySelectorAll(".case-card");
-        cards.forEach(card => {
-            card.addEventListener("mousemove", (e) => {
+        // --- 3D Tilt Card Effect ---
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 const { width, height } = rect;
-                const rotateX = gsap.utils.mapRange(0, height, -10, 10, y);
-                const rotateY = gsap.utils.mapRange(0, width, 10, -10, x);
-
-                gsap.to(card, {
-                    rotationX: rotateX,
-                    rotationY: rotateY,
-                    transformPerspective: 1000,
-                    ease: "power1.out",
-                    duration: 0.5
-                });
+                const rotateX = (y / height - 0.5) * -15; // Max 7.5 deg rotation
+                const rotateY = (x / width - 0.5) * 15;   // Max 7.5 deg rotation
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                card.style.boxShadow = '0 30px 40px rgba(0,0,0,0.2)';
             });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                card.style.boxShadow = '';
+            });
+        });
+        
+        // --- Mouse Parallax Effect ---
+        const parallaxElements = document.querySelectorAll('[data-parallax-speed]');
+        window.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const x = (clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+            const y = (clientY / window.innerHeight - 0.5) * 2; // -1 to 1
 
-            card.addEventListener("mouseleave", () => {
-                gsap.to(card, {
-                    rotationX: 0,
-                    rotationY: 0,
-                    ease: "power3.out",
-                    duration: 1
-                });
+            parallaxElements.forEach(el => {
+                const speed = el.getAttribute('data-parallax-speed');
+                el.style.transform = `translateX(${x * speed * 50}px) translateY(${y * speed * 50}px)`;
             });
         });
 
-    });
     </script>
 </body>
 </html>
-```
