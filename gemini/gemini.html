@@ -243,6 +243,55 @@
             transform: scale(1.02);
             box-shadow: 0 25px 60px rgba(0, 255, 255, 0.1);
         }
+        
+        /* NEW: Research Papers Section */
+        #research {
+            background-color: #0A0F38; /* Slightly different background to stand out */
+        }
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            perspective: 1500px;
+        }
+        .research-card {
+            background: rgba(1, 4, 22, 0.7);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #E0E1FF;
+            transition: box-shadow 0.4s ease;
+            will-change: transform;
+            transform-style: preserve-3d;
+        }
+        .research-card:hover {
+            box-shadow: 0 12px 24px rgba(0, 255, 255, 0.2);
+        }
+        .research-card h3 {
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            transform: translateZ(20px);
+        }
+        .research-card p {
+            font-size: 0.95rem;
+            margin-bottom: auto; /* Pushes the link to the bottom */
+             transform: translateZ(10px);
+        }
+        .research-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: 700;
+            color: #00FFFF;
+            text-decoration: none;
+            transform: translateZ(30px);
+        }
+        .research-link::after {
+            content: ' →';
+        }
 
         /* CTA Section */
         #cta .container { text-align: center; }
@@ -375,12 +424,34 @@
           </div>
         </section>
 
-
         <section id="platform">
             <div class="container">
-                <h2 class="section-title">Your Cognitive Command Center</h2>
+                <h2 class="section-title">Sample Report</h2>
                 <div class="platform-preview">
                     <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="research">
+            <div class="container">
+                <h2 class="section-title">Our Research</h2>
+                <div class="research-grid">
+                    <a href="#" class="research-card tilt-card">
+                        <h3>Decoding Cognitive Load with EEG</h3>
+                        <p>An in-depth analysis of using electroencephalography to measure mental workload in high-pressure environments.</p>
+                        <span class="research-link">Read Paper</span>
+                    </a>
+                    <a href="#" class="research-card tilt-card">
+                        <h3>fNIRS as a Predictor of Performance</h3>
+                        <p>This paper explores the correlation between prefrontal cortex oxygenation and task performance in complex problem-solving.</p>
+                        <span class="research-link">Read Paper</span>
+                    </a>
+                    <a href="#" class="research-card tilt-card">
+                        <h3>The Neurological Signature of "Flow State"</h3>
+                        <p>Identifying the unique brainwave patterns associated with peak performance and the state of "flow" during cognitive tasks.</p>
+                        <span class="research-link">Read Paper</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -410,7 +481,6 @@
         gsap.registerPlugin(ScrollTrigger);
 
         // --- HERO 3D-ish Interactive Canvas Animation ---
-        // This part remains the same
         const canvas = document.getElementById('hero-canvas');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
@@ -449,16 +519,16 @@
         gsap.utils.toArray('.section-title').forEach(title => { gsap.from(title, { opacity: 0, y: 50, duration: 1, scrollTrigger: { trigger: title, start: "top 85%", toggleActions: "play none none none" } }); });
 
         // Staggered card entrance animations
-        const cardSections = ['.tech-grid', '.solutions-grid'];
-        cardSections.forEach(sec => {
-            gsap.from(`${sec} > .tilt-card`, {
-                scrollTrigger: { trigger: sec, start: "top 80%" },
+        const cardGrids = ['.tech-grid', '.solutions-grid', '.research-grid'];
+        cardGrids.forEach(grid => {
+            gsap.from(`${grid} > .tilt-card`, {
+                scrollTrigger: { trigger: grid, start: "top 80%" },
                 opacity: 0, y: 60, scale: 0.95, duration: 1, stagger: 0.15, ease: "power3.out"
             });
         });
 
         // ===============================================
-        // == NEW: 3D PARALLAX TILT ON HOVER FOR CARDS ==
+        // == 3D PARALLAX TILT ON HOVER FOR ALL CARDS ==
         // ===============================================
         const tiltCards = document.querySelectorAll(".tilt-card");
 
@@ -503,7 +573,6 @@
         gsap.utils.toArray('.process-step').forEach(step => { gsap.fromTo(step, { opacity: 0, x: step.classList.contains('even') ? 100 : -100 }, { opacity: 1, x: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: step, start: "top 80%", toggleActions: "play none none reverse" } }); });
 
         // Platform Preview Chart Animation
-        // This part remains the same
         const chartSection = document.getElementById('platform');
         const chartCtx = document.getElementById('performanceChart').getContext('2d');
         let performanceChart;
