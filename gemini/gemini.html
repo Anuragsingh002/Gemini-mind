@@ -17,7 +17,8 @@
             font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: #010416;
             color: #E0E1FF;
-            overflow-x: hidden;
+            overflow-x: hidden; 
+            
         }
         img, picture { max-width: 100%; display: block; }
         input, button, textarea, select { font: inherit; }
@@ -210,6 +211,8 @@
             z-index: 2; /* Between canvas and content */
             pointer-events: none; /* Prevent interaction */
             filter: brightness(0.7) contrast(1.2);
+            animation: floatUpDown 4s ease-in-out infinite;
+}
         }
     </style>
 </head>
