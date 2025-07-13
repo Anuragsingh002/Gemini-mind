@@ -1,409 +1,400 @@
-Of course. I have expanded the code significantly to create a longer, more feature-rich, and visually attractive homepage. This single file includes new sections for product categories, client testimonials, and trusted brands, along with enhanced animations and more professional imagery.
-
-This is still a **static blueprint**. An actual ordering system requires a developer to build a secure backend and database. However, this code gives you a very powerful and impressive visual foundation.
-
-### **Key Upgrades in This Code:**
-
-  * **Longer Layout:** Added new sections for a comprehensive one-page experience.
-  * **Product Card Sections:** Dedicated, stylish card sections for Tablets, Injections, Syrups, and Surgical supplies.
-  * **More Features:** Includes new "Our Trusted Brands" and "Client Testimonials" sections to build credibility.
-  * **Enhanced Animations:** Subtle fade-in animations now trigger as you scroll down the page, making the site feel alive and professional.
-  * **Better Imagery:** Uses higher-quality, more appropriate images and icons to improve the overall look and feel.
-
------
-
-### **Complete `index.html` File (Version 2.0)**
-
-Just like before, copy all the code below into a single file named `index.html`. You can then upload it to GitHub and publish it using GitHub Pages.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mediwell Healthcare - Premium Wholesale Pharmaceutical Supplier</title>
+    <title>Mediwell Healthcare - Complete Wholesale Pharma Solutions, India</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* CSS Reset & Variables */
         :root {
-            --primary-blue: #00529B;
-            --secondary-green: #2E7D32;
-            --light-blue-bg: #E3F2FD;
-            --light-gray-bg: #f7f9fc;
-            --dark-text: #333333;
-            --light-text: #ffffff;
-            --font-primary: 'Roboto', sans-serif;
-            --font-secondary: 'Montserrat', sans-serif;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-            --border-radius: 12px;
+            --primary-color: #0d47a1; /* Deeper Professional Blue */
+            --secondary-color: #1b5e20; /* Deeper Professional Green */
+            --accent-color: #009688; /* Teal for accents */
+            --bg-light: #f5f7fa;
+            --bg-white: #ffffff;
+            --text-dark: #212121;
+            --text-light: #616161;
+            --font-family: 'Poppins', sans-serif;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --border-radius: 15px;
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        /* --- Base & Scrollbar --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: var(--font-primary);
-            color: var(--dark-text);
-            line-height: 1.7;
+            font-family: var(--font-family);
+            color: var(--text-dark);
+            line-height: 1.8;
+            background-color: var(--bg-white);
         }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0b3a82; }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        section {
-            padding: 6rem 0;
-        }
-
-        h1, h2, h3 {
-            font-family: var(--font-secondary);
-            font-weight: 700;
-        }
-
-        h2.section-title {
-            font-size: 2.8rem;
+        /* --- Layout & Typography --- */
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        section { padding: 6rem 0; overflow: hidden; }
+        h1, h2, h3, h4 { font-weight: 700; }
+        .section-title {
+            font-size: 2.5rem;
             text-align: center;
-            margin-bottom: 4rem;
-            position: relative;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .section-subtitle {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem auto;
+            color: var(--text-light);
         }
 
-        h2.section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--primary-blue);
-            border-radius: 2px;
-        }
-
-        /* Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* --- Animations --- */
+        .reveal { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal-fade { transform: translateY(50px); }
+        .reveal-left { transform: translateX(-50px); }
+        .reveal-right { transform: translateX(50px); }
+        .reveal.visible { opacity: 1; transform: translate(0, 0); }
         
-        /* Header */
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--bg-white);
+            background: linear-gradient(45deg, var(--primary-color), #1e88e5);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(13, 71, 161, 0.4); }
+
+        /* --- Header --- */
         header {
-            background-color: var(--light-text);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: var(--bg-white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
 
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        /* Hero Section */
+        /* --- Hero Section --- */
         .hero {
-            background-image: linear-gradient(rgba(0, 82, 155, 0.7), rgba(46, 125, 50, 0.5)), url('https://images.unsplash.com/photo-1584362352726-02f06b6b7724?auto=format&fit=crop&q=80&w=2070');
-            background-size: cover;
-            background-position: center;
-            color: var(--light-text);
-            text-align: center;
-            padding: 10rem 2rem;
+            background-image: linear-gradient(rgba(13, 71, 161, 0.8), rgba(13, 71, 161, 0.6)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover; background-position: center; color: var(--bg-white);
+            text-align: center; padding: 8rem 2rem;
         }
+        .hero h1 { font-size: 3.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.2rem; max-width: 700px; margin: 1.5rem auto 2.5rem auto; opacity: 0.9; }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 700px;
-            margin: 1.5rem auto 2.5rem auto;
-        }
-        
-        .btn {
-            text-decoration: none;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-family: var(--font-secondary);
-            transition: all 0.3s ease;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn-primary {
-            background-color: var(--primary-blue);
-        }
-        
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Product Categories Section */
-        #products {
-            background-color: var(--light-gray-bg);
-        }
-        
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
+        /* --- Product Categories Section --- */
+        #products { background-color: var(--bg-light); }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .product-card {
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--bg-white); border-radius: var(--border-radius); box-shadow: var(--shadow);
+            overflow: hidden; text-align: center; transition: all 0.3s ease;
+        }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; }
+        .product-card-content { padding: 1.5rem; }
+        .product-card-content h3 { font-size: 1.4rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+
+        /* --- Quality Section --- */
+        .quality-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem; }
+        .quality-item { text-align: center; }
+        .quality-item .icon {
+            display: inline-flex; justify-content: center; align-items: center;
+            width: 80px; height: 80px; border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-color), #4db6ac);
+            color: var(--bg-white); margin-bottom: 1.5rem; box-shadow: 0 5px 15px rgba(0, 150, 136, 0.4);
+        }
+        .quality-item .icon svg { width: 40px; height: 40px; }
+        .quality-item h3 { font-size: 1.2rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+
+        /* --- Process Section --- */
+        #process { background-color: var(--bg-light); }
+        .process-timeline {
+            display: flex; justify-content: space-between; position: relative;
+            flex-wrap: wrap; gap: 2rem;
+        }
+        .process-timeline::before {
+            content: ''; position: absolute; top: 35px; left: 0; right: 0;
+            height: 4px; background: #e0e0e0; z-index: 1;
+        }
+        .process-step {
+            flex: 1; min-width: 220px; text-align: center; position: relative; z-index: 2;
+        }
+        .step-number {
+            width: 70px; height: 70px; border-radius: 50%;
+            background-color: var(--bg-light); border: 4px solid var(--primary-color);
+            display: inline-flex; justify-content: center; align-items: center;
+            font-size: 1.8rem; font-weight: 700; color: var(--primary-color);
+            margin-bottom: 1rem; transition: all 0.3s ease;
+        }
+        .process-step:hover .step-number { background-color: var(--primary-color); color: var(--bg-white); transform: scale(1.1); }
+        .process-step h3 { margin-bottom: 0.5rem; }
+
+        /* --- Order Form Section --- */
+        #order-form { background-color: #e8f5e9; } /* Light Green BG */
+        .form-container {
+            background: var(--bg-white); padding: 3rem;
+            border-radius: var(--border-radius); box-shadow: var(--shadow);
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { margin-bottom: 0.5rem; font-weight: 600; color: var(--primary-color); }
+        .form-group input, .form-group textarea {
+            padding: 12px; border-radius: 8px;
+            border: 1px solid #ccc; font-family: var(--font-family); font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.2);
+        }
+        .order-items-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .order-items-table th, .order-items-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        .order-items-table th { background-color: var(--bg-light); }
+        .order-items-table input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+        .add-item-btn { margin-top: 1rem; background: var(--secondary-color); font-size: 0.9rem; padding: 10px 20px; }
+
+        /* --- Contact Section --- */
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .contact-info p { margin-bottom: 1.5rem; display: flex; align-items: center; font-size: 1.1rem; }
+        .contact-info svg { width: 24px; height: 24px; color: var(--primary-color); margin-right: 1rem; }
+        .map-placeholder {
+            height: 300px; background-color: #e0e0e0;
+            border-radius: var(--border-radius); display: flex;
+            justify-content: center; align-items: center; font-weight: 600; color: #757575;
         }
 
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        /* --- Footer --- */
+        footer { background-color: var(--text-dark); color: #ccc; text-align: center; padding: 3rem 0; }
+        @media(max-width: 992px) { .form-grid, .contact-wrapper { grid-template-columns: 1fr; } }
+        @media(max-width: 768px) {
+             .hero h1 { font-size: 2.5rem; }
+             .process-timeline::before { display: none; }
+             .process-step { margin-bottom: 2rem; }
         }
-
-        .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .product-card-content {
-            padding: 1.5rem;
-        }
-        
-        .product-card-content h3 {
-            font-size: 1.5rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .product-card-content p {
-            font-size: 0.95rem;
-            color: #666;
-        }
-
-        /* Brands Section */
-        #brands {
-            background-color: var(--light-text);
-        }
-        
-        .brands-grid {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .brand-logo {
-            filter: grayscale(100%);
-            opacity: 0.6;
-            transition: all 0.3s ease;
-        }
-        
-        .brand-logo:hover {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
-
-        /* Testimonials Section */
-        #testimonials {
-            background-color: var(--light-blue-bg);
-        }
-        
-        .testimonial-card {
-            background-color: white;
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .testimonial-card img.avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1rem;
-            border: 4px solid var(--primary-blue);
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            color: #555;
-            margin-bottom: 1.5rem;
-        }
-        
-        .testimonial-author {
-            font-weight: 700;
-            color: var(--secondary-green);
-        }
-        
-        .testimonial-author span {
-            display: block;
-            font-weight: 400;
-            color: #777;
-            font-style: normal;
-            font-size: 0.9rem;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark-text);
-            color: #ccc;
-            text-align: center;
-            padding: 3rem 0;
-        }
-
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container">
-            <a href="#" class="logo">Mediwell Healthcare</a>
-        </div>
+        <div class="container"> <a href="#" class="logo">Mediwell Healthcare</a> </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-content reveal">
-            <h1>Your Pan-India Wholesale Pharmaceutical Partner</h1>
-            <p>Providing a comprehensive range of genuine medicines, injections, and surgical supplies with reliable, on-time delivery across the nation.</p>
-            <a href="#products" class="btn btn-primary">Explore Our Products</a>
-        </div>
-    </section>
-
-    <section id="products">
-        <div class="container">
-            <h2 class="section-title reveal">Our Product Range</h2>
-            
-            <div class="category-grid">
-                <div class="product-card reveal" style="transition-delay: 100ms;">
-                    <img src="https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&q=80&w=2070" alt="Various tablets and capsules">
-                    <div class="product-card-content">
-                        <h3>Tablets & Capsules</h3>
-                        <p>A wide assortment of tablets and capsules covering major therapeutic areas, from leading manufacturers.</p>
+    <main>
+        <section class="hero">
+            <div class="hero-content reveal reveal-fade">
+                <h1>India's Premier Wholesale Pharmaceutical Distributor</h1>
+                <p>Your trusted source in Patna for genuine medicines, injections, and surgical supplies, delivered nationwide with uncompromising quality and care.</p>
+                <a href="#order-form" class="btn">Place an Order Directly</a>
+            </div>
+        </section>
+        
+        <section id="quality">
+            <div class="container">
+                <h2 class="section-title reveal reveal-fade">Our Commitment to Quality</h2>
+                <p class="section-subtitle reveal reveal-fade">Quality isn't just a promise; it's the foundation of our entire operation. We ensure every product that leaves our facility meets the highest standards of safety and efficacy.</p>
+                <div class="quality-grid">
+                    <div class="quality-item reveal reveal-left">
+                        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22V9"/></svg></div>
+                        <h3>Certified Sourcing</h3>
+                        <p>We procure directly from WHO-GMP certified manufacturers and authorized distributors only.</p>
+                    </div>
+                    <div class="quality-item reveal reveal-fade" style="transition-delay: 200ms;">
+                        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C3 11.1 2 13 2 15a7 7 0 0 0 7 7z"/><path d="M12 11.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-5 0A2.5 2.5 0 0 1 12 11.5z"/></svg></div>
+                        <h3>Climate-Controlled Storage</h3>
+                        <p>Our state-of-the-art facility in Patna maintains precise temperature and humidity levels.</p>
+                    </div>
+                    <div class="quality-item reveal reveal-right" style="transition-delay: 400ms;">
+                        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
+                        <h3>Batch & Expiry Tracking</h3>
+                        <p>A rigorous digital system tracks every product, ensuring timely dispatch and zero expired stock.</p>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="product-card reveal" style="transition-delay: 200ms;">
-                    <img src="https://images.unsplash.com/photo-1607619056574-7d8d3ee536b2?auto=format&fit=crop&q=80&w=1974" alt="Medical injections and vials">
-                    <div class="product-card-content">
-                        <h3>Injections & Vials</h3>
-                        <p>Critical care injections, vaccines, and other sterile formulations stored in optimal conditions.</p>
+        <section id="products">
+            </section>
+        
+        <section id="process">
+            <div class="container">
+                <h2 class="section-title reveal reveal-fade">Our Simple Ordering Process</h2>
+                <p class="section-subtitle reveal reveal-fade">We've streamlined our system to make procurement as easy and efficient as possible for you.</p>
+                <div class="process-timeline">
+                    <div class="process-step reveal reveal-left">
+                        <div class="step-number">1</div>
+                        <h3>Register & Verify</h3>
+                        <p>Complete a one-time registration with your business details and drug license.</p>
+                    </div>
+                    <div class="process-step reveal reveal-fade" style="transition-delay: 200ms;">
+                        <div class="step-number">2</div>
+                        <h3>Browse & Order</h3>
+                        <p>Explore our catalog or use our direct order form to add products to your request.</p>
+                    </div>
+                    <div class="process-step reveal reveal-fade" style="transition-delay: 400ms;">
+                        <div class="step-number">3</div>
+                        <h3>Confirm & Pay</h3>
+                        <p>Our team will contact you with a final quotation and secure payment options.</p>
+                    </div>
+                    <div class="process-step reveal reveal-right" style="transition-delay: 600ms;">
+                        <div class="step-number">4</div>
+                        <h3>Nationwide Delivery</h3>
+                        <p>Receive your order, safely packaged and delivered to your doorstep anywhere in India.</p>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="product-card reveal" style="transition-delay: 300ms;">
-                    <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&q=80&w=2070" alt="Bottles of medical syrup">
-                    <div class="product-card-content">
-                        <h3>Syrups & Suspensions</h3>
-                        <p>Pediatric and adult liquid formulations, including antibiotics, cough syrups, and nutritional supplements.</p>
-                    </div>
-                </div>
+        <section id="order-form">
+            <div class="container">
+                <h2 class="section-title reveal reveal-fade">Direct Order Placement Form</h2>
+                <p class="section-subtitle reveal reveal-fade">For the fastest service, fill out the form below. Our team will get back to you with a confirmation and quote shortly.</p>
                 
-                <div class="product-card reveal" style="transition-delay: 400ms;">
-                    <img src="https://images.unsplash.com/photo-1551189013-b542f55f35d2?auto=format&fit=crop&q=80&w=2001" alt="Surgical instruments on a tray">
-                    <div class="product-card-content">
-                        <h3>Surgical Supplies</h3>
-                        <p>High-quality surgical gloves, masks, bandages, and other essential disposables for clinics and hospitals.</p>
+                <form class="form-container reveal reveal-fade" action="#" method="POST" onsubmit="alert('Thank you for your request! This is a demo form. A developer is needed to make it functional.'); return false;">
+                    <h4>1. Business Information</h4>
+                    <hr style="margin: 1rem 0 1.5rem 0; border: 1px solid #eee;">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="businessName">Pharmacy / Hospital Name</label>
+                            <input type="text" id="businessName" name="businessName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="drugLicense">Drug License No.</label>
+                            <input type="text" id="drugLicense" name="drugLicense" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gstin">GSTIN</label>
+                            <input type="text" id="gstin" name="gstin" required>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 2.5rem;">2. Contact & Shipping Details</h4>
+                    <hr style="margin: 1rem 0 1.5rem 0; border: 1px solid #eee;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="contactName">Contact Person Name</label>
+                            <input type="text" id="contactName" name="contactName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                         <div class="form-group">
+                            <label for="city">City & Pincode</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="address">Full Shipping Address</label>
+                            <textarea id="address" name="address" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 2.5rem;">3. Order Items</h4>
+                    <hr style="margin: 1rem 0 1.5rem 0; border: 1px solid #eee;">
+                    <div class="form-group full-width">
+                        <table class="order-items-table" id="orderItems">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Strength (e.g., 500mg)</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="product_name[]" placeholder="e.g., Paracetamol"></td>
+                                    <td><input type="text" name="strength[]" placeholder="e.g., 500mg"></td>
+                                    <td><input type="number" name="quantity[]" min="1" placeholder="e.g., 100"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" id="addItemBtn" class="btn add-item-btn">Add Another Item</button>
+                    </div>
+
+                    <div class="form-group full-width" style="margin-top: 2rem;">
+                        <label for="upload">Or Upload Your List (PDF, DOC, JPG)</label>
+                        <input type="file" id="upload" name="upload" style="padding: 12px; border: 1px dashed #ccc;">
+                    </div>
+
+                    <div class="form-group full-width" style="text-align: center; margin-top: 2.5rem;">
+                        <button type="submit" class="btn">Submit Order Request</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title reveal reveal-fade">Get In Touch</h2>
+                <p class="section-subtitle reveal reveal-fade">We are located in the heart of Patna, ready to serve you. Reach out to us with any queries.</p>
+                <div class="contact-wrapper reveal reveal-fade">
+                    <div class="contact-info">
+                        <h3>Mediwell Healthcare</h3>
+                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>[Your Full Address], Kankarbagh, Patna, Bihar, 800020</p>
+                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+91 12345 67890</p>
+                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>sales@mediwellhealthcare.com</p>
+                    </div>
+                    <div class="map-placeholder">
+                        Google Map Placeholder
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="brands">
-        <div class="container">
-            <h2 class="section-title reveal">We Partner With Trusted Brands</h2>
-            <div class="brands-grid reveal">
-                <img src="https://placehold.co/150x50/ccc/333?text=Brand+Logo+1" alt="Brand Logo 1" class="brand-logo">
-                <img src="https://placehold.co/150x50/ccc/333?text=Brand+Logo+2" alt="Brand Logo 2" class="brand-logo">
-                <img src="https://placehold.co/150x50/ccc/333?text=Brand+Logo+3" alt="Brand Logo 3" class="brand-logo">
-                <img src="https://placehold.co/150x50/ccc/333?text=Brand+Logo+4" alt="Brand Logo 4" class="brand-logo">
-                <img src="https://placehold.co/150x50/ccc/333?text=Brand+Logo+5" alt="Brand Logo 5" class="brand-logo">
-            </div>
-        </div>
-    </section>
+    </main>
 
-    <section id="testimonials">
-        <div class="container">
-            <h2 class="section-title reveal">What Our Clients Say</h2>
-            <div class="category-grid">
-                <div class="testimonial-card reveal" style="transition-delay: 100ms;">
-                    <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=1887" alt="Avatar of a client" class="avatar">
-                    <p class="testimonial-text">"Mediwell Healthcare has transformed our procurement process. Their delivery is always on time, and the product quality is second to none. A truly reliable partner."</p>
-                    <p class="testimonial-author">R. K. Sharma <span>Owner, City Pharmacy, Lucknow</span></p>
-                </div>
-                <div class="testimonial-card reveal" style="transition-delay: 200ms;">
-                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=1888" alt="Avatar of another client" class="avatar">
-                    <p class="testimonial-text">"As a hospital, we need a supplier we can depend on for critical care medicines. Mediwell has consistently met our high standards for over three years."</p>
-                    <p class="testimonial-author">Dr. Anjali Desai <span>Purchase Head, Hope Hospital, Kolkata</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
     <footer>
         <div class="container">
-            <p>&copy; 2025 Mediwell Healthcare, Patna. All Rights Reserved.</p>
-            <p>A Professional Website Blueprint by Google Gemini.</p>
+            <p>&copy; 2025 Mediwell Healthcare, Patna, India. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Scroll Animation Logic
             const revealElements = document.querySelectorAll('.reveal');
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     }
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
+            revealElements.forEach(element => observer.observe(element));
 
-            revealElements.forEach(element => {
-                observer.observe(element);
+            // Order Form Logic
+            const addItemBtn = document.getElementById('addItemBtn');
+            const orderItemsTable = document.getElementById('orderItems').getElementsByTagName('tbody')[0];
+
+            addItemBtn.addEventListener('click', function() {
+                const newRow = orderItemsTable.insertRow();
+                newRow.innerHTML = `
+                    <td><input type="text" name="product_name[]"></td>
+                    <td><input type="text" name="strength[]"></td>
+                    <td><input type="number" name="quantity[]" min="1"></td>
+                `;
             });
         });
     </script>
 
 </body>
 </html>
-```
