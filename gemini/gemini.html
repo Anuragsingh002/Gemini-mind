@@ -3,1265 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mediwell Healthcare - Premium Medical Wholesale Distribution</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Mindxcope - The Future of Human Potential</title>
     <style>
-        :root {
-            --primary-blue: #2c5aa0;
-            --dark-blue: #1e3d72;
-            --light-blue: #42a5f5;
-            --accent-green: #4caf50;
-            --light-green: #66bb6a;
-            --background-light: #eef2f7;
-            --text-dark: #333;
-            --text-light: #fff;
-            --glow-color: #a7d9ff;
-            --shadow-light: rgba(0,0,0,0.1);
-            --shadow-medium: rgba(0,0,0,0.2);
-            --shadow-dark: rgba(0,0,0,0.3);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Modern CSS Reset */
+        *, *::before, *::after { box-sizing: border-box; }
+        body, h1, h2, h3, p, figure, blockquote, dl, dd { margin: 0; }
+        ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
+        html:focus-within { scroll-behavior: smooth; }
         body {
-            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            text-rendering: optimizeSpeed;
             line-height: 1.6;
-            color: var(--text-dark);
+            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #010416;
+            color: #E0E1FF;
             overflow-x: hidden;
-            background: var(--background-light);
         }
+        img, picture { max-width: 100%; display: block; }
+        input, button, textarea, select { font: inherit; }
 
-        /* Utility Classes */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #010416; }
+        ::-webkit-scrollbar-thumb { background: #0A0F38; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #131A5A; }
+
+        /* --- GLOBAL STYLES & LAYOUT --- */
         .container {
-            max-width: 1200px;
+            width: 90%;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.8rem;
-            margin-bottom: 3.5rem;
-            color: var(--primary-blue);
             position: relative;
-            animation: fadeInDown 1s ease-out;
+        }
+        
+        /* A full-height section for a grander feel */
+        .fullscreen-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1, h2, h3 {
             font-weight: 700;
+            line-height: 1.2;
+            color: #FFFFFF;
+            letter-spacing: -1px;
         }
+        h1 { font-size: clamp(3rem, 6vw, 5.5rem); }
+        h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 20px; }
+        h3 { font-size: clamp(1.5rem, 2.5vw, 2rem); margin-bottom: 15px; }
+        p { font-size: 1.1rem; color: #B0B3E0; margin-bottom: 20px; max-width: 65ch; }
+        .subheading { font-size: 1.2rem; color: #00FFFF; font-weight: 600; margin-bottom: 10px; }
+        .highlight { color: #00FFFF; }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 5px;
-            background: linear-gradient(45deg, var(--accent-green), var(--light-green));
-            border-radius: 2px;
-        }
-
-        /* Header Styles */
-        .header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: var(--text-light);
-            padding: 1rem 0;
+        /* --- HEADER --- */
+        header {
             position: fixed;
             width: 100%;
             top: 0;
+            left: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px var(--shadow-light);
-            backdrop-filter: blur(5px);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            padding: 25px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(1, 4, 22, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
         }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            animation: fadeIn 1s ease-out;
-            text-shadow: 1px 1px 3px var(--shadow-medium);
+        .logo { font-size: 1.8rem; font-weight: 800; color: #fff; }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { color: #E0E1FF; text-decoration: none; font-weight: 500; position: relative; }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 100%; height: 2px;
+            bottom: -5px; left: 0; background-color: #00FFFF;
+            transform: scaleX(0); transform-origin: bottom right; transition: transform 0.3s ease-out;
         }
+        .nav-links a:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
-        .logo::before {
-            content: "🏥";
-            font-size: 2rem;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-menu a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            font-size: 1.05rem;
-        }
-
-        .nav-menu a:hover {
-            color: var(--glow-color);
-            transform: translateY(-2px);
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: var(--glow-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-
+        /* --- BUTTON --- */
         .cta-button {
-            background: linear-gradient(45deg, var(--accent-green), var(--light-green));
-            color: var(--text-light);
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #00FFFF, #8A2BE2);
+            color: #FFFFFF; padding: 15px 35px; border-radius: 50px;
+            text-decoration: none; font-weight: 700; display: inline-block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; cursor: pointer;
         }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2); }
 
-        .cta-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+        /* --- HERO SECTION --- */
+        #hero .container {
+            display: flex; align-items: center; justify-content: space-between; gap: 40px;
         }
+        .hero-content { max-width: 55%; z-index: 2; }
+        .hero-visual { max-width: 40%; z-index: 1; }
+        #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.5; }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 50%, var(--light-blue) 100%);
-            color: var(--text-light);
-            padding: 120px 0 80px;
-            text-align: center;
+        /* --- ABOUT SECTION --- */
+        #about { text-align: center; }
+        #about .container { max-width: 900px; }
+
+        /* --- HORIZONTAL SCROLL SECTION --- */
+        #horizontal-scroll-section {
+            height: 100vh;
+            overflow: hidden; /* This is crucial for the pinning effect */
             position: relative;
-            overflow: hidden;
-            background-image: url('https://images.unsplash.com/photo-1584820927421-a797c551381e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Medical background */
-            background-size: cover;
-            background-position: center;
-            animation: heroFadeIn 1.5s ease-out;
         }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(30, 61, 114, 0.75); /* Darker overlay for text readability */
-            z-index: 1;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: slideInLeft 1.2s ease-out;
-            text-shadow: 2px 2px 8px var(--shadow-dark);
-            font-weight: 800;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            animation: slideInRight 1.2s ease-out 0.3s both;
-            font-weight: 400;
-        }
-
-        /* Ticker */
-        .ticker {
-            background: #ff5722; /* Vibrant orange */
-            color: var(--text-light);
-            padding: 0.8rem 0;
-            overflow: hidden;
-            white-space: nowrap;
-            box-shadow: 0 2px 10px var(--shadow-light);
-            font-weight: 500;
-        }
-
-        .ticker-content {
-            display: inline-block;
-            animation: scroll 30s linear infinite;
-            padding-right: 100%;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background: var(--background-light);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: var(--text-light);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px var(--shadow-light);
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* More complex easing */
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-            will-change: transform, box-shadow; /* Optimize for animation */
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(76, 175, 80, 0.1);
-            transform: scale(0);
-            border-radius: 20px;
-            transition: transform 0.4s ease-out;
-            z-index: 0;
-        }
-
-        .feature-card:hover::before {
-            transform: scale(1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-15px) rotateZ(2deg); /* Z-axis rotation */
-            box-shadow: 0 20px 50px var(--shadow-medium);
-            border-color: var(--accent-green);
-            z-index: 1;
-        }
-
-        .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.2rem;
-            display: block;
-            color: var(--accent-green);
-            animation: bounceIn 1s ease-out;
-        }
-
-        .feature-card h3 {
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .feature-card p {
-            font-size: 1rem;
-            color: #555;
-            font-weight: 300;
-        }
-
-        /* Product Categories */
-        .categories {
-            padding: 80px 0;
-            background: var(--background-light);
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.8rem;
-        }
-
-        .category-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            cursor: pointer;
-            border: 2px solid transparent;
-            box-shadow: 0 5px 15px var(--shadow-light);
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
+        .horizontal-track {
+            height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            min-height: 200px;
-            color: var(--text-light);
+            will-change: transform; /* Performance optimization */
         }
-
-        /* Category specific background images */
-        .category-card:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1585435557343-3b027d145e1b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Tablets */
-        .category-card:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1628343719918-09594f836585?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Injections */
-        .category-card:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1517404221773-04e4c2957b98?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Syrups */
-        .category-card:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Surgical Supplies */
-        .category-card:nth-child(5) { background-image: url('https://images.unsplash.com/photo-1600373079093-6c7c2e071e62?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* COVID Care Products */
-        .category-card:nth-child(6) { background-image: url('https://images.unsplash.com/photo-1605330386766-8968984918e9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Ayurvedic & Herbal */
-        .category-card:nth-child(7) { background-image: url('https://images.unsplash.com/photo-1594595208535-6430932c0211?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* OTC & General */
-        .category-card:nth-child(8) { background-image: url('https://images.unsplash.com/photo-1628348616110-33b6680a6b7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Diagnostics */
-
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(44, 90, 160, 0.85), rgba(44, 90, 160, 0.2)); /* Darker overlay */
-            border-radius: 15px;
-            z-index: 1;
-            transition: background 0.4s ease-out;
-        }
-
-        .category-card:hover::before {
-            background: linear-gradient(to top, rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.3)); /* Green overlay on hover */
-        }
-
-        .category-card h3, .category-card p {
-            position: relative;
-            z-index: 2;
-            color: var(--text-light);
-            text-shadow: 1px 1px 4px var(--shadow-dark);
-        }
-
-        .category-card h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.4rem;
-            animation: fadeInUp 0.5s ease-out;
-            font-weight: 600;
-        }
-
-        .category-card p {
-            font-size: 0.95rem;
-            opacity: 0.9;
-            animation: fadeInUp 0.5s ease-out 0.1s both;
-            font-weight: 300;
-        }
-
-        .category-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(44, 90, 160, 0.4);
-            border-color: var(--accent-green);
-        }
-
-        /* Medicine Catalog Section */
-        .medicine-catalog {
-            background: linear-gradient(135deg, #f0f8ff 0%, #dbe6f4 100%); /* Light blue-white gradient */
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .medicine-catalog::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1579684385108-54b6113b28b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center; /* Pills background */
-            background-size: cover;
-            opacity: 0.1;
-            z-index: 0;
-        }
-
-        .medicine-catalog .section-title {
-            color: var(--dark-blue);
-        }
-
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .medicine-card {
-            background: var(--text-light);
-            border-radius: 18px;
-            box-shadow: 0 10px 30px var(--shadow-light);
-            overflow: hidden;
-            transition: all 0.4s ease;
+        .scroll-panel {
+            height: 100vh;
+            width: 100vw;
+            flex-shrink: 0;
             display: flex;
-            flex-direction: column;
-            text-align: center;
-            border: 2px solid transparent;
-            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10%;
+            gap: 5%;
         }
-        .medicine-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 18px 45px var(--shadow-medium);
-            border-color: var(--primary-blue);
+        .panel-content { width: 45%; }
+        .panel-visual { width: 50%; }
+        .panel-visual img { border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .section-intro-panel { flex-direction: column; text-align: center; }
+
+        /* --- USE CASES SECTION --- */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            perspective: 1000px; /* For the 3D tilt effect */
+        }
+        .case-card {
+            background: #0A0F38; border: 1px solid #131A5A;
+            padding: 40px; border-radius: 15px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            will-change: transform;
+        }
+        .case-card:hover {
+             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+        .case-card .icon {
+            width: 40px; height: 40px; margin-bottom: 20px; stroke-width: 1.5;
+            color: #8A2BE2; background-color: rgba(138, 43, 226, 0.1);
+            padding: 8px; border-radius: 8px;
         }
 
-        .medicine-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 1px solid #eee;
-            transition: transform 0.3s ease;
-        }
-        .medicine-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .medicine-info {
-            padding: 1.5rem;
-            flex-grow: 1;
+        /* --- TECHNOLOGY SECTION --- */
+        .tech-split {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            gap: 5%;
+            margin-bottom: 100px;
         }
+        .tech-split:last-child { margin-bottom: 0; }
+        .tech-split.reverse { flex-direction: row-reverse; }
+        .tech-content, .tech-visual { width: 50%; }
+        .tech-visual img { border-radius: 20px; }
 
-        .medicine-info h3 {
-            font-size: 1.4rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-        }
-
-        .medicine-info p {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 1.2rem;
-            font-weight: 300;
-            flex-grow: 1;
-        }
-
-        .medicine-price {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent-green);
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .medicine-card .cta-button {
-            width: calc(100% - 3rem); /* Adjust width to match padding */
-            margin: 0 auto;
-            display: block;
-            font-size: 0.9rem;
-            padding: 0.7rem 1rem;
-            border-radius: 20px;
-            background: linear-gradient(45deg, #007bff, #0056b3); /* Blue for order button */
-            box-shadow: 0 4px 10px rgba(0,123,255,0.3);
-            color: var(--text-light);
-        }
-
-        .medicine-card .cta-button:hover {
-            background: linear-gradient(45deg, #0056b3, #007bff);
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 6px 15px rgba(0,123,255,0.4);
-        }
-
-        /* Place Order Section */
-        .place-order-section {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-            color: var(--text-light);
-            padding: 80px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 1.5s ease-out;
-            box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        .place-order-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center; /* Order Now background */
-            background-size: cover;
-            opacity: 0.2;
-            z-index: 0;
-        }
-
-        .place-order-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .place-order-content h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            animation: slideInDown 1s ease-out;
-            text-shadow: 2px 2px 8px var(--shadow-dark);
-            font-weight: 700;
-        }
-
-        .place-order-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            animation: slideInUp 1s ease-out 0.3s both;
-            font-weight: 300;
-        }
-
-        .place-order-button {
-            background: linear-gradient(45deg, #ffc107, #ff9800);
-            color: var(--text-dark); /* Dark text for contrast */
-            padding: 1.2rem 2.5rem;
-            border: none;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            animation: pulse 1.5s infinite ease-in-out;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .place-order-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #ff9800, #ffc107);
-        }
-
-        /* Stats Section */
-        .stats {
-            background: var(--primary-blue);
-            color: var(--text-light);
-            padding: 60px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .stats::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1584982635489-f53835081c7e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center; /* Abstract medical background */
-            background-size: cover;
-            opacity: 0.1;
-            z-index: 0;
-        }
-
-        .stats-grid {
+        /* --- INSIGHTS SECTION --- */
+        .insights-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .insight-card {
+            background: #0A0F38; border-radius: 10px; overflow: hidden;
+            transition: transform 0.3s ease; display: flex; flex-direction: column;
+        }
+        .insight-card:hover { transform: translateY(-10px); }
+        .insight-image { height: 200px; background-color: #131A5A; }
+        .insight-content { padding: 25px; flex-grow: 1; }
+        .insight-content h3 { font-size: 1.2rem; }
+        .insight-content a { color: #00FFFF; text-decoration: none; font-weight: bold; }
+        
+        /* --- FOOTER --- */
+        footer {
+            background: #0A0F38; text-align: center; padding: 50px;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
         }
 
-        .stat-item {
-            background: rgba(255,255,255,0.1);
-            padding: 1.5rem;
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .stat-item:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        .stat-item h3 {
-            font-size: 2.8rem;
-            margin-bottom: 0.5rem;
-            color: var(--glow-color);
-            animation: fadeInScale 1s ease-out;
-            font-weight: 800;
-        }
-
-        .stat-item p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--dark-blue);
-            color: var(--text-light);
-            padding: 60px 0 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1519782522777-a51704e6c38f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center; /* Abstract medical pattern */
-            background-size: cover;
-            opacity: 0.05;
-            z-index: 0;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-section h3 {
-            color: var(--glow-color);
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section ul li a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-weight: 300;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--glow-color);
-            text-decoration: underline;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #333;
-            color: #ccc;
-            position: relative;
-            z-index: 1;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            .hero p {
-                font-size: 1.2rem;
-            }
-            .features-grid, .catalog-grid {
-                grid-template-columns: 1fr;
-            }
-            .categories-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-            .section-title {
-                font-size: 2rem;
-            }
-            .place-order-content h2 {
-                font-size: 2.2rem;
-            }
-            .place-order-content p {
-                font-size: 1rem;
-            }
-            .place-order-button {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Top Class Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes heroFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.1); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-            50% { transform: scale(1.03); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
-            100% { transform: scale(1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-        }
-
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Floating Elements */
-        .floating-element {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.6;
-            font-size: 4rem;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-        }
-
-        .floating-img {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.3;
-            width: 100px;
-            height: auto;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-        }
-
-        .floating-1 { top: 15%; left: 8%; animation: float1 8s ease-in-out infinite; }
-        .floating-2 { top: 55%; right: 12%; animation: float2 10s ease-in-out infinite; }
-        .floating-3 { bottom: 25%; left: 3%; animation: float3 9s ease-in-out infinite; }
-        .floating-4 { top: 30%; right: 5%; animation: float4 7s ease-in-out infinite; }
-        .floating-5 { bottom: 10%; left: 20%; animation: float5 11s ease-in-out infinite; }
-        .floating-6 { top: 70%; left: 25%; animation: float6 9s ease-in-out infinite; width: 80px;} /* New floating image */
-        .floating-7 { bottom: 5%; right: 20%; animation: float7 12s ease-in-out infinite; width: 90px;} /* New floating image */
-
-        @keyframes float1 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-25px) rotate(180deg); } }
-        @keyframes float2 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-35px) rotate(-180deg); } }
-        @keyframes float3 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(90deg); } }
-        @keyframes float4 { 0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); } 50% { transform: translateY(-15px) rotate(45deg) translateX(10px); } }
-        @keyframes float5 { 0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); } 50% { transform: translateY(20px) rotate(-90deg) translateX(-15px); } }
-        @keyframes float6 { 0%, 100% { transform: translateY(0px) translateX(0px); } 50% { transform: translateY(-10px) translateX(10px); } }
-        @keyframes float7 { 0%, 100% { transform: translateY(0px) translateX(0px); } 50% { transform: translateY(15px) translateX(-5px); } }
-
-        .on-scroll-fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .on-scroll-fade-in.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body>
-    <div class="floating-element floating-1">💊</div>
-    <div class="floating-element floating-2">🏥</div>
-    <div class="floating-element floating-3">⚕️</div>
-    <img src="https://images.unsplash.com/photo-1588775619623-e18ac149a43a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Syringe" class="floating-img floating-4"> <img src="https://images.unsplash.com/photo-1576091160550-fd4280a55639?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pill" class="floating-img floating-5"> <img src="https://images.unsplash.com/photo-1594595208535-6430932c0211?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tablet Blister Pack" class="floating-img floating-6">
-    <img src="https://images.unsplash.com/photo-1585860710609-b6957c5f8e5c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Stethoscope" class="floating-img floating-7">
 
-
-    <header class="header">
-        <nav class="nav-container">
-            <div class="logo">Mediwell Healthcare</div>
-            <ul class="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#catalog">Catalog</a></li> <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            </nav>
+    <header>
+        <div class="logo">Mindxcope</div>
+        <nav class="nav-links">
+            <a href="#about">About</a>
+            <a href="#process">The Process</a>
+            <a href="#use-cases">Use Cases</a>
+            <a href="#technology">Technology</a>
+            <a href="#insights">Insights</a>
+        </nav>
+        <a href="#" class="cta-button">Request a Demo</a>
     </header>
 
-    <div class="ticker">
-        <div class="ticker-content">
-            🚨 NEW STOCK ALERT: COVID-19 Test Kits Available | 🔥 SPECIAL OFFER: 20% OFF on Surgical Supplies | 📢 Government Circular: New Medicine Regulations Effective Jan 2025 | ⚡ FLASH SALE: Insulin Products 15% Discount | 🆕 NEW LAUNCH: Advanced Cardiac Care Medicines Now Available
-        </div>
-    </div>
+    <main>
 
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Premium Medical Wholesale Distribution</h1>
-            <p>Trusted by 5000+ Pharmacies, Hospitals & Healthcare Businesses across Bihar</p>
-            <a href="#place-order" class="cta-button">Start Ordering Now</a>
-        </div>
-    </section>
-
-    <section class="features" id="services">
-        <div class="container">
-            <h2 class="section-title on-scroll-fade-in">Why Choose Mediwell Healthcare?</h2>
-            <div class="features-grid">
-                <div class="feature-card on-scroll-fade-in">
-                    <span class="feature-icon">🚀</span>
-                    <h3>Fast Delivery</h3>
-                    <p>Same-day delivery across Patna and 24-hour delivery across Bihar with real-time tracking</p>
+        <section id="hero" class="fullscreen-section">
+            <canvas id="hero-canvas"></canvas>
+            <div class="container">
+                <div class="hero-content">
+                    <p class="subheading">THE FUTURE OF HUMAN ANALYTICS</p>
+                    <h1>Quantify Cognition. Unleash Potential.</h1>
+                    <p>Our AI-powered Brain-Computer Interface measures mental performance in real time, providing the objective data you need to hire smarter, train better, and build resilient, high-performing teams.</p>
+                    <a href="#" class="cta-button">Schedule Your Demo</a>
                 </div>
-                <div class="feature-card on-scroll-fade-in">
-                    <span class="feature-icon">💰</span>
-                    <h3>Wholesale Pricing</h3>
-                    <p>Best bulk pricing tiers with transparent rates and volume discounts for all customer types</p>
-                </div>
-                <div class="feature-card on-scroll-fade-in">
-                    <span class="feature-icon">🏆</span>
-                    <h3>Quality Assurance</h3>
-                    <p>100% genuine medicines with batch tracking, expiry monitoring, and quality certifications</p>
-                </div>
-                <div class="feature-card on-scroll-fade-in">
-                    <span class="feature-icon">📱</span>
-                    <h3>Digital Platform</h3>
-                    <p>User-friendly mobile-responsive platform with advanced search, bulk ordering, and inventory management</p>
-                </div>
-                <div class="feature-card on-scroll-fade-in">
-                    <span class="feature-icon">🤝</span>
-                    <h3>Trusted Partner</h3>
-                    <p>15+ years of experience serving healthcare businesses with dedicated account managers</p>
-                </div>
-                <div class="feature-card on-scroll-fade-in">
-                    <span class="feature-icon">🔒</span>
-                    <h3>Secure Transactions</h3>
-                    <p>HTTPS encryption, GST billing, digital invoicing, and secure payment gateways</p>
+                <div class="hero-visual">
+                    <img src="https://via.placeholder.com/600x600/FFFFFF/010416?text=Mindxcope+BCI+Headset" alt="Mindxcope BCI Headset">
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="categories" id="products">
-        <div class="container">
-            <h2 class="section-title on-scroll-fade-in">Product Categories</h2>
-            <div class="categories-grid">
-                <div class="category-card on-scroll-fade-in">
-                    <h3>💊 Tablets & Capsules</h3>
-                    <p>Complete range of tablets and capsules from leading manufacturers</p>
-                </div>
-                <div class="category-card on-scroll-fade-in">
-                    <h3>💉 Injections & Infusions</h3>
-                    <p>Sterile injections, IV fluids, and specialized infusion products</p>
-                </div>
-                <div class="category-card on-scroll-fade-in">
-                    <h3>🍯 Syrups & Liquids</h3>
-                    <p>Oral liquids, syrups, and suspension formulations</p>
-                </div>
-                <div class="category-card on-scroll-fade-in">
-                    <h3>🏥 Surgical Supplies</h3>
-                    <p>Surgical instruments, disposables, and medical equipment</p>
-                </div>
-                <div class="category-card on-scroll-fade-in">
-                    <h3>😷 COVID Care Products</h3>
-                    <p>Masks, sanitizers, test kits, and COVID-19 medications</p>
-                </div>
-                <div class="category-card on-scroll-fade-in">
-                    <h3>🌿 Ayurvedic & Herbal</h3>
-                    <p>Traditional and modern ayurvedic formulations</p>
-                </div>
-                <div class="category-card on-scroll-fade-in">
-                    <h3>🩹 OTC & General</h3>
-                    <p>Over-the-counter medications and general healthcare products</p>
-                </div>
-                <div class="category-card on-scroll-fade-in">
-                    <h3>🔬 Diagnostics</h3>
-                    <p>Lab equipment, test kits, and diagnostic reagents</p>
-                </div>
+        <section id="about" class="fullscreen-section">
+            <div class="container">
+                <p class="subheading">OUR MISSION</p>
+                <h2>We are making the invisible, visible.</h2>
+                <p>For too long, crucial cognitive states like focus, fatigue, and learning ability have been subjective and impossible to measure at scale. Mindxcope was founded by neuroscientists and AI experts to change that. We believe that by understanding the mind, organizations can unlock unprecedented levels of human potential and well-being.</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="medicine-catalog" id="catalog">
-        <div class="container">
-            <h2 class="section-title on-scroll-fade-in">Popular Medicines & Wholesale Prices</h2>
-            <div class="catalog-grid">
-                <div class="medicine-card on-scroll-fade-in">
-                    <img src="https://images.unsplash.com/photo-1628352601720-438914620f31?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Paracetamol">
-                    <div class="medicine-info">
-                        <h3>Paracetamol 650mg</h3>
-                        <p>Fever and pain relief. Popular brand: Crocin/Dolo.</p>
-                        <div class="medicine-price">₹ 120/strip</div>
-                        <a href="#place-order" class="cta-button">Order Now</a>
+        <section id="process"></section> 
+        <section id="horizontal-scroll-section">
+            <div class="horizontal-track">
+                <div class="scroll-panel section-intro-panel">
+                     <p class="subheading">FROM BRAINWAVES TO BREAKTHROUGHS</p>
+                     <h2>A Four-Step Process</h2>
+                     <p>Scroll to explore how we translate raw neural data into actionable business intelligence.</p>
+                </div>
+                <div class="scroll-panel">
+                    <div class="panel-content">
+                        <h3>1. Data Collection</h3>
+                        <p>Our lightweight, comfortable BCI headset uses a combination of EEG and fNIRS sensors to non-invasively capture thousands of neural data points per second during work-simulated tasks or cognitive games.</p>
+                    </div>
+                    <div class="panel-visual">
+                         <img src="https://via.placeholder.com/600x400/FFFFFF/010416?text=Data+Capture" alt="Person wearing BCI headset">
                     </div>
                 </div>
-                <div class="medicine-card on-scroll-fade-in">
-                    <img src="https://images.unsplash.com/photo-1594595208535-6430932c0211?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Amoxicillin">
-                    <div class="medicine-info">
-                        <h3>Amoxicillin 500mg</h3>
-                        <p>Broad-spectrum antibiotic. Popular brand: Mox/Amoxil.</p>
-                        <div class="medicine-price">₹ 250/strip</div>
-                        <a href="#place-order" class="cta-button">Order Now</a>
+                 <div class="scroll-panel">
+                    <div class="panel-content">
+                        <h3>2. AI Analysis</h3>
+                        <p>Proprietary machine learning models, trained on millions of hours of cognitive data, process and clean the raw signals. The AI identifies and tags patterns correlated with specific cognitive states like deep focus, creative problem-solving, and mental fatigue.</p>
+                    </div>
+                    <div class="panel-visual">
+                         <img src="https://via.placeholder.com/600x400/00FFFF/010416?text=AI+Neural+Network" alt="AI analyzing data streams">
                     </div>
                 </div>
-                <div class="medicine-card on-scroll-fade-in">
-                    <img src="https://images.unsplash.com/photo-1584813539134-ce1517a264a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Omeprazole">
-                    <div class="medicine-info">
-                        <h3>Omeprazole 20mg</h3>
-                        <p>Reduces stomach acid. Popular brand: Omez/Aciloc.</p>
-                        <div class="medicine-price">₹ 90/strip</div>
-                        <a href="#place-order" class="cta-button">Order Now</a>
+                 <div class="scroll-panel">
+                    <div class="panel-content">
+                        <h3>3. Insight Generation</h3>
+                        <p>The analyzed data is synthesized into clear, intuitive scores and visualizations on the Mindxcope Dashboard. Track cognitive performance over time, compare team metrics, and identify individuals with unique cognitive strengths.</p>
                     </div>
-                </div>
-                <div class="medicine-card on-scroll-fade-in">
-                    <img src="https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Metformin">
-                    <div class="medicine-info">
-                        <h3>Metformin 500mg</h3>
-                        <p>Manages blood sugar levels. Popular brand: Glycomet.</p>
-                        <div class="medicine-price">₹ 180/strip</div>
-                        <a href="#place-order" class="cta-button">Order Now</a>
-                    </div>
-                </div>
-                <div class="medicine-card on-scroll-fade-in">
-                    <img src="https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Levocetirizine">
-                    <div class="medicine-info">
-                        <h3>Levocetirizine 5mg</h3>
-                        <p>Antihistamine for allergies. Popular brand: Levocet.</p>
-                        <div class="medicine-price">₹ 60/strip</div>
-                        <a href="#place-order" class="cta-button">Order Now</a>
-                    </div>
-                </div>
-                <div class="medicine-card on-scroll-fade-in">
-                    <img src="https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Vitamin C">
-                    <div class="medicine-info">
-                        <h3>Vitamin C Tablets</h3>
-                        <p>Immune booster. Popular brand: Limcee.</p>
-                        <div class="medicine-price">₹ 75/strip</div>
-                        <a href="#place-order" class="cta-button">Order Now</a>
+                    <div class="panel-visual">
+                         <img src="https://via.placeholder.com/600x400/8A2BE2/010416?text=Analytics+Dashboard" alt="Mindxcope Analytics Dashboard">
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="place-order-section" id="place-order">
-        <div class="place-order-content">
-            <h2>Ready to Place Your Order?</h2>
-            <p>Experience seamless ordering with Mediwell Healthcare's intuitive platform. Get started today!</p>
-            <a href="#" class="place-order-button">Quick Order Now</a>
-        </div>
-    </section>
-
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item on-scroll-fade-in">
-                    <h3>5000+</h3>
-                    <p>Active Customers</p>
+        <section id="use-cases" class="fullscreen-section">
+            <div class="container">
+                <div style="text-align: center; max-width: 900px; margin: 0 auto 80px auto;">
+                    <p class="subheading">INDUSTRY APPLICATIONS</p>
+                    <h2>Actionable Intelligence for Every Sector</h2>
                 </div>
-                <div class="stat-item on-scroll-fade-in">
-                    <h3>10,000+</h3>
-                    <p>Product SKUs</p>
-                </div>
-                <div class="stat-item on-scroll-fade-in">
-                    <h3>99.5%</h3>
-                    <p>Order Accuracy</p>
-                </div>
-                <div class="stat-item on-scroll-fade-in">
-                    <h3>24/7</h3>
-                    <p>Customer Support</p>
+                <div class="use-cases-grid">
+                    <div class="case-card">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <h3>Smarter Hiring</h3>
+                        <p>Identify top candidates for high-pressure roles by objectively measuring their cognitive resilience, problem-solving skills, and ability to maintain focus under stress.</p>
+                    </div>
+                    <div class="case-card">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.135A1.76 1.76 0 017.166 9.76l6.135 2.147a1.76 1.76 0 01.592 3.417z"></path></svg>
+                        <h3>Optimized Training</h3>
+                        <p>Measure the cognitive load and engagement levels during corporate training to tailor programs, prevent overload, and maximize knowledge retention.</p>
+                    </div>
+                    <div class="case-card">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <h3>Workplace Wellness</h3>
+                        <p>Proactively monitor team-wide cognitive fatigue and burnout trends. Implement data-driven wellness initiatives to create a healthier, more productive work environment.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Mediwell Healthcare</h3>
-                    <p>Your trusted partner for wholesale medical distribution in Bihar. Quality assured, fast delivery, competitive pricing.</p>
-                    <p><strong>📍 Address:</strong> Medical Complex, Patna, Bihar</p>
-                    <p><strong>📞 Phone:</strong> +91-9876543210</p>
-                    <p><strong>✉️ Email:</strong> info@mediwellhealthcare.com</p>
+         <section id="technology" class="fullscreen-section">
+            <div class="container">
+                 <div style="text-align: center; max-width: 900px; margin: 0 auto 80px auto;">
+                    <p class="subheading">OUR PLATFORM</p>
+                    <h2>Seamless Hardware, Powerful Software</h2>
                 </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#">Product Catalog</a></li>
-                        <li><a href="#">Bulk Order</a></li>
-                        <li><a href="#">Track Order</a></li>
-                        <li><a href="#">Customer Support</a></li>
-                        <li><a href="#">Download App</a></li>
-                    </ul>
+                <div class="tech-split">
+                    <div class="tech-content">
+                        <h3>The Mindxcope Headset</h3>
+                        <p>Ergonomically designed for long-term comfort, our headset combines dry-contact EEG sensors and state-of-the-art fNIRS emitters in a lightweight, wireless package. It provides research-grade data with a setup time of under two minutes.</p>
+                    </div>
+                    <div class="tech-visual">
+                        <img src="https://via.placeholder.com/600x450/FFFFFF/010416?text=Sleek+Headset+Profile" alt="Mindxcope Headset">
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h3>Customer Types</h3>
-                    <ul>
-                        <li><a href="#">Retail Pharmacies</a></li>
-                        <li><a href="#">Hospitals</a></li>
-                        <li><a href="#">Clinics</a></li>
-                        <li><a href="#">Nursing Homes</a></li>
-                        <li><a href="#">Medical Stores</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Order Support</a></li>
-                        <li><a href="#">Technical Support</a></li>
-                        <li><a href="#">Returns & Refunds</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                    </ul>
+                 <div class="tech-split reverse">
+                    <div class="tech-content">
+                        <h3>The Analytics Dashboard</h3>
+                        <p>Our secure, cloud-based platform transforms billions of data points into actionable insights. Featuring intuitive heatmaps, trend analysis, and customizable reports, the dashboard is your command center for cognitive performance management.</p>
+                    </div>
+                    <div class="tech-visual">
+                        <img src="https://via.placeholder.com/600x450/00FFFF/010416?text=Dashboard+UI" alt="Analytics Dashboard">
+                    </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Mediwell Healthcare. All rights reserved. | Licensed Medical Distributor | GST: 10XXXXX1234X1ZX</p>
-            </div>
-        </div>
+        </section>
+
+        <section id="insights" class="fullscreen-section">
+             <div class="container">
+                 <div style="text-align: center; max-width: 900px; margin: 0 auto 80px auto;">
+                    <p class="subheading">THOUGHT LEADERSHIP</p>
+                    <h2>From the Forefront of Neuroscience</h2>
+                </div>
+                <div class="insights-grid">
+                    <article class="insight-card">
+                        <div class="insight-image"></div>
+                        <div class="insight-content">
+                            <h3>The Neuroscience of the 'Flow State'</h3>
+                            <a href="#">Read More &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="insight-card">
+                        <div class="insight-image"></div>
+                        <div class="insight-content">
+                            <h3>AI in HR: Moving Beyond the Resume</h3>
+                             <a href="#">Read More &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="insight-card">
+                        <div class="insight-image"></div>
+                        <div class="insight-content">
+                            <h3>Preventing Burnout: A Data-Driven Approach</h3>
+                             <a href="#">Read More &rarr;</a>
+                        </div>
+                    </article>
+                </div>
+             </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Mindxcope. All Rights Reserved.</p>
     </footer>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.addEventListener('DOMContentLoaded', function() {
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- SMOOTH SCROLLING FOR NAV LINKS ---
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                const targetId = this.getAttribute('href');
+                gsap.to(window, {duration: 1.5, scrollTo: { y: targetId, offsetY: 70 }, ease: "power3.inOut"});
             });
         });
 
-        // Scroll animations (using Intersection Observer for 'on-scroll-fade-in')
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                } else {
-                    entry.target.classList.remove('is-visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.on-scroll-fade-in').forEach(el => {
-            observer.observe(el);
+        // --- HERO ANIMATION ---
+        const heroContent = ".hero-content > *";
+        gsap.from(heroContent, {
+            opacity: 0, y: 50, duration: 1, ease: "power3.out", stagger: 0.2, delay: 0.5
         });
-
-        // Counter animation for stats
-        const animateCounters = () => {
-            document.querySelectorAll('.stat-item h3').forEach(counter => {
-                // Check if counter has already been animated to prevent re-animation on scroll-out/in
-                if (counter.dataset.animated) return;
-
-                const target = parseInt(counter.textContent.replace(/[^0-9.]/g, ''));
-                const suffix = counter.textContent.replace(/[0-9.]/g, '');
-                let current = 0;
-                const duration = 1500; // milliseconds
-                let startTime = null;
-
-                const animate = (timestamp) => {
-                    if (!startTime) startTime = timestamp;
-                    const progress = (timestamp - startTime) / duration;
-                    const easeOutQuad = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress; // Easing function
-
-                    current = Math.min(target, easeOutQuad * target);
-                    counter.textContent = Math.floor(current) + suffix;
-
-                    if (current < target) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        counter.dataset.animated = true; // Mark as animated
-                    }
-                };
-                requestAnimationFrame(animate);
-            });
-        };
-
-        // Trigger counter animation when stats section is visible
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounters();
-                    // No unobserve, allowing re-animation if user scrolls away and back
-                }
-            });
-        }, { threshold: 0.5 });
-        const statsSection = document.querySelector('.stats');
-        if (statsSection) {
-            statsObserver.observe(statsSection);
+        gsap.from(".hero-visual img", {
+            opacity: 0, scale: 0.8, duration: 1.5, ease: "power3.out", delay: 0.8
+        });
+        
+        // Hero Canvas Background (Simplified version)
+        const canvas = document.getElementById('hero-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+            window.onresize = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; };
+            // A simple animated background could go here if desired
         }
 
-        // Category card interactions
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const category = card.querySelector('h3').textContent;
-                alert(`Opening ${category} category...\n\nThis would typically navigate to the product catalog filtered by this category.`);
+        // --- GENERIC SECTION ENTRANCE ANIMATION ---
+        gsap.utils.toArray('.fullscreen-section:not(#hero)').forEach(section => {
+            gsap.from(section.querySelectorAll("*"), {
+                opacity: 0,
+                y: 40,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 70%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+        
+        // --- HORIZONTAL SCROLLING ---
+        const track = document.querySelector('.horizontal-track');
+        const panels = gsap.utils.toArray('.scroll-panel');
+        
+        // Calculate the total width of the track
+        let trackWidth = -100 * (panels.length - 1);
+
+        gsap.to(track, {
+            xPercent: trackWidth,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#horizontal-scroll-section",
+                start: "top top",
+                end: () => "+=" + (track.offsetWidth - window.innerWidth),
+                pin: true,
+                scrub: 1,
+                snap: {
+                    snapTo: 1 / (panels.length - 1),
+                    duration: { min: 0.2, max: 0.5 },
+                    ease: "power1.inOut"
+                }
+            }
+        });
+        
+        // Animate elements inside each panel as they come into view
+        panels.forEach((panel, i) => {
+            gsap.from(panel.querySelectorAll("*"), {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: panel,
+                    containerAnimation: gsap.to(track, {xPercent: trackWidth, ease:"none"}),
+                    start: "left 70%",
+                    toggleActions: "play none none reverse",
+                }
             });
         });
 
-        // Medicine card order buttons
-        document.querySelectorAll('.medicine-card .cta-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent default link behavior
-                const medicineName = button.closest('.medicine-card').querySelector('h3').textContent;
-                alert(`You clicked to order: ${medicineName}\n\nThis would typically add the item to your cart or lead to a detailed product page.`);
+        // --- USE CASES 3D TILT EFFECT ---
+        const cards = document.querySelectorAll(".case-card");
+        cards.forEach(card => {
+            card.addEventListener("mousemove", (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const { width, height } = rect;
+                const rotateX = gsap.utils.mapRange(0, height, -10, 10, y);
+                const rotateY = gsap.utils.mapRange(0, width, 10, -10, x);
+
+                gsap.to(card, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    transformPerspective: 1000,
+                    ease: "power1.out",
+                    duration: 0.5
+                });
+            });
+
+            card.addEventListener("mouseleave", () => {
+                gsap.to(card, {
+                    rotationX: 0,
+                    rotationY: 0,
+                    ease: "power3.out",
+                    duration: 1
+                });
             });
         });
 
-
-        // Mobile menu toggle (updated logic)
-        const createMobileMenu = () => {
-            const navContainer = document.querySelector('.nav-container');
-            let menuButton = document.querySelector('.mobile-menu-button');
-            const navMenu = document.querySelector('.nav-menu');
-
-            if (window.innerWidth <= 768) {
-                if (!menuButton) {
-                    menuButton = document.createElement('button');
-                    menuButton.innerHTML = '☰';
-                    menuButton.className = 'mobile-menu-button';
-                    menuButton.style.cssText = `
-                        background: none;
-                        border: none;
-                        color: white;
-                        font-size: 1.8rem;
-                        cursor: pointer;
-                        z-index: 1001;
-                    `;
-                    navContainer.appendChild(menuButton);
-
-                    menuButton.addEventListener('click', () => {
-                        navMenu.classList.toggle('active');
-                    });
-                }
-                navMenu.style.cssText = `
-                    display: none; /* Hidden by default on mobile */
-                    flex-direction: column;
-                    position: absolute;
-                    top: 60px;
-                    left: 0;
-                    width: 100%;
-                    background: var(--dark-blue);
-                    padding: 1rem 0;
-                    box-shadow: 0 5px 15px var(--shadow-medium);
-                    text-align: center;
-                `;
-                 // Ensure nav menu is hidden initially
-                if (!navMenu.classList.contains('active')) {
-                    navMenu.style.display = 'none';
-                }
-
-            } else {
-                if (menuButton) {
-                    menuButton.remove();
-                }
-                navMenu.classList.remove('active'); // Remove active class if screen grows
-                navMenu.style.cssText = `
-                    display: flex; /* Always flex on desktop */
-                    flex-direction: row;
-                    position: static;
-                    background: none;
-                    padding: 0;
-                    box-shadow: none;
-                `;
-            }
-        };
-
-        // Add class for active mobile menu
-        const styleSheet = document.styleSheets[0];
-        styleSheet.insertRule(`
-            .nav-menu.active {
-                display: flex !important;
-            }
-        `, styleSheet.cssRules.length);
-
-
-        window.addEventListener('resize', createMobileMenu);
-        createMobileMenu(); // Call on initial load
-
-        // Add loading animation (modified for smoother fade-in)
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.8s ease-in-out';
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
+    });
     </script>
 </body>
 </html>
