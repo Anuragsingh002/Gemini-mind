@@ -124,35 +124,37 @@
             gap: 30px;
             position: relative;
             z-index: 10;
-            perspective: 1000px; /* Added for 3D effect */
+            perspective: 1500px; /* Added for 3D effect */
         }
         .tech-card {
             background: rgba(10, 15, 56, 0.5);
             border: 1px solid rgba(0, 255, 255, 0.2);
             padding: 30px;
             border-radius: 15px;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        background 0.3s ease,
-                        box-shadow 0.4s ease; /* Enhanced transition */
+            transition: background 0.3s ease, box-shadow 0.4s ease;
             position: relative;
             overflow: hidden;
             z-index: 10;
             will-change: transform; /* Performance optimization */
+            transform-style: preserve-3d; /* Needed for child elements in 3D space */
         }
         .tech-card:hover {
-            transform: translateY(-10px) rotateX(5deg) scale(1.05); /* 3D tilt on hover */
             background: rgba(10, 15, 56, 1);
-            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.15); /* Enhanced shadow */
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.15);
         }
         .tech-card .icon {
             width: 50px;
             height: 50px;
             margin-bottom: 20px;
             stroke: #00FFFF;
-            transition: transform 0.3s ease; /* Icon animation */
+            transition: transform 0.3s ease;
+            transform: translateZ(20px); /* Lift icon slightly in 3D space */
         }
         .tech-card:hover .icon {
-            transform: scale(1.1) rotate(-5deg);
+            transform: translateZ(40px) scale(1.1) rotate(-5deg);
+        }
+        .tech-card h3, .tech-card p {
+             transform: translateZ(10px); /* Lift text slightly */
         }
         .tech-card p { font-size: 1rem; }
 
@@ -165,7 +167,7 @@
             opacity: 0;
             transition: background 0.3s ease;
             padding: 20px;
-            border-radius: 15px; /* Added for hover effect */
+            border-radius: 15px;
         }
         .process-step:hover {
              background: rgba(10, 15, 56, 0.3);
@@ -196,39 +198,36 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 2rem;
-            perspective: 1000px; /* Added for 3D effect */
+            perspective: 1500px; /* Added for 3D effect */
         }
-
        #solutions .solution-card {
             background-color: #0A0F38;
             padding: 30px;
             border-radius: 10px;
             border-left: 4px solid #00FFFF;
             box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        box-shadow 0.4s ease; /* Smoother transition */
+            transition: box-shadow 0.4s ease;
             opacity: 1;
-            will-change: transform; /* Performance optimization */
+            will-change: transform;
+            transform-style: preserve-3d;
         }
-
        #solutions .solution-card:hover {
-            transform: translateY(-10px) scale(1.03); /* More impactful hover */
             box-shadow: 0 12px 24px rgba(0, 255, 255, 0.2);
         }
-
        #solutions .solution-card h3 {
             color: #FCFCFF;
             margin-bottom: 1rem;
             transition: color 0.3s ease;
+            transform: translateZ(20px);
         }
        #solutions .solution-card:hover h3 {
-           color: #00FFFF; /* Highlight title on hover */
+           color: #00FFFF;
        }
-
        #solutions .solution-card p {
             color: #FCFCFF;
             line-height: 1.6;
             font-size: 1rem;
+            transform: translateZ(10px);
         }
 
         /* Platform Preview Section */
@@ -260,19 +259,11 @@
         /* --- FLOATING IMAGES --- */
         .floating-image {
             position: absolute;
-            opacity: 0; /* Start with 0 opacity */
-            z-index: 2; /* Between canvas and content */
-            pointer-events: none; /* Prevent interaction */
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
             filter: brightness(0.7) contrast(1.2);
-            animation: floatUpDown 4s ease-in-out infinite;
         }
-
-        @keyframes floatUpDown {
-          0%   { transform: translateY(0); }
-          50%  { transform: translateY(-40px); }
-          100% { transform: translateY(0); }
-        }
-
     </style>
 </head>
 <body>
@@ -291,10 +282,10 @@
         <section id="hero">
             <canvas id="hero-canvas"></canvas>
             <div class="container">
-                <img src="https://shorturl.at/InIDM" alt="Abstract Brain Scan" class="floating-image" style="top: 10%; left: 15%; width: 150px;">
-                <img src="https://shorturl.at/OkTID" alt="Abstract BCI Interface" class="floating-image" style="top: 30%; right: 10%; width: 120px;">
-                <img src="https://shorturl.at/iUUQn" alt="Abstract Neural Network" class="floating-image" style="bottom: 15%; left: 25%; width: 180px;">
-                <img src="https://shorturl.at/KjxcE" alt="Mindxcope Abstract Logo" class="floating-image" style="top: 15%; right: 20%; width: 100px;">
+                <img src="https://i.ibb.co/9gX4s3s/brain-scan.png" alt="Abstract Brain Scan" class="floating-image" style="top: 10%; left: 15%; width: 150px;">
+                <img src="https://i.ibb.co/hZ5yF0b/bci-interface.png" alt="Abstract BCI Interface" class="floating-image" style="top: 30%; right: 10%; width: 120px;">
+                <img src="https://i.ibb.co/Cbfb7b3/neural-network.png" alt="Abstract Neural Network" class="floating-image" style="bottom: 15%; left: 25%; width: 180px;">
+                <img src="https://i.ibb.co/zV9j4fQ/abstract-logo.png" alt="Mindxcope Abstract Logo" class="floating-image" style="top: 15%; right: 20%; width: 100px;">
 
                 <div class="hero-content">
                     <h1>Unlock Human Potential with <span class="highlight">Neuro-AI</span></h1>
@@ -306,32 +297,31 @@
 
         <section id="tech">
             <div class="container">
-                 <img src="https://shorturl.at/LswRb" alt="Abstract EEG Waves" class="floating-image" style="top: 10%; right: 5%; width: 160px;">
-                 <img src="https://shorturl.at/JNOU4" alt="Abstract fNIRS Data" class="floating-image" style="bottom: 10%; left: 5%; width: 140px;">
+                 <img src="https://i.ibb.co/yQ8dJ2C/eeg-waves.png" alt="Abstract EEG Waves" class="floating-image" style="top: 10%; right: 5%; width: 160px;">
+                 <img src="https://i.ibb.co/L8yV4v8/fnirs-data.png" alt="Abstract fNIRS Data" class="floating-image" style="bottom: 10%; left: 5%; width: 140px;">
 
                 <h2 class="section-title">A Multi-Layered Approach to Cognition</h2>
                 <div class="tech-grid">
-                    <div class="tech-card">
+                    <div class="tech-card tilt-card">
                         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         <h3>EEG Analysis</h3>
-                        <p>High-resolution EEG captures brainwave patterns that reveal attention span, cognitive workload, and mental fatigue — in real time and at millisecond precision. This allows recruiters to assess how candidates think, not just what they say.</p>
+                        <p>High-resolution EEG captures brainwave patterns that reveal attention span, cognitive workload, and mental fatigue.</p>
                     </div>
-                    <div class="tech-card">
+                    <div class="tech-card tilt-card">
                         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M12 15a2.5 2.5 0 01-5 0V7.5a2.5 2.5 0 015 0V15zM12 15a2.5 2.5 0 005 0V7.5a2.5 2.5 0 00-5 0V15z"></path></svg>
                         <h3>fNIRS Imaging</h3>
-                        <p>fNIRS tracks blood oxygenation in the prefrontal cortex to decode problem-solving depth, decision stress response, and working memory. It gives a metabolic snapshot of brain effort — crucial for roles requiring leadership and judgment.</p>
+                        <p>fNIRS tracks blood oxygenation in the prefrontal cortex to decode problem-solving depth and decision stress response.</p>
                     </div>
-                    <div class="tech-card">
+                    <div class="tech-card tilt-card">
                         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
                         <h3>Keystroke Dynamics</h3>
-                        <p>By analyzing typing speed, rhythm, and correction patterns, we identify cognitive fluency, mental fatigue, and adaptability. It’s a passive, privacy-safe layer that reveals how your brain performs under real-world pressure.</p>
+                        <p>By analyzing typing rhythm and patterns, we identify cognitive fluency, mental fatigue, and adaptability under pressure.</p>
                     </div>
-                    <div class="tech-card">
+                    <div class="tech-card tilt-card">
                         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                         <h3>Cognitive Games</h3>
-                        <p>Gamified neuro-assessments benchmark attention, memory, and decision-making speed in a controlled environment. These results are used to create a cognitive scorecard that’s reliable, unbiased, and scientifically grounded.</p>
+                        <p>Gamified neuro-assessments benchmark attention, memory, and decision-making speed in a controlled environment.</p>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -344,52 +334,46 @@
                         <div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-12v4m-2-2h4m5 6v4m-2-2h4M17 3l-4.5 4.5M12 12l4.5 4.5M7 21l4.5-4.5M12 12l-4.5-4.5"></path></svg></div>
                         <div class="step-content">
                             <h3>1.  Multimodal Cognitive Signal Capture</h3>
-                            <p>Mindxcope's lightweight, non-invasive BCI headset seamlessly collects EEG signals, typing patterns, Browse behavior, and physiological data during real-world tasks or cognitive games building a complete picture of brain and behavioral activity.</p>
+                            <p>Mindxcope's lightweight, non-invasive BCI headset seamlessly collects EEG signals, typing patterns, and physiological data during real-world tasks or cognitive games.</p>
                         </div>
                     </div>
                     <div class="process-step">
                         <div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3"></path></svg></div>
                         <div class="step-content">
                             <h3>2. AI-Driven Cognitive Intelligence</h3>
-                            <p>Our machine learning models decode billions of neural and behavioral data points into actionable insights — identifying core traits like focus, creativity, emotional resilience, IQ, and stress response in real time.</p>
+                            <p>Our machine learning models decode billions of data points into actionable insights — identifying traits like focus, creativity, resilience, and stress response.</p>
                         </div>
                     </div>
                     <div class="process-step">
                         <div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div>
                         <div class="step-content">
                             <h3>3. Predictive Hiring Dashboard</h3>
-                            <p>Mindxcope’s interactive dashboard enables recruiters to compare candidates beyond resumes — using science-backed, bias-free cognitive metrics to make smarter hiring decisions.</p>
-                        </div>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div>
-                        <div class="step-content">
-                            <h3>4. Real-Time Mental Fatigue Monitoring</h3>
-                            <p>We continuously track cognitive load and fatigue signals — allowing employers to detect burnout risk, monitor attention span, and ensure peak performance zones in both hiring and workforce development.</p>
+                            <p>Mindxcope’s interactive dashboard enables recruiters to compare candidates beyond resumes, using science-backed, bias-free cognitive metrics.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-<section id="solutions">
-  <div class="container">
-    <h2 class="section-title">Transform Your Organization</h2>
-    <div class="solutions-grid">
-      <div class="solution-card">
-        <h3>Hire Smarter</h3>
-        <p>Move beyond resumes. Objectively identify candidates with the cognitive resilience, focus, and adaptability needed to thrive.</p>
-      </div>
-      <div class="solution-card">
-        <h3>Train Better</h3>
-        <p>Measure the cognitive impact of your training programs. Understand when employees are disengaged, and optimize training timing.</p>
-      </div>
-      <div class="solution-card">
-        <h3>Boost Performance</h3>
-        <p>Proactively manage workplace cognitive wellness. Identify early signs of burnout and intervene with targeted support.</p>
-      </div>
-    </div>
-  </div>
-</section>
+
+        <section id="solutions">
+          <div class="container">
+            <h2 class="section-title">Transform Your Organization</h2>
+            <div class="solutions-grid">
+              <div class="solution-card tilt-card">
+                <h3>Hire Smarter</h3>
+                <p>Move beyond resumes. Objectively identify candidates with the cognitive resilience, focus, and adaptability needed to thrive.</p>
+              </div>
+              <div class="solution-card tilt-card">
+                <h3>Train Better</h3>
+                <p>Measure the cognitive impact of your training programs. Understand when employees are disengaged, and optimize training timing.</p>
+              </div>
+              <div class="solution-card tilt-card">
+                <h3>Boost Performance</h3>
+                <p>Proactively manage workplace cognitive wellness. Identify early signs of burnout and intervene with targeted support.</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
 
         <section id="platform">
@@ -416,8 +400,8 @@
     </footer>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
@@ -426,280 +410,109 @@
         gsap.registerPlugin(ScrollTrigger);
 
         // --- HERO 3D-ish Interactive Canvas Animation ---
+        // This part remains the same
         const canvas = document.getElementById('hero-canvas');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
         let particles = [];
         const mouse = { x: width / 2, y: height / 2 };
-
         class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.size = Math.random() * 1.5 + 1;
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 30) + 1;
-                this.color = 'rgba(0, 255, 255, 0.5)';
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
-            }
-            update() {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                let forceDirectionX = dx / distance;
-                let forceDirectionY = dy / distance;
-                let maxDistance = 100;
-                let force = (maxDistance - distance) / maxDistance;
-                if (force < 0) force = 0;
-
-                this.x += (forceDirectionX * force * this.density) + (this.baseX - this.x) * 0.05;
-                this.y += (forceDirectionY * force * this.density) + (this.baseY - this.y) * 0.05;
-            }
+            constructor(x, y) { this.x = x; this.y = y; this.size = Math.random() * 1.5 + 1; this.baseX = this.x; this.baseY = this.y; this.density = (Math.random() * 30) + 1; this.color = 'rgba(0, 255, 255, 0.5)'; }
+            draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.closePath(); ctx.fill(); }
+            update() { let dx = mouse.x - this.x; let dy = mouse.y - this.y; let distance = Math.sqrt(dx * dx + dy * dy); let forceDirectionX = dx / distance; let forceDirectionY = dy / distance; let maxDistance = 100; let force = (maxDistance - distance) / maxDistance; if (force < 0) force = 0; this.x += (forceDirectionX * force * this.density) + (this.baseX - this.x) * 0.05; this.y += (forceDirectionY * force * this.density) + (this.baseY - this.y) * 0.05; }
         }
-
-        function initParticles() {
-            particles = [];
-            const particlesCount = (width > 768) ? 150 : 50;
-            for (let i = 0; i < particlesCount; i++) {
-                particles.push(new Particle(Math.random() * width, Math.random() * height));
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, width, height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-            }
-            connectParticles();
-            requestAnimationFrame(animateParticles);
-        }
-
-        function connectParticles() {
-            let opacityValue = 1;
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) +
-                                     ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
-                    if (distance < (width/7) * (height/7)) {
-                        opacityValue = 1 - (distance/20000);
-                        ctx.strokeStyle = `rgba(0, 255, 255, ${opacityValue})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
-        });
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            initParticles();
-        });
+        function initParticles() { particles = []; const particlesCount = (width > 768) ? 150 : 50; for (let i = 0; i < particlesCount; i++) { particles.push(new Particle(Math.random() * width, Math.random() * height)); } }
+        function animateParticles() { ctx.clearRect(0, 0, width, height); for (let i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); } connectParticles(); requestAnimationFrame(animateParticles); }
+        function connectParticles() { let opacityValue = 1; for (let a = 0; a < particles.length; a++) { for (let b = a; b < particles.length; b++) { let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y)); if (distance < (width/7) * (height/7)) { opacityValue = 1 - (distance/20000); ctx.strokeStyle = `rgba(0, 255, 255, ${opacityValue})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(particles[a].x, particles[a].y); ctx.lineTo(particles[b].x, particles[b].y); ctx.stroke(); } } } }
+        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; initParticles(); });
         initParticles();
         animateParticles();
 
         // --- GSAP Animations ---
+        gsap.from("header", { y: '-100%', duration: 1.5, ease: "power4.out", delay: 0.5 });
+        gsap.from(".hero-content > *", { opacity: 0, y: 50, duration: 1.5, ease: "power4.out", stagger: 0.2, delay: 1 });
 
-        // Header entrance
-        gsap.from("header", {
-            y: '-100%',
-            duration: 1.5,
-            ease: "power4.out",
-            delay: 0.5
-        });
-
-        // Hero content entrance
-        gsap.from(".hero-content > *", {
-            opacity: 0,
-            y: 50,
-            duration: 1.5,
-            ease: "power4.out",
-            stagger: 0.2,
-            delay: 1
-        });
-
-        // --- FLOATING IMAGE ANIMATION ---
+        // Floating Image Animation
         gsap.utils.toArray('.floating-image').forEach(img => {
             const xOffset = gsap.utils.random(-40, 40);
             const yOffset = gsap.utils.random(-40, 40);
             const rotate = gsap.utils.random(-10, 10);
             const duration = gsap.utils.random(5, 8);
             const delay = gsap.utils.random(0, 2);
-
-            // Infinite floating animation
-            gsap.to(img, {
-                x: `+=${xOffset}`,
-                y: `+=${yOffset}`,
-                rotation: rotate,
-                duration: duration,
-                yoyo: true,
-                repeat: -1,
-                ease: "sine.inOut",
-                delay: delay
-            });
-
-            // Fade in with ScrollTrigger
-            gsap.fromTo(img, { opacity: 0, scale: 0.8 }, {
-                opacity: 0.6,
-                scale: 1,
-                duration: 1.5,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: img.closest('section'), // Trigger when the parent section comes into view
-                    start: "top 80%",
-                    toggleActions: "play none none none"
-                }
-            });
+            gsap.to(img, { x: `+=${xOffset}`, y: `+=${yOffset}`, rotation: rotate, duration: duration, yoyo: true, repeat: -1, ease: "sine.inOut", delay: delay });
+            gsap.fromTo(img, { opacity: 0, scale: 0.8 }, { opacity: 0.6, scale: 1, duration: 1.5, ease: "power3.out", scrollTrigger: { trigger: img.closest('section'), start: "top 80%", toggleActions: "play none none none" } });
         });
 
         // General purpose fade-in for section titles
-        gsap.utils.toArray('.section-title').forEach(title => {
-            gsap.from(title, {
-                opacity: 0,
-                y: 50,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: title,
-                    start: "top 85%",
-                    toggleActions: "play none none none"
-                }
+        gsap.utils.toArray('.section-title').forEach(title => { gsap.from(title, { opacity: 0, y: 50, duration: 1, scrollTrigger: { trigger: title, start: "top 85%", toggleActions: "play none none none" } }); });
+
+        // Staggered card entrance animations
+        const cardSections = ['.tech-grid', '.solutions-grid'];
+        cardSections.forEach(sec => {
+            gsap.from(`${sec} > .tilt-card`, {
+                scrollTrigger: { trigger: sec, start: "top 80%" },
+                opacity: 0, y: 60, scale: 0.95, duration: 1, stagger: 0.15, ease: "power3.out"
             });
         });
 
-        // Tech cards animation - NEW 3D Effect
-        gsap.from(".tech-card", {
-            scrollTrigger: {
-                trigger: ".tech-grid",
-                start: "top 80%",
-            },
-            opacity: 0,
-            y: 60,
-            rotationX: -20, // 3D rotation
-            transformOrigin: "bottom center",
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out"
+        // ===============================================
+        // == NEW: 3D PARALLAX TILT ON HOVER FOR CARDS ==
+        // ===============================================
+        const tiltCards = document.querySelectorAll(".tilt-card");
+
+        tiltCards.forEach(card => {
+            const tiltStrength = 15; // How much the card tilts. Higher is more.
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const cardWidth = rect.width;
+                const cardHeight = rect.height;
+                const centerX = rect.left + cardWidth / 2;
+                const centerY = rect.top + cardHeight / 2;
+                const mouseX = e.clientX - centerX;
+                const mouseY = e.clientY - centerY;
+
+                const rotateY = (mouseX / (cardWidth / 2)) * tiltStrength;
+                const rotateX = -(mouseY / (cardHeight / 2)) * tiltStrength;
+
+                gsap.to(card, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    transformPerspective: 1000,
+                    scale: 1.05,
+                    ease: "power2.out",
+                    duration: 0.8
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotationX: 0,
+                    rotationY: 0,
+                    scale: 1,
+                    ease: "power2.out",
+                    duration: 1
+                });
+            });
         });
+
 
         // How it works timeline animation
-        gsap.utils.toArray('.process-step').forEach(step => {
-            gsap.fromTo(step,
-                { opacity: 0, x: step.classList.contains('even') ? 100 : -100 },
-                {
-                    opacity: 1,
-                    x: 0,
-                    duration: 1,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: step,
-                        start: "top 80%",
-                        toggleActions: "play none none reverse"
-                    }
-                }
-            );
-        });
-
-        // Solutions cards animation - NEW Staggered Effect
-        gsap.from(".solution-card", {
-            scrollTrigger: {
-                trigger: ".solutions-grid",
-                start: "top 80%",
-            },
-            opacity: 0,
-            y: 60,
-            scale: 0.95, // Start slightly smaller
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out"
-        });
+        gsap.utils.toArray('.process-step').forEach(step => { gsap.fromTo(step, { opacity: 0, x: step.classList.contains('even') ? 100 : -100 }, { opacity: 1, x: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: step, start: "top 80%", toggleActions: "play none none reverse" } }); });
 
         // Platform Preview Chart Animation
+        // This part remains the same
         const chartSection = document.getElementById('platform');
         const chartCtx = document.getElementById('performanceChart').getContext('2d');
         let performanceChart;
-
-        const chartData = {
-            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
-            datasets: [{
-                label: 'Team Focus Score',
-                data: [65, 68, 72, 70, 78, 82, 85, 88],
-                borderColor: '#00FFFF',
-                backgroundColor: 'rgba(0, 255, 255, 0.1)',
-                fill: true,
-                tension: 0.4
-            }, {
-                label: 'Team Fatigue Level',
-                data: [45, 42, 40, 43, 35, 30, 28, 25],
-                borderColor: '#8A2BE2',
-                backgroundColor: 'rgba(138, 43, 226, 0.1)',
-                fill: true,
-                tension: 0.4
-            }]
-        };
-
-        const chartOptions = {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: { labels: { color: '#E0E1FF' } }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { color: '#B0B3E0' },
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                },
-                x: {
-                    ticks: { color: '#B0B3E0' },
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                }
-            }
-        };
-
-        ScrollTrigger.create({
-            trigger: chartSection,
-            start: "top 60%",
-            onEnter: () => {
-                if (performanceChart) performanceChart.destroy();
-                performanceChart = new Chart(chartCtx, {
-                    type: 'line',
-                    data: chartData,
-                    options: chartOptions,
-                });
-            },
-            onLeaveBack: () => {
-                if(performanceChart) performanceChart.destroy();
-            }
-        });
+        const chartData = { labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'], datasets: [{ label: 'Team Focus Score', data: [65, 68, 72, 70, 78, 82, 85, 88], borderColor: '#00FFFF', backgroundColor: 'rgba(0, 255, 255, 0.1)', fill: true, tension: 0.4 }, { label: 'Team Fatigue Level', data: [45, 42, 40, 43, 35, 30, 28, 25], borderColor: '#8A2BE2', backgroundColor: 'rgba(138, 43, 226, 0.1)', fill: true, tension: 0.4 }] };
+        const chartOptions = { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#E0E1FF' } } }, scales: { y: { beginAtZero: true, ticks: { color: '#B0B3E0' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } }, x: { ticks: { color: '#B0B3E0' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } } } };
+        ScrollTrigger.create({ trigger: chartSection, start: "top 60%", onEnter: () => { if (performanceChart) performanceChart.destroy(); performanceChart = new Chart(chartCtx, { type: 'line', data: chartData, options: chartOptions, }); }, onLeaveBack: () => { if(performanceChart) performanceChart.destroy(); } });
 
         // Final CTA animation
-        gsap.from("#cta .container > *", {
-            scrollTrigger: {
-                trigger: "#cta",
-                start: "top 80%",
-            },
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out"
-        });
+        gsap.from("#cta .container > *", { scrollTrigger: { trigger: "#cta", start: "top 80%" }, opacity: 0, y: 50, duration: 1, stagger: 0.2, ease: "power3.out" });
 
     });
     </script>
