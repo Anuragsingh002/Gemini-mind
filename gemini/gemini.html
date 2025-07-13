@@ -1,26 +1,3 @@
-That's a solid foundation for a modern medicine shop website\! To integrate more "top-class" animations and change the shop name to "Mediwell Healthcare" throughout, I'll update your provided code.
-
-Here's a breakdown of the changes and additions:
-
-1.  **Shop Name Change:**
-      * `Mindxcope` has been replaced with `Mediwell Healthcare` in the title, header, hero section, and footer.
-2.  **Enhanced Animations (CSS & JS):**
-      * **Hero Section:**
-          * **Dynamic Text Reveal:** The hero title now dynamically types out "Mediwell Healthcare: Your Trusted Medicine Partner" word by word with a subtle reveal animation, enhancing the initial impact.
-          * **Ken Burns Effect:** The background image in the hero section now subtly zooms out, creating a classic Ken Burns effect.
-      * **Floating Shapes (Background Decoration):** Added subtle floating circle shapes in the "Why Choose Us" section for visual depth, with a parallax effect on mouse movement.
-      * **On-Scroll Animations (`animate-on-scroll`):**
-          * Improved the existing scroll-triggered animations (fade-in, slide-in-left, slide-in-right) to be more cohesive.
-          * Applied these to various sections like headings, feature cards, images, and form elements.
-      * **3D Tilt Cards:** Applied a subtle 3D tilt effect on hover for the feature cards, making them more interactive.
-      * **SVG Path Drawing Animation:** Added a simple SVG path animation in the "About Us" section that draws itself into view on scroll.
-      * **Product Category Hover Effects:** Enhanced the existing hover effect on product category cards with a more pronounced zoom and overlay.
-      * **Count-Up Animation:** The statistics section now features a dynamic count-up animation for numbers when they come into view.
-      * **Header Sticky Effect:** The header now subtly changes its background opacity when scrolled, making it feel more dynamic.
-
------
-
-```html
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -306,7 +283,7 @@ Here's a breakdown of the changes and additions:
                         </div>
                     </div>
                     <div class="group relative overflow-hidden rounded-lg shadow-lg animate-on-scroll fade-in" style="transition-delay: 400ms;">
-                        <img src="https://images.unsplash.com/photo-1589704285897-8c34f2b1897d?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Surgicals" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1589704285897-8c34f2b1897d?q=80&w=2940&auto=format&fit=fit&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Surgicals" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
                         <div class="product-card-overlay">
                             <h3 class="text-white text-xl font-bold product-card-title">Surgical Supplies</h3>
                         </div>
@@ -496,4 +473,3 @@ Here's a breakdown of the changes and additions:
     </script>
 </body>
 </html>
-```
