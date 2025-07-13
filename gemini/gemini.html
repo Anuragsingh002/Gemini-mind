@@ -1,30 +1,4 @@
-Of course. I will now create a top-class website for **Mindxcope** using my full potential.
 
-This website is designed to be a single-page, narrative-driven experience that communicates the sophistication and cutting-edge nature of the Mindxcope platform. It incorporates a futuristic, trustworthy aesthetic with top-tier animations to guide the user through the complex information in an engaging and understandable way.
-
-### **Design & Animation Philosophy**
-
-  * **Aesthetic:** A dark, professional, and futuristic theme ("Dark Mode") is used to evoke a sense of high technology and focus. The color palette consists of deep blues and blacks, accented with vibrant cyan and magenta to represent neural activity and artificial intelligence.
-  * **Typography:** A clean, modern sans-serif font (`Inter`) is used for readability, paired with a slightly more technical font for effect.
-  * **Animations:** The animations are not just decorative; they are integral to the storytelling. We will use the industry-leading **GreenSock Animation Platform (GSAP)** for high-performance, complex animations.
-      * **Hero Animation:** An immediate "wow" factor with a dynamic, interactive neural network visualization.
-      * **Scroll-Triggered Storytelling:** As you scroll, content and visuals animate into view, guiding the user's focus and explaining the process step-by-step.
-      * **Micro-interactions:** Subtle but satisfying animations on buttons, cards, and interactive elements make the site feel alive and responsive.
-  * **Interactive Visualizations:** Instead of static images, we'll use animated SVGs and a mock "live" data chart (using **Chart.js**) to make the technology feel tangible and real.
-
-### **The Code**
-
-Here is the complete code for the website. For this demonstration, the HTML, CSS, and JavaScript are combined into a single file. In a real-world project, you would separate these into `index.html`, `style.css`, and `script.js` files.
-
-**To use this code:**
-
-1.  Copy all the code below.
-2.  Paste it into a new file and save it as `index.html`.
-3.  Open the `index.html` file in your web browser.
-
-<!-- end list -->
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +34,7 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 100px 0;
+            padding: 120px 0;
             position: relative;
         }
         h1, h2, h3 {
@@ -68,11 +42,13 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
             line-height: 1.2;
             color: #FFFFFF;
             letter-spacing: -0.5px;
+            position: relative;
+            z-index: 10;
         }
         h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
         h2 { font-size: clamp(2rem, 4vw, 3rem); text-align: center; margin-bottom: 60px; }
         h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); margin-bottom: 15px; }
-        p { font-size: 1.1rem; color: #B0B3E0; margin-bottom: 20px; max-width: 65ch; }
+        p { font-size: 1.1rem; color: #B0B3E0; margin-bottom: 20px; max-width: 65ch; position: relative; z-index: 10; }
         .text-center { text-align: center; }
         .text-center p { margin-left: auto; margin-right: auto; }
         .highlight { color: #00FFFF; }
@@ -120,6 +96,8 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: none;
             cursor: pointer;
+            position: relative;
+            z-index: 10;
         }
         .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2); }
 
@@ -131,16 +109,22 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
             position: relative;
             overflow: hidden;
         }
-        #hero .container { padding: 0 5%; }
+        #hero .container { padding-top: 0; padding-bottom: 0; }
         .hero-content { max-width: 50%; z-index: 2; }
         .hero-content p { font-size: 1.2rem; }
         #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
         /* Tech Stack Section */
+        #tech {
+            position: relative;
+            overflow: hidden;
+        }
         .tech-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
+            position: relative;
+            z-index: 10;
         }
         .tech-card {
             background: rgba(10, 15, 56, 0.5);
@@ -150,6 +134,7 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
             transition: transform 0.3s ease, background 0.3s ease;
             position: relative;
             overflow: hidden;
+            z-index: 10;
         }
         .tech-card:hover { transform: translateY(-10px); background: rgba(10, 15, 56, 1); }
         .tech-card .icon {
@@ -218,6 +203,15 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
             padding: 40px 5%;
             border-top: 1px solid rgba(0, 255, 255, 0.1);
         }
+
+        /* --- FLOATING IMAGES --- */
+        .floating-image {
+            position: absolute;
+            opacity: 0; /* Start with 0 opacity */
+            z-index: 2; /* Between canvas and content */
+            pointer-events: none; /* Prevent interaction */
+            filter: brightness(0.7) contrast(1.2);
+        }
     </style>
 </head>
 <body>
@@ -236,6 +230,11 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
         <section id="hero">
             <canvas id="hero-canvas"></canvas>
             <div class="container">
+                <img src="https://via.placeholder.com/150/00FFFF/010416?text=Brain" alt="Abstract Brain Scan" class="floating-image" style="top: 10%; left: 15%; width: 150px;">
+                <img src="https://via.placeholder.com/120/8A2BE2/010416?text=BCI" alt="Abstract BCI Interface" class="floating-image" style="top: 30%; right: 10%; width: 120px;">
+                <img src="https://via.placeholder.com/180/FFFFFF/010416?text=Network" alt="Abstract Neural Network" class="floating-image" style="bottom: 15%; left: 25%; width: 180px;">
+                <img src="https://via.placeholder.com/100/FFFFFF/010416?text=Logo" alt="Mindxcope Abstract Logo" class="floating-image" style="top: 15%; right: 20%; width: 100px;">
+
                 <div class="hero-content">
                     <h1>Unlock Human Potential with <span class="highlight">Neuro-AI</span></h1>
                     <p>Mindxcope is an AI-powered Brain–Computer Interface (BCI) platform measuring cognitive performance in real time to help you hire smarter, train better, and build resilient teams.</p>
@@ -246,6 +245,9 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
 
         <section id="tech">
             <div class="container">
+                 <img src="https://via.placeholder.com/160/00FFFF/010416?text=EEG" alt="Abstract EEG Waves" class="floating-image" style="top: 10%; right: 5%; width: 160px;">
+                <img src="https://via.placeholder.com/140/8A2BE2/010416?text=fNIRS" alt="Abstract fNIRS Data" class="floating-image" style="bottom: 10%; left: 5%; width: 140px;">
+
                 <h2 class="section-title">A Multi-Layered Approach to Cognition</h2>
                 <div class="tech-grid">
                     <div class="tech-card">
@@ -264,7 +266,7 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
                         <p>Our AI analyzes keystroke dynamics and patterns, offering a non-invasive continuous measure of fatigue, and cognitive fluency.</p>
                     </div>
                     <div class="tech-card">
-                         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                         <h3>Cognitive Games</h3>
                         <p>Gamified assessments benchmark memory, decision-making speed, and learning ability in engaging, standardized environments.</p>
                     </div>
@@ -352,7 +354,6 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
     <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-        // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger);
 
         // --- HERO 3D-ish Interactive Canvas Animation ---
@@ -462,6 +463,40 @@ Here is the complete code for the website. For this demonstration, the HTML, CSS
             ease: "power4.out",
             stagger: 0.2,
             delay: 1
+        });
+        
+        // --- FLOATING IMAGE ANIMATION ---
+        gsap.utils.toArray('.floating-image').forEach(img => {
+            const xOffset = gsap.utils.random(-40, 40);
+            const yOffset = gsap.utils.random(-40, 40);
+            const rotate = gsap.utils.random(-10, 10);
+            const duration = gsap.utils.random(5, 8);
+            const delay = gsap.utils.random(0, 2);
+
+            // Infinite floating animation
+            gsap.to(img, {
+                x: `+=${xOffset}`,
+                y: `+=${yOffset}`,
+                rotation: rotate,
+                duration: duration,
+                yoyo: true,
+                repeat: -1,
+                ease: "sine.inOut",
+                delay: delay
+            });
+
+            // Fade in with ScrollTrigger
+            gsap.fromTo(img, { opacity: 0, scale: 0.8 }, {
+                opacity: 0.6,
+                scale: 1,
+                duration: 1.5,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: img.closest('section'), // Trigger when the parent section comes into view
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
         });
         
         // General purpose fade-in for section titles
