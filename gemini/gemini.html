@@ -169,19 +169,37 @@
         .step-content p { font-size: 1rem; max-width: 100%; }
 
         /* Solutions Section */
-        .solutions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .solution-card {
-            background: #0A0F38;
-            padding: 30px;
-            border-radius: 10px;
-            border-left: 4px solid #8A2BE2;
-            opacity: 1;
-        }
-        .solution-card p { font-size: 1rem; }
+       #solutions .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 2rem;
+  }
+
+  #solutions .solution-card {
+    background-color: #0A0F38;
+    padding: 30px;
+    border-radius: 10px;
+    border-left: 4px solid #00FFFF;
+    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+    opacity: 1; /* FIXED */
+  }
+
+  #solutions .solution-card:hover {
+    transform: translateY(-5px);
+  }
+
+  #solutions .solution-card h3 {
+    color: #00FFFF;
+    margin-bottom: 1rem;
+  }
+
+  #solutions .solution-card p {
+    color: #B0B3E0;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
 
         /* Platform Preview Section */
         .platform-preview {
@@ -319,30 +337,26 @@
                 </div>
             </div>
         </section>
-
-        <section id="solutions">
+<section id="solutions">
   <div class="container">
     <h2 class="section-title">Transform Your Organization</h2>
     <div class="solutions-grid">
-      
       <div class="solution-card">
         <h3>Hire Smarter</h3>
         <p>Move beyond resumes. Objectively identify candidates with the cognitive resilience, focus, and adaptability needed to thrive.</p>
       </div>
-      
       <div class="solution-card">
         <h3>Train Better</h3>
         <p>Measure the cognitive impact of your training programs. Understand when employees are disengaged, and optimize training timing.</p>
       </div>
-      
       <div class="solution-card">
         <h3>Boost Performance</h3>
         <p>Proactively manage workplace cognitive wellness. Identify early signs of burnout and intervene with targeted support.</p>
       </div>
-    
     </div>
   </div>
 </section>
+
 
         <section id="platform">
             <div class="container">
