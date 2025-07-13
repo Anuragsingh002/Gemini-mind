@@ -234,7 +234,7 @@
         .platform-preview {
             background: #0A0F38;
             border-radius: 20px;
-            padding: 40px;
+            padding: 20px; /* Adjusted padding */
             border: 1px solid rgba(0, 255, 255, 0.2);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             transition: transform 0.5s ease, box-shadow 0.5s ease;
@@ -243,10 +243,13 @@
             transform: scale(1.02);
             box-shadow: 0 25px 60px rgba(0, 255, 255, 0.1);
         }
-        
-        /* NEW: Research Papers Section */
+        .platform-preview img {
+            border-radius: 10px; /* Soften edges of the image */
+        }
+
+        /* Research Papers Section */
         #research {
-            background-color: #0A0F38; /* Slightly different background to stand out */
+            background-color: #0A0F38;
         }
         .research-grid {
             display: grid;
@@ -379,7 +382,7 @@
             <div class="container">
                 <h2 class="section-title">From Brainwaves to Breakthroughs</h2>
                 <div class="process-timeline">
-                    <div class="process-step">
+                     <div class="process-step">
                         <div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-12v4m-2-2h4m5 6v4m-2-2h4M17 3l-4.5 4.5M12 12l4.5 4.5M7 21l4.5-4.5M12 12l-4.5-4.5"></path></svg></div>
                         <div class="step-content">
                             <h3>1.  Multimodal Cognitive Signal Capture</h3>
@@ -428,7 +431,7 @@
             <div class="container">
                 <h2 class="section-title">Sample Report</h2>
                 <div class="platform-preview">
-                    <canvas id="performanceChart"></canvas>
+                    <img src="https://i.ibb.co/6g2y30p/dashboard-sample.png" alt="Sample performance report dashboard">
                 </div>
             </div>
         </section>
@@ -473,8 +476,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
     document.addEventListener('DOMContentLoaded', function() {
 
@@ -504,7 +505,6 @@
         gsap.from("header", { y: '-100%', duration: 1.5, ease: "power4.out", delay: 0.5 });
         gsap.from(".hero-content > *", { opacity: 0, y: 50, duration: 1.5, ease: "power4.out", stagger: 0.2, delay: 1 });
 
-        // Floating Image Animation
         gsap.utils.toArray('.floating-image').forEach(img => {
             const xOffset = gsap.utils.random(-40, 40);
             const yOffset = gsap.utils.random(-40, 40);
@@ -515,10 +515,8 @@
             gsap.fromTo(img, { opacity: 0, scale: 0.8 }, { opacity: 0.6, scale: 1, duration: 1.5, ease: "power3.out", scrollTrigger: { trigger: img.closest('section'), start: "top 80%", toggleActions: "play none none none" } });
         });
 
-        // General purpose fade-in for section titles
         gsap.utils.toArray('.section-title').forEach(title => { gsap.from(title, { opacity: 0, y: 50, duration: 1, scrollTrigger: { trigger: title, start: "top 85%", toggleActions: "play none none none" } }); });
 
-        // Staggered card entrance animations
         const cardGrids = ['.tech-grid', '.solutions-grid', '.research-grid'];
         cardGrids.forEach(grid => {
             gsap.from(`${grid} > .tilt-card`, {
@@ -527,14 +525,9 @@
             });
         });
 
-        // ===============================================
-        // == 3D PARALLAX TILT ON HOVER FOR ALL CARDS ==
-        // ===============================================
         const tiltCards = document.querySelectorAll(".tilt-card");
-
         tiltCards.forEach(card => {
-            const tiltStrength = 15; // How much the card tilts. Higher is more.
-
+            const tiltStrength = 15;
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const cardWidth = rect.width;
@@ -543,10 +536,8 @@
                 const centerY = rect.top + cardHeight / 2;
                 const mouseX = e.clientX - centerX;
                 const mouseY = e.clientY - centerY;
-
                 const rotateY = (mouseX / (cardWidth / 2)) * tiltStrength;
                 const rotateX = -(mouseY / (cardHeight / 2)) * tiltStrength;
-
                 gsap.to(card, {
                     rotationX: rotateX,
                     rotationY: rotateY,
@@ -556,7 +547,6 @@
                     duration: 0.8
                 });
             });
-
             card.addEventListener('mouseleave', () => {
                 gsap.to(card, {
                     rotationX: 0,
@@ -568,19 +558,10 @@
             });
         });
 
-
-        // How it works timeline animation
         gsap.utils.toArray('.process-step').forEach(step => { gsap.fromTo(step, { opacity: 0, x: step.classList.contains('even') ? 100 : -100 }, { opacity: 1, x: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: step, start: "top 80%", toggleActions: "play none none reverse" } }); });
 
-        // Platform Preview Chart Animation
-        const chartSection = document.getElementById('platform');
-        const chartCtx = document.getElementById('performanceChart').getContext('2d');
-        let performanceChart;
-        const chartData = { labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'], datasets: [{ label: 'Team Focus Score', data: [65, 68, 72, 70, 78, 82, 85, 88], borderColor: '#00FFFF', backgroundColor: 'rgba(0, 255, 255, 0.1)', fill: true, tension: 0.4 }, { label: 'Team Fatigue Level', data: [45, 42, 40, 43, 35, 30, 28, 25], borderColor: '#8A2BE2', backgroundColor: 'rgba(138, 43, 226, 0.1)', fill: true, tension: 0.4 }] };
-        const chartOptions = { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#E0E1FF' } } }, scales: { y: { beginAtZero: true, ticks: { color: '#B0B3E0' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } }, x: { ticks: { color: '#B0B3E0' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } } } };
-        ScrollTrigger.create({ trigger: chartSection, start: "top 60%", onEnter: () => { if (performanceChart) performanceChart.destroy(); performanceChart = new Chart(chartCtx, { type: 'line', data: chartData, options: chartOptions, }); }, onLeaveBack: () => { if(performanceChart) performanceChart.destroy(); } });
+        // DELETED Chart.js animation code
 
-        // Final CTA animation
         gsap.from("#cta .container > *", { scrollTrigger: { trigger: "#cta", start: "top 80%" }, opacity: 0, y: 50, duration: 1, stagger: 0.2, ease: "power3.out" });
 
     });
