@@ -325,9 +325,9 @@
         <nav class="nav-links">
             <a href="#tech">Technology</a>
             <a href="#solutions">Solutions</a>
-            <a href="#platform">Sample Report</a>
+            <a href="#platform">Platform</a>
         </nav>
-        <a href="#cta" class="cta-button">Book a call</a>
+        <a href="#cta" class="cta-button">Request a Demo</a>
     </header>
 
     <main>
@@ -340,7 +340,7 @@
                 <img src="https://i.ibb.co/zV9j4fQ/abstract-logo.png" alt="Mindxcope Abstract Logo" class="floating-image" style="top: 15%; right: 20%; width: 100px;">
 
                 <div class="hero-content">
-                    <h1>Unlock Human Potential with <span class="highlight">MindXcope</span></h1>
+                    <h1>Unlock Human Potential with <span class="highlight">Neuro-AI</span></h1>
                     <p>Mindxcope is an AI-powered Brain–Computer Interface (BCI) platform measuring cognitive performance in real time to help you hire smarter, train better, and build resilient teams.</p>
                     <a href="#cta" class="cta-button">Discover How</a>
                 </div>
@@ -370,11 +370,10 @@
                         <p>By analyzing typing rhythm and patterns, we identify cognitive fluency, mental fatigue, and adaptability under pressure.</p>
                     </div>
                     <div class="tech-card tilt-card">
-                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                        <h3>Cognitive Gmaes</h3>
-                        <p>Gamified neuro-assessments benchmark attention, memory, and decision-making speed in a controlled environment. These results are used to create a cognitive scorecard that’s reliable, unbiased, and scientifically grounded..</p>
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        <h3>Cognitive Games</h3>
+                        <p>Gamified neuro-assessments benchmark attention, memory, and decision-making speed in a controlled environment.</p>
                     </div>
-                    
                 </div>
             </div>
         </section>
@@ -432,7 +431,7 @@
             <div class="container">
                 <h2 class="section-title">Sample Report</h2>
                 <div class="platform-preview">
-                    <img src="demo.jpg" alt="Sample performance report dashboard">
+                    <img src="https://i.ibb.co/6g2y30p/dashboard-sample.png" alt="Sample performance report dashboard">
                 </div>
             </div>
         </section>
@@ -477,6 +476,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
 
@@ -560,8 +560,6 @@
         });
 
         gsap.utils.toArray('.process-step').forEach(step => { gsap.fromTo(step, { opacity: 0, x: step.classList.contains('even') ? 100 : -100 }, { opacity: 1, x: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: step, start: "top 80%", toggleActions: "play none none reverse" } }); });
-
-        // DELETED Chart.js animation code
 
         gsap.from("#cta .container > *", { scrollTrigger: { trigger: "#cta", start: "top 80%" }, opacity: 0, y: 50, duration: 1, stagger: 0.2, ease: "power3.out" });
 
