@@ -1,0 +1,601 @@
+Of course. I will now create a top-class website for **Mindxcope** using my full potential.
+
+This website is designed to be a single-page, narrative-driven experience that communicates the sophistication and cutting-edge nature of the Mindxcope platform. It incorporates a futuristic, trustworthy aesthetic with top-tier animations to guide the user through the complex information in an engaging and understandable way.
+
+### **Design & Animation Philosophy**
+
+  * **Aesthetic:** A dark, professional, and futuristic theme ("Dark Mode") is used to evoke a sense of high technology and focus. The color palette consists of deep blues and blacks, accented with vibrant cyan and magenta to represent neural activity and artificial intelligence.
+  * **Typography:** A clean, modern sans-serif font (`Inter`) is used for readability, paired with a slightly more technical font for effect.
+  * **Animations:** The animations are not just decorative; they are integral to the storytelling. We will use the industry-leading **GreenSock Animation Platform (GSAP)** for high-performance, complex animations.
+      * **Hero Animation:** An immediate "wow" factor with a dynamic, interactive neural network visualization.
+      * **Scroll-Triggered Storytelling:** As you scroll, content and visuals animate into view, guiding the user's focus and explaining the process step-by-step.
+      * **Micro-interactions:** Subtle but satisfying animations on buttons, cards, and interactive elements make the site feel alive and responsive.
+  * **Interactive Visualizations:** Instead of static images, we'll use animated SVGs and a mock "live" data chart (using **Chart.js**) to make the technology feel tangible and real.
+
+### **The Code**
+
+Here is the complete code for the website. For this demonstration, the HTML, CSS, and JavaScript are combined into a single file. In a real-world project, you would separate these into `index.html`, `style.css`, and `script.js` files.
+
+**To use this code:**
+
+1.  Copy all the code below.
+2.  Paste it into a new file and save it as `index.html`.
+3.  Open the `index.html` file in your web browser.
+
+<!-- end list -->
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindxcope - The Future of Mental Performance Analytics</title>
+    <style>
+        /* Modern CSS Reset */
+        *, *::before, *::after { box-sizing: border-box; }
+        body, h1, h2, h3, p, figure, blockquote, dl, dd { margin: 0; }
+        ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
+        html:focus-within { scroll-behavior: smooth; }
+        body {
+            min-height: 100vh;
+            text-rendering: optimizeSpeed;
+            line-height: 1.5;
+            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #010416;
+            color: #E0E1FF;
+            overflow-x: hidden;
+        }
+        img, picture { max-width: 100%; display: block; }
+        input, button, textarea, select { font: inherit; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #010416; }
+        ::-webkit-scrollbar-thumb { background: #0A0F38; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #131A5A; }
+
+        /* Global Styles & Typography */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 0;
+            position: relative;
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: #FFFFFF;
+            letter-spacing: -0.5px;
+        }
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); text-align: center; margin-bottom: 60px; }
+        h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); margin-bottom: 15px; }
+        p { font-size: 1.1rem; color: #B0B3E0; margin-bottom: 20px; max-width: 65ch; }
+        .text-center { text-align: center; }
+        .text-center p { margin-left: auto; margin-right: auto; }
+        .highlight { color: #00FFFF; }
+
+        /* Header */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(1, 4, 22, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; color: #fff; }
+        .nav-links a { color: #E0E1FF; text-decoration: none; margin-left: 30px; font-weight: 500; position: relative; }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #00FFFF;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+        .nav-links a:hover::after { transform: scaleX(1); transform-origin: bottom left; }
+
+        /* Primary Button */
+        .cta-button {
+            background: linear-gradient(90deg, #00FFFF, #8A2BE2);
+            color: #FFFFFF;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2); }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        #hero .container { padding: 0 5%; }
+        .hero-content { max-width: 50%; z-index: 2; }
+        .hero-content p { font-size: 1.2rem; }
+        #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+
+        /* Tech Stack Section */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .tech-card {
+            background: rgba(10, 15, 56, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tech-card:hover { transform: translateY(-10px); background: rgba(10, 15, 56, 1); }
+        .tech-card .icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+            stroke: #00FFFF;
+        }
+        .tech-card p { font-size: 1rem; }
+
+        /* How it Works Section */
+        #how-it-works .container { max-width: 900px; }
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 50px;
+            opacity: 0;
+        }
+        .process-step:nth-child(even) { flex-direction: row-reverse; }
+        .step-icon {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #0A0F38;
+            display: grid;
+            place-items: center;
+            border: 2px solid #00FFFF;
+            margin: 0 40px;
+        }
+        .step-icon svg { width: 40px; height: 40px; stroke: #fff; }
+        .step-content p { font-size: 1rem; max-width: 100%; }
+
+        /* Solutions Section */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .solution-card {
+            background: #0A0F38;
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 4px solid #8A2BE2;
+            opacity: 0;
+        }
+        .solution-card p { font-size: 1rem; }
+
+        /* Platform Preview Section */
+        .platform-preview {
+            background: #0A0F38;
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* CTA Section */
+        #cta .container { text-align: center; }
+        #cta h2 { margin-bottom: 20px; }
+
+        /* Footer */
+        footer {
+            background: #0A0F38;
+            text-align: center;
+            padding: 40px 5%;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Mindxcope</div>
+        <nav class="nav-links">
+            <a href="#tech">Technology</a>
+            <a href="#solutions">Solutions</a>
+            <a href="#platform">Platform</a>
+        </nav>
+        <a href="#cta" class="cta-button">Request a Demo</a>
+    </header>
+
+    <main>
+        <section id="hero">
+            <canvas id="hero-canvas"></canvas>
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Unlock Human Potential with <span class="highlight">Neuro-AI</span></h1>
+                    <p>Mindxcope is an AI-powered Brain–Computer Interface (BCI) platform measuring cognitive performance in real time to help you hire smarter, train better, and build resilient teams.</p>
+                    <a href="#cta" class="cta-button">Discover How</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech">
+            <div class="container">
+                <h2 class="section-title">A Multi-Layered Approach to Cognition</h2>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <h3>EEG Analysis</h3>
+                        <p>High-resolution electroencephalography captures brainwave patterns, providing millisecond-level data on focus, attention, and cognitive load.</p>
+                    </div>
+                    <div class="tech-card">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M12 15a2.5 2.5 0 01-5 0V7.5a2.5 2.5 0 015 0V15zM12 15a2.5 2.5 0 005 0V7.5a2.5 2.5 0 00-5 0V15z"></path></svg>
+                        <h3>fNIRS Imaging</h3>
+                        <p>Functional near-infrared spectroscopy measures blood flow in the prefrontal cortex, revealing deeper insights into problem-solving and executive functions.</p>
+                    </div>
+                    <div class="tech-card">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        <h3>Typing Behavior</h3>
+                        <p>Our AI analyzes keystroke dynamics and patterns, offering a non-invasive continuous measure of fatigue, and cognitive fluency.</p>
+                    </div>
+                    <div class="tech-card">
+                         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        <h3>Cognitive Games</h3>
+                        <p>Gamified assessments benchmark memory, decision-making speed, and learning ability in engaging, standardized environments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works">
+            <div class="container">
+                <h2 class="section-title">From Brainwaves to Breakthroughs</h2>
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-12v4m-2-2h4m5 6v4m-2-2h4M17 3l-4.5 4.5M12 12l4.5 4.5M7 21l4.5-4.5M12 12l-4.5-4.5"></path></svg></div>
+                        <div class="step-content">
+                            <h3>1. Seamless Data Collection</h3>
+                            <p>Our lightweight, user-friendly BCI headset gathers neural and physiological data non-invasively during regular work tasks or our specialized cognitive games.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3"></path></svg></div>
+                        <div class="step-content">
+                            <h3>2. AI-Powered Analysis</h3>
+                            <p>Our proprietary machine learning algorithms process billions of data points in real-time, translating complex signals into clear, actionable metrics.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div>
+                        <div class="step-content">
+                            <h3>3. Actionable Insights Dashboard</h3>
+                            <p>Visualize cognitive performance, track trends in focus and fatigue, and identify high-potential candidates or training needs through our intuitive analytics platform.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions">
+            <div class="container">
+                <h2 class="section-title">Transform Your Organization</h2>
+                <div class="solutions-grid">
+                    <div class="solution-card">
+                        <h3>Hire Smarter</h3>
+                        <p>Move beyond resumes. Objectively identify candidates with the cognitive resilience, focus, and learning ability required for high-pressure roles.</p>
+                    </div>
+                    <div class="solution-card">
+                        <h3>Train Better</h3>
+                        <p>Measure the cognitive impact of your training programs. Understand when employees are engaged and when they're fatigued to optimize learning and retention.</p>
+                    </div>
+                    <div class="solution-card">
+                        <h3>Boost Performance</h3>
+                        <p>Proactively manage workplace cognitive wellness. Identify early signs of burnout and create an environment where focus and deep work can flourish.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="platform">
+            <div class="container">
+                <h2 class="section-title">Your Cognitive Command Center</h2>
+                <div class="platform-preview">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <section id="cta">
+            <div class="container">
+                <h2 class="section-title">See the Future of Performance. Today.</h2>
+                <p class="text-center">Ready to unlock the full potential of your team? Schedule a personalized demo to see how Mindxcope can revolutionize your organization.</p>
+                <br>
+                <a href="mailto:demo@mindxcope.com" class="cta-button">Request a Live Demo</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Mindxcope. All Rights Reserved. | Pioneering the future of cognitive analytics.</p>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- HERO 3D-ish Interactive Canvas Animation ---
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+        let particles = [];
+        const mouse = { x: width / 2, y: height / 2 };
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 1.5 + 1;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 30) + 1;
+                this.color = 'rgba(0, 255, 255, 0.5)';
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+            update() {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let forceDirectionX = dx / distance;
+                let forceDirectionY = dy / distance;
+                let maxDistance = 100;
+                let force = (maxDistance - distance) / maxDistance;
+                if (force < 0) force = 0;
+
+                this.x += (forceDirectionX * force * this.density) + (this.baseX - this.x) * 0.05;
+                this.y += (forceDirectionY * force * this.density) + (this.baseY - this.y) * 0.05;
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particlesCount = (width > 768) ? 150 : 50;
+            for (let i = 0; i < particlesCount; i++) {
+                particles.push(new Particle(Math.random() * width, Math.random() * height));
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        function connectParticles() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) +
+                                   ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                    if (distance < (width/7) * (height/7)) {
+                        opacityValue = 1 - (distance/20000);
+                        ctx.strokeStyle = `rgba(0, 255, 255, ${opacityValue})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        });
+        initParticles();
+        animateParticles();
+        
+        // --- GSAP Animations ---
+
+        // Header entrance
+        gsap.from("header", {
+            y: '-100%',
+            duration: 1.5,
+            ease: "power4.out",
+            delay: 0.5
+        });
+
+        // Hero content entrance
+        gsap.from(".hero-content > *", {
+            opacity: 0,
+            y: 50,
+            duration: 1.5,
+            ease: "power4.out",
+            stagger: 0.2,
+            delay: 1
+        });
+        
+        // General purpose fade-in for section titles
+        gsap.utils.toArray('.section-title').forEach(title => {
+            gsap.from(title, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: title,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+
+        // Tech cards animation
+        gsap.from(".tech-card", {
+            scrollTrigger: {
+                trigger: ".tech-grid",
+                start: "top 80%",
+            },
+            opacity: 0,
+            y: 60,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        // How it works timeline animation
+        gsap.utils.toArray('.process-step').forEach(step => {
+            gsap.fromTo(step, 
+                { opacity: 0, x: step.classList.contains('even') ? 100 : -100 }, 
+                {
+                    opacity: 1,
+                    x: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: step,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+        
+        // Solutions cards animation
+        gsap.from(".solution-card", {
+            scrollTrigger: {
+                trigger: ".solutions-grid",
+                start: "top 80%",
+            },
+            opacity: 0,
+            y: 60,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+        
+        // Platform Preview Chart Animation
+        const chartSection = document.getElementById('platform');
+        const chartCtx = document.getElementById('performanceChart').getContext('2d');
+        let performanceChart;
+        
+        const chartData = {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+            datasets: [{
+                label: 'Team Focus Score',
+                data: [65, 68, 72, 70, 78, 82, 85, 88],
+                borderColor: '#00FFFF',
+                backgroundColor: 'rgba(0, 255, 255, 0.1)',
+                fill: true,
+                tension: 0.4
+            }, {
+                label: 'Team Fatigue Level',
+                data: [45, 42, 40, 43, 35, 30, 28, 25],
+                borderColor: '#8A2BE2',
+                backgroundColor: 'rgba(138, 43, 226, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        };
+
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { labels: { color: '#E0E1FF' } }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#B0B3E0' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                },
+                x: {
+                    ticks: { color: '#B0B3E0' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                }
+            }
+        };
+
+        ScrollTrigger.create({
+            trigger: chartSection,
+            start: "top 60%",
+            onEnter: () => {
+                if (performanceChart) performanceChart.destroy();
+                performanceChart = new Chart(chartCtx, {
+                    type: 'line',
+                    data: chartData,
+                    options: chartOptions,
+                });
+            },
+            onLeaveBack: () => {
+                if(performanceChart) performanceChart.destroy();
+            }
+        });
+
+        // Final CTA animation
+        gsap.from("#cta .container > *", {
+            scrollTrigger: {
+                trigger: "#cta",
+                start: "top 80%",
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+    });
+    </script>
+</body>
+</html>
+```
