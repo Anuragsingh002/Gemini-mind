@@ -4,8 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mediwell Healthcare - Premium Medical Wholesale Distribution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        :root {
+            --primary-blue: #2c5aa0;
+            --dark-blue: #1e3d72;
+            --light-blue: #42a5f5;
+            --accent-green: #4caf50;
+            --light-green: #66bb6a;
+            --background-light: #eef2f7;
+            --text-dark: #333;
+            --text-light: #fff;
+            --glow-color: #a7d9ff;
+            --shadow-light: rgba(0,0,0,0.1);
+            --shadow-medium: rgba(0,0,0,0.2);
+            --shadow-dark: rgba(0,0,0,0.3);
+        }
 
         * {
             margin: 0;
@@ -16,23 +30,51 @@
         body {
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-dark);
             overflow-x: hidden;
-            /* Changed background color */
-            background: #eef2f7; /* Light blue-grey */
+            background: var(--background-light);
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3.5rem;
+            color: var(--primary-blue);
+            position: relative;
+            animation: fadeInDown 1s ease-out;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(45deg, var(--accent-green), var(--light-green));
+            border-radius: 2px;
         }
 
         /* Header Styles */
         .header {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d72 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--text-light);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px); /* Slightly less blur for clarity */
+            box-shadow: 0 2px 20px var(--shadow-light);
+            backdrop-filter: blur(5px);
         }
 
         .nav-container {
@@ -46,11 +88,12 @@
 
         .logo {
             font-size: 1.8rem;
-            font-weight: bold;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             animation: fadeIn 1s ease-out;
+            text-shadow: 1px 1px 3px var(--shadow-medium);
         }
 
         .logo::before {
@@ -65,15 +108,16 @@
         }
 
         .nav-menu a {
-            color: white;
+            color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
+            font-size: 1.05rem;
         }
 
         .nav-menu a:hover {
-            color: #a7d9ff; /* Lighter blue for hover */
+            color: var(--glow-color);
             transform: translateY(-2px);
         }
 
@@ -84,7 +128,7 @@
             height: 2px;
             bottom: -5px;
             left: 0;
-            background: #a7d9ff;
+            background: var(--glow-color);
             transition: width 0.3s ease;
         }
 
@@ -93,17 +137,19 @@
         }
 
         .cta-button {
-            background: linear-gradient(45deg, #4caf50, #66bb6a);
-            color: white;
+            background: linear-gradient(45deg, var(--accent-green), var(--light-green));
+            color: var(--text-light);
             padding: 0.8rem 1.5rem;
             border: none;
             border-radius: 25px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
             box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .cta-button:hover {
@@ -113,17 +159,16 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #1e3d72 0%, #2c5aa0 50%, #42a5f5 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 50%, var(--light-blue) 100%);
+            color: var(--text-light);
             padding: 120px 0 80px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            /* Added background image */
-            background-image: url('https://via.placeholder.com/1500x800/1e3d72/FFFFFF?text=Medical+Supplies+Background'); /* Placeholder image for medical supplies */
+            background-image: url('https://images.unsplash.com/photo-1584820927421-a797c551381e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Medical background */
             background-size: cover;
             background-position: center;
-            animation: heroFadeIn 1s ease-out;
+            animation: heroFadeIn 1.5s ease-out;
         }
 
         .hero::before {
@@ -133,7 +178,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(30, 61, 114, 0.7); /* Darker overlay for text readability */
+            background: rgba(30, 61, 114, 0.75); /* Darker overlay for text readability */
             z-index: 1;
         }
 
@@ -146,115 +191,42 @@
         }
 
         .hero h1 {
-            font-size: 3.8rem; /* Slightly larger heading */
+            font-size: 4rem;
             margin-bottom: 1rem;
-            animation: slideInLeft 1s ease-out;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            animation: slideInLeft 1.2s ease-out;
+            text-shadow: 2px 2px 8px var(--shadow-dark);
+            font-weight: 800;
         }
 
         .hero p {
-            font-size: 1.4rem; /* Slightly larger paragraph */
-            margin-bottom: 2.5rem; /* More space below paragraph */
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
             opacity: 0.9;
-            animation: slideInRight 1s ease-out 0.3s both;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes heroFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            animation: slideInRight 1.2s ease-out 0.3s both;
+            font-weight: 400;
         }
 
         /* Ticker */
         .ticker {
-            background: #ff5722;
-            color: white;
+            background: #ff5722; /* Vibrant orange */
+            color: var(--text-light);
             padding: 0.8rem 0;
             overflow: hidden;
             white-space: nowrap;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            font-weight: 500;
         }
 
         .ticker-content {
             display: inline-block;
             animation: scroll 30s linear infinite;
-            padding-right: 100%; /* Ensure content can scroll fully out of view */
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            padding-right: 100%;
         }
 
         /* Features Section */
         .features {
             padding: 80px 0;
-            background: #f8f9fa;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.8rem; /* Slightly larger title */
-            margin-bottom: 3.5rem; /* More space below title */
-            color: #2c5aa0;
-            position: relative;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px; /* Adjust position */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px; /* Wider underline */
-            height: 5px; /* Thicker underline */
-            background: linear-gradient(45deg, #4caf50, #66bb6a);
-            border-radius: 2px;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            background: var(--background-light);
         }
 
         .features-grid {
@@ -264,15 +236,16 @@
         }
 
         .feature-card {
-            background: white;
-            padding: 2.5rem; /* More padding */
-            border-radius: 20px; /* More rounded corners */
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1); /* Stronger shadow */
+            background: var(--text-light);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px var(--shadow-light);
             text-align: center;
-            transition: all 0.4s ease; /* Slower transition */
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* More complex easing */
             border: 2px solid transparent;
-            position: relative; /* For pulse animation */
+            position: relative;
             overflow: hidden;
+            will-change: transform, box-shadow; /* Optimize for animation */
         }
 
         .feature-card::before {
@@ -285,7 +258,7 @@
             background: rgba(76, 175, 80, 0.1);
             transform: scale(0);
             border-radius: 20px;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease-out;
             z-index: 0;
         }
 
@@ -294,58 +267,54 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-15px) rotate(2deg); /* More pronounced lift and slight rotation */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            border-color: #4caf50;
-            z-index: 1; /* Bring to front on hover */
+            transform: translateY(-15px) rotateZ(2deg); /* Z-axis rotation */
+            box-shadow: 0 20px 50px var(--shadow-medium);
+            border-color: var(--accent-green);
+            z-index: 1;
         }
 
         .feature-icon {
-            font-size: 3.5rem; /* Larger icon */
+            font-size: 3.5rem;
             margin-bottom: 1.2rem;
             display: block;
-            color: #4caf50; /* Green icon color */
+            color: var(--accent-green);
             animation: bounceIn 1s ease-out;
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0.1); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-
         .feature-card h3 {
-            color: #2c5aa0;
+            color: var(--primary-blue);
             margin-bottom: 1rem;
-            font-size: 1.5rem; /* Larger heading */
+            font-size: 1.5rem;
+            font-weight: 600;
         }
 
         .feature-card p {
             font-size: 1rem;
             color: #555;
+            font-weight: 300;
         }
 
         /* Product Categories */
         .categories {
             padding: 80px 0;
-            background: #eef2f7; /* Matching body background */
+            background: var(--background-light);
         }
 
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.8rem; /* Slightly larger gap */
+            gap: 1.8rem;
         }
 
         .category-card {
             background: white;
             padding: 2rem;
-            border-radius: 15px; /* Slightly more rounded */
+            border-radius: 15px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
             border: 2px solid transparent;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px var(--shadow-light);
             position: relative;
             overflow: hidden;
             background-size: cover;
@@ -353,19 +322,20 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            min-height: 200px; /* Ensure cards have a minimum height */
-            color: white; /* Text color for cards with images */
+            min-height: 200px;
+            color: var(--text-light);
         }
 
         /* Category specific background images */
-        .category-card:nth-child(1) { background-image: url('https://via.placeholder.com/300x200/42a5f5/FFFFFF?text=Tablets'); }
-        .category-card:nth-child(2) { background-image: url('https://via.placeholder.com/300x200/66bb6a/FFFFFF?text=Injections'); }
-        .category-card:nth-child(3) { background-image: url('https://via.placeholder.com/300x200/ef5350/FFFFFF?text=Syrups'); }
-        .category-card:nth-child(4) { background-image: url('https://via.placeholder.com/300x200/ffca28/FFFFFF?text=Surgical'); }
-        .category-card:nth-child(5) { background-image: url('https://via.placeholder.com/300x200/ab47bc/FFFFFF?text=COVID+Care'); }
-        .category-card:nth-child(6) { background-image: url('https://via.placeholder.com/300x200/8d6e63/FFFFFF?text=Ayurvedic'); }
-        .category-card:nth-child(7) { background-image: url('https://via.placeholder.com/300x200/ffa726/FFFFFF?text=OTC'); }
-        .category-card:nth-child(8) { background-image: url('https://via.placeholder.com/300x200/78909c/FFFFFF?text=Diagnostics'); }
+        .category-card:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1585435557343-3b027d145e1b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Tablets */
+        .category-card:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1628343719918-09594f836585?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Injections */
+        .category-card:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1517404221773-04e4c2957b98?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Syrups */
+        .category-card:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Surgical Supplies */
+        .category-card:nth-child(5) { background-image: url('https://images.unsplash.com/photo-1600373079093-6c7c2e071e62?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* COVID Care Products */
+        .category-card:nth-child(6) { background-image: url('https://images.unsplash.com/photo-1605330386766-8968984918e9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Ayurvedic & Herbal */
+        .category-card:nth-child(7) { background-image: url('https://images.unsplash.com/photo-1594595208535-6430932c0211?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* OTC & General */
+        .category-card:nth-child(8) { background-image: url('https://images.unsplash.com/photo-1628348616110-33b6680a6b7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); } /* Diagnostics */
+
 
         .category-card::before {
             content: '';
@@ -374,10 +344,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to top, rgba(44, 90, 160, 0.8), rgba(44, 90, 160, 0.2)); /* Darker overlay */
+            background: linear-gradient(to top, rgba(44, 90, 160, 0.85), rgba(44, 90, 160, 0.2)); /* Darker overlay */
             border-radius: 15px;
             z-index: 1;
-            transition: background 0.3s ease;
+            transition: background 0.4s ease-out;
         }
 
         .category-card:hover::before {
@@ -387,112 +357,150 @@
         .category-card h3, .category-card p {
             position: relative;
             z-index: 2;
-            color: white; /* Ensure text is white */
+            color: var(--text-light);
+            text-shadow: 1px 1px 4px var(--shadow-dark);
         }
 
         .category-card h3 {
             margin-bottom: 0.5rem;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             animation: fadeInUp 0.5s ease-out;
+            font-weight: 600;
         }
 
         .category-card p {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             opacity: 0.9;
             animation: fadeInUp 0.5s ease-out 0.1s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            font-weight: 300;
         }
 
         .category-card:hover {
-            transform: translateY(-8px) scale(1.02); /* More pronounced lift and slight scale */
+            transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 40px rgba(44, 90, 160, 0.4);
-            border-color: #4caf50; /* Green border on hover */
+            border-color: var(--accent-green);
         }
 
-        /* Search Section */
-        .search-section {
-            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
-            color: white;
-            padding: 60px 0;
-            text-align: center;
+        /* Medicine Catalog Section */
+        .medicine-catalog {
+            background: linear-gradient(135deg, #f0f8ff 0%, #dbe6f4 100%); /* Light blue-white gradient */
+            padding: 80px 0;
             position: relative;
             overflow: hidden;
         }
-
-        .search-section::before {
+        .medicine-catalog::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://via.placeholder.com/800x400/4caf50/FFFFFF?text=Medical+Search') no-repeat center center; /* Search background image */
+            background: url('https://images.unsplash.com/photo-1579684385108-54b6113b28b7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center; /* Pills background */
             background-size: cover;
-            opacity: 0.3; /* Slightly transparent overlay */
+            opacity: 0.1;
             z-index: 0;
         }
 
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto;
+        .medicine-catalog .section-title {
+            color: var(--dark-blue);
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
             position: relative;
-            z-index: 1; /* Bring search elements to front */
+            z-index: 1;
         }
 
-        .search-input {
+        .medicine-card {
+            background: var(--text-light);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        .medicine-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 18px 45px var(--shadow-medium);
+            border-color: var(--primary-blue);
+        }
+
+        .medicine-card img {
             width: 100%;
-            padding: 1.2rem 1.8rem; /* More padding */
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem; /* Larger font */
-            outline: none;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15); /* Stronger shadow */
-            transition: all 0.3s ease;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            transition: transform 0.3s ease;
         }
-        .search-input:focus {
-            box-shadow: 0 0 0 4px rgba(255,255,255,0.5);
+        .medicine-card:hover img {
+            transform: scale(1.05);
         }
 
-        .search-button {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            background: #2c5aa0;
-            color: white;
-            border: none;
-            padding: 0.9rem 1.8rem; /* More padding */
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        .medicine-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .search-button:hover {
-            background: #1e3d72;
-            transform: scale(1.08) translateY(-2px); /* More pronounced scale and lift */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .medicine-info h3 {
+            font-size: 1.4rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .medicine-info p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+            flex-grow: 1;
+        }
+
+        .medicine-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .medicine-card .cta-button {
+            width: calc(100% - 3rem); /* Adjust width to match padding */
+            margin: 0 auto;
+            display: block;
+            font-size: 0.9rem;
+            padding: 0.7rem 1rem;
+            border-radius: 20px;
+            background: linear-gradient(45deg, #007bff, #0056b3); /* Blue for order button */
+            box-shadow: 0 4px 10px rgba(0,123,255,0.3);
+            color: var(--text-light);
+        }
+
+        .medicine-card .cta-button:hover {
+            background: linear-gradient(45deg, #0056b3, #007bff);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 15px rgba(0,123,255,0.4);
         }
 
         /* Place Order Section */
         .place-order-section {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); /* Blue gradient */
-            color: white;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: var(--text-light);
             padding: 80px 0;
             text-align: center;
             position: relative;
             overflow: hidden;
             animation: fadeIn 1.5s ease-out;
+            box-shadow: inset 0 5px 20px rgba(0,0,0,0.2);
         }
 
         .place-order-section::before {
@@ -502,7 +510,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://via.placeholder.com/1500x500/007bff/FFFFFF?text=Order+Now+Background') no-repeat center center; /* Order background image */
+            background: url('https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center; /* Order Now background */
             background-size: cover;
             opacity: 0.2;
             z-index: 0;
@@ -520,7 +528,8 @@
             font-size: 3rem;
             margin-bottom: 1.5rem;
             animation: slideInDown 1s ease-out;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 8px var(--shadow-dark);
+            font-weight: 700;
         }
 
         .place-order-content p {
@@ -528,15 +537,16 @@
             margin-bottom: 2.5rem;
             opacity: 0.9;
             animation: slideInUp 1s ease-out 0.3s both;
+            font-weight: 300;
         }
 
         .place-order-button {
-            background: linear-gradient(45deg, #ffc107, #ff9800); /* Orange/Amber gradient */
-            color: #333;
+            background: linear-gradient(45deg, #ffc107, #ff9800);
+            color: var(--text-dark); /* Dark text for contrast */
             padding: 1.2rem 2.5rem;
             border: none;
             border-radius: 30px;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.4s ease;
@@ -544,24 +554,20 @@
             display: inline-block;
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             animation: pulse 1.5s infinite ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .place-order-button:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #ff9800, #ffc107); /* Reverse gradient on hover */
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-            50% { transform: scale(1.03); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
-            100% { transform: scale(1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+            background: linear-gradient(45deg, #ff9800, #ffc107);
         }
 
         /* Stats Section */
         .stats {
-            background: #2c5aa0;
-            color: white;
+            background: var(--primary-blue);
+            color: var(--text-light);
             padding: 60px 0;
             position: relative;
             overflow: hidden;
@@ -573,7 +579,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://via.placeholder.com/1500x300/2c5aa0/FFFFFF?text=Stats+Background') no-repeat center center; /* Stats background image */
+            background: url('https://images.unsplash.com/photo-1584982635489-f53835081c7e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center; /* Abstract medical background */
             background-size: cover;
             opacity: 0.1;
             z-index: 0;
@@ -594,39 +600,32 @@
             border-radius: 10px;
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .stat-item:hover {
             background: rgba(255,255,255,0.2);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
         .stat-item h3 {
-            font-size: 2.8rem; /* Larger font */
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
-            color: #a7d9ff; /* Lighter blue */
+            color: var(--glow-color);
             animation: fadeInScale 1s ease-out;
+            font-weight: 800;
         }
 
         .stat-item p {
-            font-size: 1.2rem; /* Larger font */
+            font-size: 1.2rem;
             opacity: 0.9;
-        }
-
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            font-weight: 300;
         }
 
         /* Footer */
         .footer {
-            background: #1e3d72;
-            color: white;
+            background: var(--dark-blue);
+            color: var(--text-light);
             padding: 60px 0 20px;
             position: relative;
             overflow: hidden;
@@ -638,12 +637,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://via.placeholder.com/1500x400/1e3d72/FFFFFF?text=Footer+Pattern') no-repeat center center; /* Footer background pattern */
+            background: url('https://images.unsplash.com/photo-1519782522777-a51704e6c38f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center; /* Abstract medical pattern */
             background-size: cover;
             opacity: 0.05;
             z-index: 0;
         }
-
 
         .footer-content {
             display: grid;
@@ -655,9 +653,10 @@
         }
 
         .footer-section h3 {
-            color: #a7d9ff; /* Lighter blue */
+            color: var(--glow-color);
             margin-bottom: 1rem;
             font-size: 1.4rem;
+            font-weight: 600;
         }
 
         .footer-section ul {
@@ -665,17 +664,18 @@
         }
 
         .footer-section ul li {
-            margin-bottom: 0.8rem; /* More spacing */
+            margin-bottom: 0.8rem;
         }
 
         .footer-section ul li a {
             color: #ccc;
             text-decoration: none;
             transition: color 0.3s ease;
+            font-weight: 300;
         }
 
         .footer-section ul li a:hover {
-            color: #a7d9ff;
+            color: var(--glow-color);
             text-decoration: underline;
         }
 
@@ -686,6 +686,7 @@
             color: #ccc;
             position: relative;
             z-index: 1;
+            font-size: 0.9rem;
         }
 
         /* Responsive Design */
@@ -699,7 +700,7 @@
             .hero p {
                 font-size: 1.2rem;
             }
-            .features-grid {
+            .features-grid, .catalog-grid {
                 grid-template-columns: 1fr;
             }
             .categories-grid {
@@ -720,16 +721,67 @@
             }
         }
 
-        /* Animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out; /* Slower and smoother */
+        /* Top Class Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.1); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+            50% { transform: scale(1.03); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+            100% { transform: scale(1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         /* Floating Elements */
@@ -737,72 +789,48 @@
             position: fixed;
             pointer-events: none;
             z-index: 1;
-            opacity: 0.6; /* More subtle */
-            font-size: 4rem; /* Larger */
+            opacity: 0.6;
+            font-size: 4rem;
             filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
             animation-iteration-count: infinite;
             animation-timing-function: ease-in-out;
         }
 
-        /* New image-based floating elements */
         .floating-img {
             position: fixed;
             pointer-events: none;
             z-index: 1;
             opacity: 0.3;
-            width: 100px; /* Adjust size as needed */
+            width: 100px;
             height: auto;
             animation-iteration-count: infinite;
             animation-timing-function: ease-in-out;
         }
 
-        .floating-1 {
-            top: 15%;
-            left: 8%;
-            animation: float1 8s ease-in-out infinite;
-        }
+        .floating-1 { top: 15%; left: 8%; animation: float1 8s ease-in-out infinite; }
+        .floating-2 { top: 55%; right: 12%; animation: float2 10s ease-in-out infinite; }
+        .floating-3 { bottom: 25%; left: 3%; animation: float3 9s ease-in-out infinite; }
+        .floating-4 { top: 30%; right: 5%; animation: float4 7s ease-in-out infinite; }
+        .floating-5 { bottom: 10%; left: 20%; animation: float5 11s ease-in-out infinite; }
+        .floating-6 { top: 70%; left: 25%; animation: float6 9s ease-in-out infinite; width: 80px;} /* New floating image */
+        .floating-7 { bottom: 5%; right: 20%; animation: float7 12s ease-in-out infinite; width: 90px;} /* New floating image */
 
-        .floating-2 {
-            top: 55%;
-            right: 12%;
-            animation: float2 10s ease-in-out infinite;
-        }
+        @keyframes float1 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-25px) rotate(180deg); } }
+        @keyframes float2 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-35px) rotate(-180deg); } }
+        @keyframes float3 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(90deg); } }
+        @keyframes float4 { 0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); } 50% { transform: translateY(-15px) rotate(45deg) translateX(10px); } }
+        @keyframes float5 { 0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); } 50% { transform: translateY(20px) rotate(-90deg) translateX(-15px); } }
+        @keyframes float6 { 0%, 100% { transform: translateY(0px) translateX(0px); } 50% { transform: translateY(-10px) translateX(10px); } }
+        @keyframes float7 { 0%, 100% { transform: translateY(0px) translateX(0px); } 50% { transform: translateY(15px) translateX(-5px); } }
 
-        .floating-3 {
-            bottom: 25%;
-            left: 3%;
-            animation: float3 9s ease-in-out infinite;
+        .on-scroll-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        .floating-4 {
-            top: 30%;
-            right: 5%;
-            animation: float4 7s ease-in-out infinite;
-        }
-        .floating-5 {
-            bottom: 10%;
-            left: 20%;
-            animation: float5 11s ease-in-out infinite;
-        }
-
-        @keyframes float1 {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-25px) rotate(180deg); }
-        }
-        @keyframes float2 {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-35px) rotate(-180deg); }
-        }
-        @keyframes float3 {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(90deg); }
-        }
-        @keyframes float4 {
-            0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); }
-            50% { transform: translateY(-15px) rotate(45deg) translateX(10px); }
-        }
-        @keyframes float5 {
-            0%, 100% { transform: translateY(0px) rotate(0deg) translateX(0px); }
-            50% { transform: translateY(20px) rotate(-90deg) translateX(-15px); }
+        .on-scroll-fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -810,8 +838,9 @@
     <div class="floating-element floating-1">💊</div>
     <div class="floating-element floating-2">🏥</div>
     <div class="floating-element floating-3">⚕️</div>
-    <img src="https://via.placeholder.com/80/FFFFFF?text=Syringe" alt="Syringe" class="floating-img floating-4">
-    <img src="https://via.placeholder.com/80/FFFFFF?text=Pill" alt="Pill" class="floating-img floating-5">
+    <img src="https://images.unsplash.com/photo-1588775619623-e18ac149a43a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Syringe" class="floating-img floating-4"> <img src="https://images.unsplash.com/photo-1576091160550-fd4280a55639?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pill" class="floating-img floating-5"> <img src="https://images.unsplash.com/photo-1594595208535-6430932c0211?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tablet Blister Pack" class="floating-img floating-6">
+    <img src="https://images.unsplash.com/photo-1585860710609-b6957c5f8e5c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Stethoscope" class="floating-img floating-7">
+
 
     <header class="header">
         <nav class="nav-container">
@@ -820,11 +849,10 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#products">Products</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#catalog">Catalog</a></li> <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <a href="#" class="cta-button">Login / Register</a>
-        </nav>
+            </nav>
     </header>
 
     <div class="ticker">
@@ -843,34 +871,34 @@
 
     <section class="features" id="services">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">Why Choose Mediwell Healthcare?</h2>
+            <h2 class="section-title on-scroll-fade-in">Why Choose Mediwell Healthcare?</h2>
             <div class="features-grid">
-                <div class="feature-card animate-on-scroll">
+                <div class="feature-card on-scroll-fade-in">
                     <span class="feature-icon">🚀</span>
                     <h3>Fast Delivery</h3>
                     <p>Same-day delivery across Patna and 24-hour delivery across Bihar with real-time tracking</p>
                 </div>
-                <div class="feature-card animate-on-scroll">
+                <div class="feature-card on-scroll-fade-in">
                     <span class="feature-icon">💰</span>
                     <h3>Wholesale Pricing</h3>
                     <p>Best bulk pricing tiers with transparent rates and volume discounts for all customer types</p>
                 </div>
-                <div class="feature-card animate-on-scroll">
+                <div class="feature-card on-scroll-fade-in">
                     <span class="feature-icon">🏆</span>
                     <h3>Quality Assurance</h3>
                     <p>100% genuine medicines with batch tracking, expiry monitoring, and quality certifications</p>
                 </div>
-                <div class="feature-card animate-on-scroll">
+                <div class="feature-card on-scroll-fade-in">
                     <span class="feature-icon">📱</span>
                     <h3>Digital Platform</h3>
                     <p>User-friendly mobile-responsive platform with advanced search, bulk ordering, and inventory management</p>
                 </div>
-                <div class="feature-card animate-on-scroll">
+                <div class="feature-card on-scroll-fade-in">
                     <span class="feature-icon">🤝</span>
                     <h3>Trusted Partner</h3>
                     <p>15+ years of experience serving healthcare businesses with dedicated account managers</p>
                 </div>
-                <div class="feature-card animate-on-scroll">
+                <div class="feature-card on-scroll-fade-in">
                     <span class="feature-icon">🔒</span>
                     <h3>Secure Transactions</h3>
                     <p>HTTPS encryption, GST billing, digital invoicing, and secure payment gateways</p>
@@ -881,37 +909,37 @@
 
     <section class="categories" id="products">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">Product Categories</h2>
+            <h2 class="section-title on-scroll-fade-in">Product Categories</h2>
             <div class="categories-grid">
-                <div class="category-card animate-on-scroll">
+                <div class="category-card on-scroll-fade-in">
                     <h3>💊 Tablets & Capsules</h3>
                     <p>Complete range of tablets and capsules from leading manufacturers</p>
                 </div>
-                <div class="category-card animate-on-scroll">
+                <div class="category-card on-scroll-fade-in">
                     <h3>💉 Injections & Infusions</h3>
                     <p>Sterile injections, IV fluids, and specialized infusion products</p>
                 </div>
-                <div class="category-card animate-on-scroll">
+                <div class="category-card on-scroll-fade-in">
                     <h3>🍯 Syrups & Liquids</h3>
                     <p>Oral liquids, syrups, and suspension formulations</p>
                 </div>
-                <div class="category-card animate-on-scroll">
+                <div class="category-card on-scroll-fade-in">
                     <h3>🏥 Surgical Supplies</h3>
                     <p>Surgical instruments, disposables, and medical equipment</p>
                 </div>
-                <div class="category-card animate-on-scroll">
+                <div class="category-card on-scroll-fade-in">
                     <h3>😷 COVID Care Products</h3>
                     <p>Masks, sanitizers, test kits, and COVID-19 medications</p>
                 </div>
-                <div class="category-card animate-on-scroll">
+                <div class="category-card on-scroll-fade-in">
                     <h3>🌿 Ayurvedic & Herbal</h3>
                     <p>Traditional and modern ayurvedic formulations</p>
                 </div>
-                <div class="category-card animate-on-scroll">
+                <div class="category-card on-scroll-fade-in">
                     <h3>🩹 OTC & General</h3>
                     <p>Over-the-counter medications and general healthcare products</p>
                 </div>
-                <div class="category-card animate-on-scroll">
+                <div class="category-card on-scroll-fade-in">
                     <h3>🔬 Diagnostics</h3>
                     <p>Lab equipment, test kits, and diagnostic reagents</p>
                 </div>
@@ -919,14 +947,65 @@
         </div>
     </section>
 
-    <section class="search-section">
+    <section class="medicine-catalog" id="catalog">
         <div class="container">
-            <h2 style="margin-bottom: 2rem;">Find Your Products Instantly</h2>
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search by medicine name, brand, or composition...">
-                <button class="search-button">🔍 Search</button>
+            <h2 class="section-title on-scroll-fade-in">Popular Medicines & Wholesale Prices</h2>
+            <div class="catalog-grid">
+                <div class="medicine-card on-scroll-fade-in">
+                    <img src="https://images.unsplash.com/photo-1628352601720-438914620f31?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Paracetamol">
+                    <div class="medicine-info">
+                        <h3>Paracetamol 650mg</h3>
+                        <p>Fever and pain relief. Popular brand: Crocin/Dolo.</p>
+                        <div class="medicine-price">₹ 120/strip</div>
+                        <a href="#place-order" class="cta-button">Order Now</a>
+                    </div>
+                </div>
+                <div class="medicine-card on-scroll-fade-in">
+                    <img src="https://images.unsplash.com/photo-1594595208535-6430932c0211?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Amoxicillin">
+                    <div class="medicine-info">
+                        <h3>Amoxicillin 500mg</h3>
+                        <p>Broad-spectrum antibiotic. Popular brand: Mox/Amoxil.</p>
+                        <div class="medicine-price">₹ 250/strip</div>
+                        <a href="#place-order" class="cta-button">Order Now</a>
+                    </div>
+                </div>
+                <div class="medicine-card on-scroll-fade-in">
+                    <img src="https://images.unsplash.com/photo-1584813539134-ce1517a264a9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Omeprazole">
+                    <div class="medicine-info">
+                        <h3>Omeprazole 20mg</h3>
+                        <p>Reduces stomach acid. Popular brand: Omez/Aciloc.</p>
+                        <div class="medicine-price">₹ 90/strip</div>
+                        <a href="#place-order" class="cta-button">Order Now</a>
+                    </div>
+                </div>
+                <div class="medicine-card on-scroll-fade-in">
+                    <img src="https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Metformin">
+                    <div class="medicine-info">
+                        <h3>Metformin 500mg</h3>
+                        <p>Manages blood sugar levels. Popular brand: Glycomet.</p>
+                        <div class="medicine-price">₹ 180/strip</div>
+                        <a href="#place-order" class="cta-button">Order Now</a>
+                    </div>
+                </div>
+                <div class="medicine-card on-scroll-fade-in">
+                    <img src="https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Levocetirizine">
+                    <div class="medicine-info">
+                        <h3>Levocetirizine 5mg</h3>
+                        <p>Antihistamine for allergies. Popular brand: Levocet.</p>
+                        <div class="medicine-price">₹ 60/strip</div>
+                        <a href="#place-order" class="cta-button">Order Now</a>
+                    </div>
+                </div>
+                <div class="medicine-card on-scroll-fade-in">
+                    <img src="https://images.unsplash.com/photo-1628348700057-0a2d20d4f39c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Vitamin C">
+                    <div class="medicine-info">
+                        <h3>Vitamin C Tablets</h3>
+                        <p>Immune booster. Popular brand: Limcee.</p>
+                        <div class="medicine-price">₹ 75/strip</div>
+                        <a href="#place-order" class="cta-button">Order Now</a>
+                    </div>
+                </div>
             </div>
-            <p style="margin-top: 1rem; opacity: 0.9;">Search by barcode, voice command, or upload your order list</p>
         </div>
     </section>
 
@@ -941,19 +1020,19 @@
     <section class="stats">
         <div class="container">
             <div class="stats-grid">
-                <div class="stat-item animate-on-scroll">
+                <div class="stat-item on-scroll-fade-in">
                     <h3>5000+</h3>
                     <p>Active Customers</p>
                 </div>
-                <div class="stat-item animate-on-scroll">
+                <div class="stat-item on-scroll-fade-in">
                     <h3>10,000+</h3>
                     <p>Product SKUs</p>
                 </div>
-                <div class="stat-item animate-on-scroll">
+                <div class="stat-item on-scroll-fade-in">
                     <h3>99.5%</h3>
                     <p>Order Accuracy</p>
                 </div>
-                <div class="stat-item animate-on-scroll">
+                <div class="stat-item on-scroll-fade-in">
                     <h3>24/7</h3>
                     <p>Customer Support</p>
                 </div>
@@ -1023,43 +1102,53 @@
             });
         });
 
-        // Scroll animations
+        // Scroll animations (using Intersection Observer for 'on-scroll-fade-in')
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
+                    entry.target.classList.add('is-visible');
                 } else {
-                    entry.target.classList.remove('animated'); // Optional: remove animation on scroll out
+                    entry.target.classList.remove('is-visible');
                 }
             });
         }, observerOptions);
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+
+        document.querySelectorAll('.on-scroll-fade-in').forEach(el => {
             observer.observe(el);
         });
 
         // Counter animation for stats
         const animateCounters = () => {
-            const counters = document.querySelectorAll('.stat-item h3');
-            counters.forEach(counter => {
-                const target = parseInt(counter.textContent.replace(/[^0-9]/g, ''));
-                const suffix = counter.textContent.replace(/[0-9]/g, '');
-                let current = 0;
-                const increment = target / 100;
-                let count = 0; // Use a separate variable for animation counter
+            document.querySelectorAll('.stat-item h3').forEach(counter => {
+                // Check if counter has already been animated to prevent re-animation on scroll-out/in
+                if (counter.dataset.animated) return;
 
-                const timer = setInterval(() => {
-                    count++;
-                    current = Math.min(target, current + increment);
-                    if (count > 100) { // Stop after 100 increments
-                        current = target;
-                        clearInterval(timer);
-                    }
+                const target = parseInt(counter.textContent.replace(/[^0-9.]/g, ''));
+                const suffix = counter.textContent.replace(/[0-9.]/g, '');
+                let current = 0;
+                const duration = 1500; // milliseconds
+                let startTime = null;
+
+                const animate = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = (timestamp - startTime) / duration;
+                    const easeOutQuad = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress; // Easing function
+
+                    current = Math.min(target, easeOutQuad * target);
                     counter.textContent = Math.floor(current) + suffix;
-                }, 20);
+
+                    if (current < target) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        counter.dataset.animated = true; // Mark as animated
+                    }
+                };
+                requestAnimationFrame(animate);
             });
         };
 
@@ -1068,7 +1157,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateCounters();
-                    statsObserver.unobserve(entry.target); // Run animation once
+                    // No unobserve, allowing re-animation if user scrolls away and back
                 }
             });
         }, { threshold: 0.5 });
@@ -1076,21 +1165,6 @@
         if (statsSection) {
             statsObserver.observe(statsSection);
         }
-
-        // Search functionality
-        const searchInput = document.querySelector('.search-input');
-        const searchButton = document.querySelector('.search-button');
-        searchButton.addEventListener('click', () => {
-            const query = searchInput.value.trim();
-            if (query) {
-                alert(`Searching for: ${query}\n\nThis would typically redirect to the product catalog with search results.`);
-            }
-        });
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                searchButton.click();
-            }
-        });
 
         // Category card interactions
         document.querySelectorAll('.category-card').forEach(card => {
@@ -1100,20 +1174,21 @@
             });
         });
 
-        // Feature card hover improvements (already mostly covered by CSS transitions)
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                // Additional JavaScript effects if needed, but CSS handles most of it
-            });
-            card.addEventListener('mouseleave', () => {
-                //
+        // Medicine card order buttons
+        document.querySelectorAll('.medicine-card .cta-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default link behavior
+                const medicineName = button.closest('.medicine-card').querySelector('h3').textContent;
+                alert(`You clicked to order: ${medicineName}\n\nThis would typically add the item to your cart or lead to a detailed product page.`);
             });
         });
 
-        // Mobile menu toggle (for future implementation)
+
+        // Mobile menu toggle (updated logic)
         const createMobileMenu = () => {
             const navContainer = document.querySelector('.nav-container');
             let menuButton = document.querySelector('.mobile-menu-button');
+            const navMenu = document.querySelector('.nav-menu');
 
             if (window.innerWidth <= 768) {
                 if (!menuButton) {
@@ -1126,40 +1201,55 @@
                         color: white;
                         font-size: 1.8rem;
                         cursor: pointer;
-                        z-index: 1001; /* Ensure it's above other content */
+                        z-index: 1001;
                     `;
                     navContainer.appendChild(menuButton);
 
                     menuButton.addEventListener('click', () => {
-                        const navMenu = document.querySelector('.nav-menu');
-                        if (navMenu) {
-                            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-                            navMenu.style.flexDirection = 'column';
-                            navMenu.style.position = 'absolute';
-                            navMenu.style.top = '60px'; /* Below header */
-                            navMenu.style.left = '0';
-                            navMenu.style.width = '100%';
-                            navMenu.style.background = '#2c5aa0';
-                            navMenu.style.padding = '1rem 0';
-                            navMenu.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-                        }
+                        navMenu.classList.toggle('active');
                     });
                 }
+                navMenu.style.cssText = `
+                    display: none; /* Hidden by default on mobile */
+                    flex-direction: column;
+                    position: absolute;
+                    top: 60px;
+                    left: 0;
+                    width: 100%;
+                    background: var(--dark-blue);
+                    padding: 1rem 0;
+                    box-shadow: 0 5px 15px var(--shadow-medium);
+                    text-align: center;
+                `;
+                 // Ensure nav menu is hidden initially
+                if (!navMenu.classList.contains('active')) {
+                    navMenu.style.display = 'none';
+                }
+
             } else {
                 if (menuButton) {
                     menuButton.remove();
-                    const navMenu = document.querySelector('.nav-menu');
-                    if (navMenu) {
-                        navMenu.style.display = 'flex';
-                        navMenu.style.flexDirection = 'row';
-                        navMenu.style.position = 'static';
-                        navMenu.style.background = 'none';
-                        navMenu.style.padding = '0';
-                        navMenu.style.boxShadow = 'none';
-                    }
                 }
+                navMenu.classList.remove('active'); // Remove active class if screen grows
+                navMenu.style.cssText = `
+                    display: flex; /* Always flex on desktop */
+                    flex-direction: row;
+                    position: static;
+                    background: none;
+                    padding: 0;
+                    box-shadow: none;
+                `;
             }
         };
+
+        // Add class for active mobile menu
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(`
+            .nav-menu.active {
+                display: flex !important;
+            }
+        `, styleSheet.cssRules.length);
+
 
         window.addEventListener('resize', createMobileMenu);
         createMobileMenu(); // Call on initial load
