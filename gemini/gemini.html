@@ -212,6 +212,12 @@
             pointer-events: none; /* Prevent interaction */
             filter: brightness(0.7) contrast(1.2);
             animation: floatUpDown 4s ease-in-out infinite;
+            @keyframes floatUpDown {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-40px); }  /* <– Increase this for stronger floating */
+  100% { transform: translateY(0); }
+}
+
 }
         }
     </style>
