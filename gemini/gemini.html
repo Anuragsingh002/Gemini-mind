@@ -566,6 +566,12 @@
         });
 
         gsap.utils.toArray('.process-step').forEach(step => { gsap.fromTo(step, { opacity: 0, x: step.classList.contains('even') ? 100 : -100 }, { opacity: 1, x: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: step, start: "top 80%", toggleActions: "play none none reverse" } }); });
+        
+        // This animation now correctly targets the platform preview image as well
+        gsap.from(".platform-preview", {
+            scrollTrigger: { trigger: "#platform", start: "top 80%" },
+            opacity: 0, y: 60, scale: 0.95, duration: 1, ease: "power3.out"
+        });
 
         gsap.from("#cta .container > *", { scrollTrigger: { trigger: "#cta", start: "top 80%" }, opacity: 0, y: 50, duration: 1, stagger: 0.2, ease: "power3.out" });
 
