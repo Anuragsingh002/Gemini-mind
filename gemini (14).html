@@ -397,8 +397,8 @@
             margin-bottom: 20px;
         }
         
-        /* Why Choose Us Section */
-        #why-us {
+        /* Why Choose Us & Digital Advantage Sections */
+        #why-us, #digital-advantage {
             background-color: rgba(233, 236, 239, 0.9); /* Made semi-transparent */
         }
         
@@ -414,6 +414,12 @@
             border-radius: 8px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
         
         .feature-item .icon {
@@ -431,39 +437,6 @@
             font-size: 16px;
             line-height: 1.6;
             color: #555;
-        }
-        
-        /* Bulk Order Steps */
-        #bulk-order {
-             background-color: transparent; /* Changed to transparent to show body background */
-        }
-
-        .steps-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 40px;
-            text-align: center;
-        }
-        
-        .step {
-            max-width: 300px;
-        }
-        
-        .step .icon {
-            font-size: 60px;
-            color: var(--primary-color);
-            background-color: #e7f1ff;
-            width: 120px;
-            height: 120px;
-            line-height: 120px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-        
-        .step h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
         }
         
         /* Testimonials Section */
@@ -586,7 +559,7 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            </div>
+        </div>
     </header>
 
     <div class="ticker-wrap">
@@ -611,7 +584,7 @@
             <p class="fade-in" style="transition-delay: 0.2s;">Delivering health with speed and precision across Patna. Your reliable partner in the healthcare supply chain.</p>
             <div>
                 <a href="#products" class="btn btn-primary btn-large fade-in" style="transition-delay: 0.4s;"><i class="fas fa-pills"></i> Browse Products</a>
-                <a href="#bulk-order" class="btn btn-secondary btn-large fade-in" style="transition-delay: 0.5s;"><i class="fas fa-bolt"></i> Quick Order Now</a>
+                <a href="#digital-advantage" class="btn btn-secondary btn-large fade-in" style="transition-delay: 0.5s;"><i class="fas fa-bolt"></i> Our Advantage</a>
             </div>
         </div>
     </section>
@@ -681,7 +654,7 @@
                     </div>
                 </div>
                 <div class="product-card fade-in" style="transition-delay: 0.1s;">
-                    <img src="https://shorturl.at/0Z5BJ" alt="N95 Masks">
+                    <img src="https://images.unsplash.com/photo-1628771065518-5d824141855a?q=80&w=800&auto=format&fit=crop" alt="N95 Masks">
                     <div class="product-card-content">
                         <h3>N95 Face Masks</h3>
                         <p class="category">COVID Care</p>
@@ -735,24 +708,24 @@
         </div>
     </section>
     
-    <section id="bulk-order">
+    <section id="digital-advantage">
         <div class="container">
-            <h2 class="section-title fade-in">Our Simple Bulk Ordering Process</h2>
-            <div class="steps-container">
-                <div class="step fade-in" style="transition-delay: 0.1s;">
-                    <div class="icon"><i class="fas fa-list-check"></i></div>
-                    <h3>1. Create Your Order</h3>
-                    <p>Easily search for products or upload your list via CSV/Excel for quick cart building.</p>
+            <h2 class="section-title fade-in">Experience the Digital Advantage</h2>
+            <div class="features-grid">
+                <div class="feature-item fade-in" style="transition-delay: 0.1s;">
+                    <div class="icon"><i class="fas fa-laptop-medical"></i></div>
+                    <h3>Smart Ordering Platform</h3>
+                    <p>Use our modern web portal to place orders, reorder past purchases, or upload bulk lists via CSV/Excel in seconds.</p>
                 </div>
-                <div class="step fade-in" style="transition-delay: 0.3s;">
-                    <div class="icon"><i class="fas fa-file-signature"></i></div>
-                    <h3>2. Confirm & Pay</h3>
-                    <p>Review your order, get instant quotes with GST, and pay through our secure gateway.</p>
+                <div class="feature-item fade-in" style="transition-delay: 0.2s;">
+                    <div class="icon"><i class="fas fa-route"></i></div>
+                    <h3>Live Order Tracking</h3>
+                    <p>Gain complete transparency with real-time tracking of your shipment from our warehouse to your doorstep.</p>
                 </div>
-                <div class="step fade-in" style="transition-delay: 0.5s;">
-                    <div class="icon"><i class="fas fa-box-open"></i></div>
-                    <h3>3. Receive Your Delivery</h3>
-                    <p>Track your order in real-time and receive it at your doorstep, hassle-free.</p>
+                <div class="feature-item fade-in" style="transition-delay: 0.3s;">
+                    <div class="icon"><i class="fab fa-whatsapp"></i></div>
+                    <h3>Dedicated Digital Support</h3>
+                    <p>Connect with your dedicated account manager instantly via WhatsApp or email for quick resolutions and support.</p>
                 </div>
             </div>
         </div>
