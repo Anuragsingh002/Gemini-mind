@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mediwell Healthcare - Wholesale Medical Distributor</title>
+    <title>Mediwell Healthcare - Bihar's Premier Pharma Distributor</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
     <style>
         /* General Styling */
         :root {
-            --primary-color: #007bff;
-            --secondary-color: #0d6efd;
-            --background-color: #f8f9fa;
+            --primary-color: #005c97; /* Darker, more professional blue */
+            --secondary-color: #363795;
+            --accent-color: #00a8cc; /* A bright, modern accent */
+            --background-color: #fdfdfd;
             --text-color: #333;
             --light-gray: #e9ecef;
             --white: #ffffff;
@@ -29,24 +30,7 @@
             margin: 0;
             background-color: var(--background-color);
             color: var(--text-color);
-            background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2070&auto=format&fit=crop'); /* Added background image */
-            background-attachment: fixed; /* Keeps the background image fixed on scroll */
-            background-size: cover; /* Ensures the image covers the entire background */
-            position: relative;
         }
-        
-        /* Added an overlay to ensure text is readable */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.85);
-            z-index: -1;
-        }
-
 
         .container {
             max-width: 1200px;
@@ -56,6 +40,7 @@
 
         section {
             padding: 80px 0;
+            overflow: hidden; /* Prevent horizontal scroll from animations */
         }
 
         h2.section-title {
@@ -142,11 +127,12 @@
             height: 2px;
             bottom: 0;
             left: 0;
-            background-color: var(--primary-color);
+            background-color: var(--accent-color);
             transition: width 0.3s ease;
         }
 
-        .nav ul li a:hover::after {
+        .nav ul li a:hover, .nav ul li a:hover::after {
+            color: var(--primary-color);
             width: 100%;
         }
 
@@ -156,7 +142,7 @@
             border-radius: 25px;
             font-weight: 500;
             transition: all 0.3s ease;
-            margin-left: 10px; /* Added margin for spacing between buttons */
+            margin-left: 10px;
         }
 
         .btn-primary {
@@ -170,20 +156,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
             border-color: var(--secondary-color);
-        }
-        
-        /* Added styles for the new button */
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--primary-color);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
         }
         
         /* Ticker */
@@ -253,15 +225,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, rgba(0, 86, 179, 0.7), rgba(0, 123, 255, 0.6));
+            background: linear-gradient(45deg, rgba(0, 92, 151, 0.8), rgba(54, 55, 149, 0.7));
             z-index: -1;
         }
 
         .hero-content h1 {
             font-size: 56px;
             font-family: var(--heading-font);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-weight: 700;
+        }
+        
+        .hero-content .subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
         }
 
         .hero-content p {
@@ -277,12 +256,12 @@
         
         /* Shop By Category Section */
         #categories {
-            background-color: transparent; /* Changed to transparent to show body background */
+            background-color: var(--white);
         }
         
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 25px;
             text-align: center;
         }
@@ -291,14 +270,14 @@
             background: var(--background-color);
             padding: 30px 20px;
             border-radius: 10px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Enhanced transition */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid var(--light-gray);
         }
 
         .category-card:hover {
-            transform: translateY(-10px) scale(1.05); /* Enhanced animation */
+            transform: translateY(-10px) scale(1.05);
             box-shadow: 0 15px 25px rgba(0,0,0,0.12);
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); /* Enhanced transition color */
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: var(--white);
             border-color: var(--secondary-color);
         }
@@ -307,13 +286,12 @@
             font-size: 48px;
             color: var(--primary-color);
             margin-bottom: 15px;
-            transition: color 0.3s ease;
+            transition: all 0.4s ease;
         }
         
         .category-card:hover .icon {
             color: var(--white);
-            transform: rotate(360deg); /* Added icon animation */
-            transition: all 0.5s ease;
+            transform: scale(1.2);
         }
         
         .category-card h3 {
@@ -323,7 +301,7 @@
 
         /* Featured Products Section */
         #products {
-             background-color: transparent; /* Changed to transparent to show body background */
+             background-color: var(--light-gray);
         }
 
         .product-grid {
@@ -337,7 +315,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Added border-color transition */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             position: relative;
             overflow: hidden;
             border: 1px solid #eee;
@@ -346,20 +324,19 @@
         .product-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-color: var(--primary-color); /* Added transition color */
+            border-color: var(--accent-color);
         }
         
         .product-card:hover img {
-            transform: scale(1.05); /* Added image zoom animation */
+            transform: scale(1.05);
             transition: transform 0.4s ease;
         }
-
 
         .product-card .badge {
             position: absolute;
             top: 15px;
             right: 15px;
-            background-color: #28a745;
+            background-color: var(--accent-color);
             color: var(--white);
             padding: 5px 12px;
             border-radius: 20px;
@@ -397,9 +374,46 @@
             margin-bottom: 20px;
         }
         
-        /* Why Choose Us & Digital Advantage Sections */
-        #why-us, #digital-advantage {
-            background-color: rgba(233, 236, 239, 0.9); /* Made semi-transparent */
+        /* NEW: Image Slider Section */
+        #image-slider {
+            padding: 0;
+            max-width: 100%;
+            background: #f0f0f0;
+        }
+        .slider-container {
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            min-height: 400px;
+        }
+        .slider-track {
+            display: flex;
+            width: calc(250px * 12); /* width of image * number of images */
+            animation: slide-animation 40s linear infinite;
+        }
+        .slide {
+            width: 250px;
+            height: 300px;
+            margin: 0 15px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @keyframes slide-animation {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 6)); } /* width of image * half number of images */
+        }
+        
+        /* Why Choose Us Section */
+        #why-us {
+            background-color: var(--white);
         }
         
         .features-grid {
@@ -409,17 +423,18 @@
         }
         
         .feature-item {
-            background: var(--white);
+            background: #fcfcfc;
             padding: 40px 30px;
             border-radius: 8px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--light-gray);
             transition: all 0.3s ease-in-out;
         }
         
         .feature-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+            border-color: var(--accent-color);
         }
         
         .feature-item .icon {
@@ -441,7 +456,7 @@
         
         /* Testimonials Section */
         #testimonials {
-             background-color: transparent; /* Changed to transparent to show body background */
+             background-color: var(--light-gray);
         }
         
         .testimonial-grid {
@@ -451,23 +466,88 @@
         }
         
         .testimonial-card {
-            background: var(--background-color);
+            background: var(--white);
             padding: 30px;
             border-radius: 8px;
             border-left: 5px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
         }
         
         .testimonial-card p.quote {
             font-style: italic;
             color: #555;
             line-height: 1.7;
+            flex-grow: 1; /* Pushes author to the bottom */
         }
         
-        .testimonial-card .author {
+        .testimonial-card .author-info {
             margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-card .author-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        
+        .testimonial-card .author-details {
             font-weight: bold;
             color: var(--primary-color);
         }
+        
+        .testimonial-card .author-details span {
+            display: block;
+            font-size: 14px;
+            color: #777;
+            font-weight: normal;
+        }
+        
+        /* NEW: CTA Order Section */
+        #cta-order {
+            background: linear-gradient(45deg, rgba(0, 92, 151, 0.9), rgba(54, 55, 149, 0.9)), url('https://images.unsplash.com/photo-1581094651181-3c6754573673?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat fixed;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        #cta-order h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        #cta-order p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+        
+        .btn-cta {
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 20px 50px;
+            font-size: 22px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0, 168, 204, 0.4);
+            animation: pulse-animation 2s infinite;
+        }
+        
+        .btn-cta:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 168, 204, 0.5);
+            animation: none;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
 
         /* Footer */
         .footer {
@@ -494,7 +574,7 @@
             position: absolute;
             left: 0;
             bottom: -10px;
-            background-color: var(--primary-color);
+            background-color: var(--accent-color);
             height: 2px;
             width: 50px;
         }
@@ -537,7 +617,7 @@
         }
 
         .social-links a:hover {
-            background-color: var(--primary-color);
+            background-color: var(--accent-color);
             transform: translateY(-3px);
         }
 
@@ -564,11 +644,10 @@
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <span>Out of Stock: Paracetamol 650mg</span>
-            <span>New Arrival: COVID-19 Antigen Test Kits</span>
-            <span>Government Circular: New GST Rules Applied</span>
-            <span>Urgent: Recall of Batch #XYZ123</span>
-            <span>Special Discount on Bulk Orders of Vitamins</span>
+            <span>Specializing in temperature-controlled injections and vaccines</span>
+            <span>Now delivering to all major districts in Bihar</span>
+            <span>New government GST rules applied</span>
+            <span>Partner with the most trusted pharma distributor in Patna</span>
         </div>
     </div>
 
@@ -580,12 +659,9 @@
             </video>
         </div>
         <div class="hero-content">
-            <h1 class="fade-in">Trusted Wholesale Pharma Distribution</h1>
-            <p class="fade-in" style="transition-delay: 0.2s;">Delivering health with speed and precision across Patna. Your reliable partner in the healthcare supply chain.</p>
-            <div>
-                <a href="#products" class="btn btn-primary btn-large fade-in" style="transition-delay: 0.4s;"><i class="fas fa-pills"></i> Browse Products</a>
-                <a href="#digital-advantage" class="btn btn-secondary btn-large fade-in" style="transition-delay: 0.5s;"><i class="fas fa-bolt"></i> Our Advantage</a>
-            </div>
+            <h1 class="fade-in">Bihar's Premier Wholesale Pharma Distributor</h1>
+            <p class="subtitle fade-in" style="transition-delay: 0.2s;">Specializing in Critical Care & Injections</p>
+            <a href="#products" class="btn btn-primary btn-large fade-in" style="transition-delay: 0.4s;"><i class="fas fa-pills"></i> Browse All Products</a>
         </div>
     </section>
     
@@ -597,8 +673,6 @@
                 <div class="category-card fade-in" style="transition-delay: 0.2s;"><div class="icon"><i class="fas fa-syringe"></i></div><h3>Injections</h3></div>
                 <div class="category-card fade-in" style="transition-delay: 0.3s;"><div class="icon"><i class="fas fa-prescription-bottle"></i></div><h3>Syrups</h3></div>
                 <div class="category-card fade-in" style="transition-delay: 0.4s;"><div class="icon"><i class="fas fa-band-aid"></i></div><h3>Surgical</h3></div>
-                <div class="category-card fade-in" style="transition-delay: 0.5s;"><div class="icon"><i class="fas fa-head-side-virus"></i></div><h3>COVID Care</h3></div>
-                <div class="category-card fade-in" style="transition-delay: 0.6s;"><div class="icon"><i class="fas fa-leaf"></i></div><h3>Ayurvedic</h3></div>
             </div>
         </div>
     </section>
@@ -608,11 +682,11 @@
             <h2 class="section-title fade-in">Featured Products & Best Deals</h2>
             <div class="product-grid">
                 <div class="product-card fade-in">
-                    <img src="https://images.unsplash.com/photo-1607619056574-7d8d3ee536b2?q=80&w=800&auto=format&fit=crop" alt="Tablets">
+                    <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop" alt="Insulin">
                     <div class="product-card-content">
-                        <h3>Atorvastatin 20mg</h3>
-                        <p class="category">Tablets</p>
-                        <div class="price"><span>Bulk Price: ₹120.00 / strip</span></div>
+                        <h3>Insulin Pen</h3>
+                        <p class="category">Injections</p>
+                        <div class="price"><span>Bulk Price: ₹450.00 / pen</span></div>
                         <a href="#" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
@@ -636,96 +710,55 @@
                     </div>
                 </div>
                  <div class="product-card fade-in" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1584308666744-84804044b6ae?q=80&w=800&auto=format&fit=crop" alt="OTC Product">
+                    <img src="https://images.unsplash.com/photo-1607619056574-7d8d3ee536b2?q=80&w=800&auto=format&fit=crop" alt="Tablets">
                     <div class="product-card-content">
-                        <h3>Antiseptic Liquid</h3>
-                        <p class="category">OTC</p>
-                        <div class="price"><span>Bulk Price: ₹55.00 / unit</span></div>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-                <div class="product-card fade-in">
-                    <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop" alt="Insulin">
-                    <div class="product-card-content">
-                        <h3>Insulin Pen</h3>
-                        <p class="category">Injections</p>
-                        <div class="price"><span>Bulk Price: ₹450.00 / pen</span></div>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-                <div class="product-card fade-in" style="transition-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1628771065518-5d824141855a?q=80&w=800&auto=format&fit=crop" alt="N95 Masks">
-                    <div class="product-card-content">
-                        <h3>N95 Face Masks</h3>
-                        <p class="category">COVID Care</p>
-                        <div class="price"><span>Bulk Price: ₹300.00 / box of 20</span></div>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-                <div class="product-card fade-in" style="transition-delay: 0.2s;">
-                     <div class="badge">New</div>
-                    <img src="https://images.unsplash.com/photo-1607568788193-27a94a42861c?q=80&w=800&auto=format&fit=crop" alt="Ayurvedic">
-                    <div class="product-card-content">
-                        <h3>Ashwagandha Capsules</h3>
-                        <p class="category">Ayurvedic</p>
-                        <div class="price"><span>Bulk Price: ₹180.00 / bottle</span></div>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-                 <div class="product-card fade-in" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1605206771191-5c3a194931a5?q=80&w=800&auto=format&fit=crop" alt="First Aid">
-                    <div class="product-card-content">
-                        <h3>First Aid Kit</h3>
-                        <p class="category">Surgical</p>
-                        <div class="price"><span>Bulk Price: ₹750.00 / kit</span></div>
+                        <h3>Atorvastatin 20mg</h3>
+                        <p class="category">Tablets</p>
+                        <div class="price"><span>Bulk Price: ₹120.00 / strip</span></div>
                         <a href="#" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
+    <section id="image-slider">
+        <div class="slider-container">
+            <div class="slider-track">
+                <div class="slide"><img src="https://images.unsplash.com/photo-1581092921442-aa96d5a75392?q=80&w=800" alt="Modern Warehouse"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1628328703876-5aff5005c2ce?q=80&w=800" alt="Injection Vials"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1574717523113-643659a35280?q=80&w=800" alt="Pharmaceutical Logistics"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1606038451583-a1d8b5847432?q=80&w=800" alt="Pharmacist at work"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1581093581783-9a5f5d0828d1?q=80&w=800" alt="Cold Storage"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1622181519493-1815e68340d9?q=80&w=800" alt="Medical Supplies"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1581092921442-aa96d5a75392?q=80&w=800" alt="Modern Warehouse"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1628328703876-5aff5005c2ce?q=80&w=800" alt="Injection Vials"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1574717523113-643659a35280?q=80&w=800" alt="Pharmaceutical Logistics"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1606038451583-a1d8b5847432?q=80&w=800" alt="Pharmacist at work"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1581093581783-9a5f5d0828d1?q=80&w=800" alt="Cold Storage"></div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1622181519493-1815e68340d9?q=80&w=800" alt="Medical Supplies"></div>
+            </div>
+        </div>
+    </section>
+
     <section id="why-us">
         <div class="container">
-            <h2 class="section-title fade-in">Why Choose Mediwell Healthcare?</h2>
+            <h2 class="section-title fade-in">Why Partner With Mediwell Healthcare?</h2>
             <div class="features-grid">
                 <div class="feature-item fade-in" style="transition-delay: 0.1s;">
                     <div class="icon"><i class="fas fa-check-circle"></i></div>
-                    <h3>Quality Assurance</h3>
-                    <p>Every product is sourced from certified manufacturers and undergoes strict quality checks.</p>
+                    <h3>Unmatched Quality</h3>
+                    <p>Every product is sourced from certified manufacturers and undergoes strict quality checks before dispatch.</p>
                 </div>
                 <div class="feature-item fade-in" style="transition-delay: 0.2s;">
                     <div class="icon"><i class="fas fa-truck-fast"></i></div>
-                    <h3>Fast & Reliable Delivery</h3>
-                    <p>Our robust logistics network ensures timely and secure delivery across Patna and beyond.</p>
+                    <h3>Bihar-Wide Logistics</h3>
+                    <p>Our robust logistics network ensures timely and secure delivery across Patna and all major districts of Bihar.</p>
                 </div>
                 <div class="feature-item fade-in" style="transition-delay: 0.3s;">
-                    <div class="icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                    <h3>Competitive Bulk Pricing</h3>
-                    <p>We offer transparent, tiered pricing to maximize your profit margins and simplify procurement.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="digital-advantage">
-        <div class="container">
-            <h2 class="section-title fade-in">Experience the Digital Advantage</h2>
-            <div class="features-grid">
-                <div class="feature-item fade-in" style="transition-delay: 0.1s;">
-                    <div class="icon"><i class="fas fa-laptop-medical"></i></div>
-                    <h3>Smart Ordering Platform</h3>
-                    <p>Use our modern web portal to place orders, reorder past purchases, or upload bulk lists via CSV/Excel in seconds.</p>
-                </div>
-                <div class="feature-item fade-in" style="transition-delay: 0.2s;">
-                    <div class="icon"><i class="fas fa-route"></i></div>
-                    <h3>Live Order Tracking</h3>
-                    <p>Gain complete transparency with real-time tracking of your shipment from our warehouse to your doorstep.</p>
-                </div>
-                <div class="feature-item fade-in" style="transition-delay: 0.3s;">
-                    <div class="icon"><i class="fab fa-whatsapp"></i></div>
-                    <h3>Dedicated Digital Support</h3>
-                    <p>Connect with your dedicated account manager instantly via WhatsApp or email for quick resolutions and support.</p>
+                    <div class="icon"><i class="fas fa-temperature-three-quarters"></i></div>
+                    <h3>Specialized Injection Handling</h3>
+                    <p>We provide expert cold chain management for vaccines and critical care injections, ensuring 100% efficacy.</p>
                 </div>
             </div>
         </div>
@@ -736,18 +769,35 @@
             <h2 class="section-title fade-in">What Our Clients Say</h2>
             <div class="testimonial-grid">
                 <div class="testimonial-card fade-in" style="transition-delay: 0.1s;">
-                    <p class="quote">"Mediwell Healthcare has transformed our procurement process. Their delivery is always on time, and the bulk upload feature saves us hours every week."</p>
-                    <p class="author">- R. Kumar, City Pharmacy</p>
+                    <p class="quote">"Mediwell Healthcare has transformed our procurement. Their on-time delivery of critical injections is unmatched in the region. A truly reliable partner."</p>
+                    <div class="author-info">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="R. Kumar">
+                        <div class="author-details">R. Kumar <span>Owner, City Pharmacy</span></div>
+                    </div>
                 </div>
                 <div class="testimonial-card fade-in" style="transition-delay: 0.2s;">
-                    <p class="quote">"The best part is the transparency in pricing and batch numbers. We always know what we're getting. Highly reliable partners for our hospital."</p>
-                    <p class="author">- Dr. Anjali Singh, Hope Hospital</p>
+                    <p class="quote">"The best part is the transparency in pricing and batch numbers. We always know we're getting authentic products for our hospital's needs."</p>
+                    <div class="author-info">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Anjali Singh">
+                        <div class="author-details">Dr. Anjali Singh <span>Procurement Head, Hope Hospital</span></div>
+                    </div>
                 </div>
                 <div class="testimonial-card fade-in" style="transition-delay: 0.3s;">
-                    <p class="quote">"Their customer support is excellent. Any query or issue is resolved instantly through their WhatsApp chat. A truly modern distributor."</p>
-                    <p class="author">- S. Ahmed, Capital Medicals</p>
+                    <p class="quote">"Their customer support is excellent. Any query or issue with our bulk order was resolved instantly through their WhatsApp chat. Highly recommended!"</p>
+                    <div class="author-info">
+                        <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="S. Ahmed">
+                        <div class="author-details">S. Ahmed <span>Manager, Capital Medicals</span></div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="cta-order">
+        <div class="container fade-in">
+            <h2>Ready to Stock Your Inventory?</h2>
+            <p>Experience seamless ordering, competitive pricing, and the fastest delivery network in Bihar. Partner with us and elevate your healthcare business today.</p>
+            <a href="#contact" class="btn btn-cta">Order Now &nbsp; <i class="fas fa-arrow-right"></i></a>
         </div>
     </section>
 
@@ -755,7 +805,7 @@
         <div class="container">
             <div class="footer-col">
                 <h4>Mediwell Healthcare</h4>
-                <p>Your trusted wholesale partner in Patna for all medical supplies. Ensuring quality and timely delivery since 2025.</p>
+                <p>Bihar's trusted wholesale partner for all medical supplies. Ensuring quality and timely delivery since 2025.</p>
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
