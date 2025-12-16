@@ -1,858 +1,503 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mediwell Healthcare - Bihar's Premier Pharma Distributor</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Mindxcope | The Future of Cognitive Intelligence</title>
+    <meta name="description" content="AI-powered Brain-Computer Interface (BCI) platform for quantifying focus, fatigue, and human potential.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        // "Void" Palette - Deep Tech Backgrounds
+                        neural: {
+                            950: '#050505', // Main Background (OLED Black)
+                            900: '#0A0A0A', // Secondary Background
+                            800: '#121212', // Card Surface
+                            700: '#1E1E1E', // Borders
+                        },
+                        // "Signal" Palette - Data Visualization
+                        synapse: {
+                            DEFAULT: '#00F0FF', // Primary Teal/Cyan
+                            dim: 'rgba(0, 240, 255, 0.1)',
+                            glow: 'rgba(0, 240, 255, 0.5)',
+                        },
+                        pulse: {
+                            DEFAULT: '#7B61FF', // AI Violet
+                        },
+                        alert: {
+                            DEFAULT: '#FFB020', // Warning Amber
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'glass': 'linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%)',
+                    },
+                    boxShadow: {
+                        'neon': '0 0 20px rgba(0, 240, 255, 0.15)',
+                        'neon-hover': '0 0 30px rgba(0, 240, 255, 0.4)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-links@3/tsparticles.preset.links.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <style>
-        /* General Styling */
-        :root {
-            --primary-color: #2D67C1; /* A friendly, professional blue */
-            --secondary-color: #363795;
-            --accent-color: #00a8cc; /* A bright, modern accent */
-            --cta-color: #E85D45; /* Reddish-orange from the image */
-            --background-color: #fdfdfd;
-            --light-background: #F0F7FF; /* Light blue background for hero */
-            --text-color: #333;
-            --light-gray: #e9ecef;
-            --white: #ffffff;
-            --heading-font: 'Helvetica Neue', 'Arial', sans-serif;
-            --body-font: 'Helvetica Neue', 'Arial', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--body-font);
-            margin: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            padding: 80px 0;
-            overflow: hidden; /* Prevent horizontal scroll from animations */
-        }
-
-        h2.section-title {
-            text-align: center;
-            font-size: 38px;
-            font-family: var(--heading-font);
-            margin-bottom: 50px;
-            font-weight: 600;
-            position: relative;
-        }
-
-        h2.section-title::after {
-            content: '';
-            width: 70px;
-            height: 4px;
-            background: var(--primary-color);
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: -15px;
-            border-radius: 2px;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
+        
+        /* Glassmorphism Utilities */
+       .glass-panel {
+            background: rgba(18, 18, 18, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         
-        /* Animation: Fade-in on Scroll */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+       .text-glow {
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
         }
-
-        .fade-in.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Header */
-        .header {
-            background-color: var(--white);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: background-color 0.3s ease;
-        }
-
-        .header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo a {
-            text-decoration: none;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-transform: uppercase;
-        }
-
-        .nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-
-        .nav ul li {
-            margin-left: 35px;
-        }
-
-        .nav ul li a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-            padding-bottom: 5px;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
-
-        .nav ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--cta-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav ul li a:hover, .nav ul li a:hover::after {
-            color: var(--primary-color);
-            width: 100%;
-        }
-
-        .btn {
-            text-decoration: none;
-            padding: 10px 22px;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            margin-left: 10px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: 2px solid var(--primary-color);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-            border-color: var(--secondary-color);
-        }
-        
-        /* Ticker */
-        .ticker-wrap {
-            width: 100%;
-            overflow: hidden;
-            background-color: #212529;
-            color: var(--white);
-            padding: 10px 0;
-        }
-
-        .ticker {
-            display: inline-block;
-            white-space: nowrap;
-            padding-left: 100%;
-            animation: ticker-animation 30s linear infinite;
-        }
-
-        .ticker span {
-            margin-right: 60px;
-            font-size: 14px;
-        }
-
-        @keyframes ticker-animation {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* NEW Hero Section */
-        .hero-new {
-            background-color: var(--light-background);
-            padding: 60px 0;
-            display: flex;
-            align-items: center;
-            min-height: 85vh;
-        }
-        
-        .hero-new .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-            flex-wrap: wrap; /* For responsive behavior */
-        }
-        
-        .hero-text-content {
-            flex: 1;
-            min-width: 300px; /* For responsive behavior */
-        }
-        
-        .hero-image-content {
-            flex: 1;
-            text-align: center;
-            min-width: 300px; /* For responsive behavior */
-        }
-        
-        .hero-image-content img {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        .hero-text-content h1 {
-            font-size: 52px;
-            font-weight: 700;
-            color: var(--primary-color);
-            line-height: 1.2;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-        
-        .btn-shop-now {
-            background-color: var(--cta-color);
-            color: var(--white);
-            padding: 15px 35px;
-            font-size: 16px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(232, 93, 69, 0.4);
-        }
-        
-        .btn-shop-now:hover {
-            background-color: #d84315;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(232, 93, 69, 0.5);
-        }
-
-        @media (max-width: 768px) {
-            .hero-new .container {
-                flex-direction: column-reverse;
-                text-align: center;
-            }
-            .hero-text-content h1 {
-                font-size: 38px;
-            }
-        }
-        
-        /* Shop By Category Section */
-        #categories {
-            background-color: var(--white);
-        }
-        
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            text-align: center;
-        }
-        
-        .category-card {
-            background: var(--background-color);
-            padding: 30px 20px;
-            border-radius: 10px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid var(--light-gray);
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.12);
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-            border-color: var(--secondary-color);
-        }
-        
-        .category-card .icon {
-            font-size: 48px;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            transition: all 0.4s ease;
-        }
-        
-        .category-card:hover .icon {
-            color: var(--white);
-            transform: scale(1.2);
-        }
-        
-        .category-card h3 {
-            font-size: 18px;
-            margin: 0;
-        }
-
-        /* Featured Products Section */
-        #products {
-             background-color: var(--light-gray);
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-        }
-
-        .product-card {
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #eee;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-color: var(--accent-color);
-        }
-        
-        .product-card:hover img {
-            transform: scale(1.05);
-            transition: transform 0.4s ease;
-        }
-
-        .product-card .badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: var(--accent-color);
-            color: var(--white);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-        
-        .product-card-content {
-            padding: 25px;
-        }
-
-        .product-card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
-
-        .product-card .category {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .product-card .price {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        /* Image Slider Section */
-        #image-slider {
-            padding: 0;
-            max-width: 100%;
-            background: #f0f0f0;
-        }
-        .slider-container {
-            overflow: hidden;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            min-height: 400px;
-        }
-        .slider-track {
-            display: flex;
-            width: calc(250px * 12); /* width of image * number of images */
-            animation: slide-animation 40s linear infinite;
-        }
-        .slide {
-            width: 250px;
-            height: 300px;
-            margin: 0 15px;
-            flex-shrink: 0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        @keyframes slide-animation {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-250px * 6)); } /* width of image * half number of images */
-        }
-        
-        /* Why Choose Us Section */
-        #why-us {
-            background-color: var(--white);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-item {
-            background: #fcfcfc;
-            padding: 40px 30px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--light-gray);
-            transition: all 0.3s ease-in-out;
-        }
-        
-        .feature-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
-            border-color: var(--accent-color);
-        }
-        
-        .feature-item .icon {
-            font-size: 50px;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        .feature-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-item p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #555;
-        }
-        
-        /* Testimonials Section */
-        #testimonials {
-             background-color: var(--light-gray);
-        }
-        
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .testimonial-card {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 8px;
-            border-left: 5px solid var(--primary-color);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .testimonial-card p.quote {
-            font-style: italic;
-            color: #555;
-            line-height: 1.7;
-            flex-grow: 1; /* Pushes author to the bottom */
-        }
-        
-        .testimonial-card .author-info {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .testimonial-card .author-info img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-            object-fit: cover;
-        }
-        
-        .testimonial-card .author-details {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        .testimonial-card .author-details span {
-            display: block;
-            font-size: 14px;
-            color: #777;
-            font-weight: normal;
-        }
-        
-        /* CTA Order Section */
-        #cta-order {
-            background: linear-gradient(45deg, rgba(0, 92, 151, 0.9), rgba(54, 55, 149, 0.9)), url('https://images.unsplash.com/photo-1581094651181-3c6754573673?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat fixed;
-            color: var(--white);
-            text-align: center;
-        }
-        
-        #cta-order h2 {
-            font-size: 42px;
-            margin-bottom: 20px;
-        }
-        
-        #cta-order p {
-            font-size: 20px;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            opacity: 0.9;
-        }
-        
-        .btn-cta {
-            background-color: var(--accent-color);
-            color: var(--white);
-            padding: 20px 50px;
-            font-size: 22px;
-            border-radius: 50px;
-            box-shadow: 0 5px 20px rgba(0, 168, 204, 0.4);
-            animation: pulse-animation 2s infinite;
-        }
-        
-        .btn-cta:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 168, 204, 0.5);
-            animation: none;
-        }
-
-        @keyframes pulse-animation {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Footer */
-        .footer {
-            background-color: #212529;
-            color: var(--white);
-            padding: 60px 0;
-        }
-
-        .footer .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .footer-col h4 {
-            font-size: 20px;
-            margin-bottom: 25px;
-            position: relative;
-            font-weight: 600;
-        }
-
-        .footer-col h4::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -10px;
-            background-color: var(--accent-color);
-            height: 2px;
-            width: 50px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-col ul li a, .footer-col p {
-            color: #bbb;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--white);
-            padding-left: 8px;
-        }
-        
-        .footer-col i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .social-links a {
-            display: inline-block;
-            height: 40px;
-            width: 40px;
-            background-color: rgba(255,255,255,0.1);
-            margin-right: 10px;
-            text-align: center;
-            line-height: 40px;
-            border-radius: 50%;
-            color: var(--white);
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
     </style>
 </head>
-<body>
 
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <a href="#">Mediwell Healthcare</a>
-            </div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#categories">Categories</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<body class="bg-neural-950 text-white antialiased selection:bg-synapse-DEFAULT selection:text-black overflow-x-hidden">
 
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <span>Specializing in temperature-controlled injections and vaccines</span>
-            <span>Now delivering to all major districts in Bihar</span>
-            <span>Get All major Injections on Cheaper rate</span>
-            <span>Partner with the most trusted pharma distributor in Patna</span>
-        </div>
-    </div>
+    <nav x-data="{ open: false, scrolled: false }" 
+         @scroll.window="scrolled = (window.pageYOffset > 50)"
+         :class="scrolled? 'bg-neural-950/80 border-b border-white/5 backdrop-blur-xl' : 'bg-transparent border-transparent'"
+         class="fixed w-full z-50 transition-all duration-300 top-0 left-0">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                    <div class="w-8 h-8 rounded-full border border-synapse-DEFAULT flex items-center justify-center relative overflow-hidden group-hover:shadow-neon transition-all duration-500">
+                        <div class="w-1.5 h-1.5 bg-synapse-DEFAULT rounded-full animate-pulse"></div>
+                        <div class="absolute w-full h-full border-t border-synapse-DEFAULT animate-spin opacity-50"></div>
+                    </div>
+                    <span class="text-lg font-bold tracking-tight text-white group-hover:text-synapse-DEFAULT transition-colors">
+                        MINDXCOPE
+                    </span>
+                </div>
 
-    <section class="hero-new" id="home">
-        <div class="container">
-            <div class="hero-text-content">
-                <h1 class="fade-in">Welcome, to mediwell Healthcare</h1>
-                <a href="#products" class="btn-shop-now fade-in" style="transition-delay: 0.2s;">Shop Now</a>
-            </div>
-            <div class="hero-image-content fade-in" style="transition-delay: 0.4s;">
-                <img src="mediwell.png" alt="Pharmacist at a medical store">
-            </div>
-        </div>
-    </section>
-    <section id="categories">
-        <div class="container">
-            <h2 class="section-title fade-in">Shop By Category</h2>
-            <div class="category-grid">
-                <div class="category-card fade-in" style="transition-delay: 0.1s;"><div class="icon"><i class="fas fa-tablets"></i></div><h3>Tablets</h3></div>
-                <div class="category-card fade-in" style="transition-delay: 0.2s;"><div class="icon"><i class="fas fa-syringe"></i></div><h3>Injections</h3></div>
-                <div class="category-card fade-in" style="transition-delay: 0.3s;"><div class="icon"><i class="fas fa-prescription-bottle"></i></div><h3>Syrups</h3></div>
-                <div class="category-card fade-in" style="transition-delay: 0.4s;"><div class="icon"><i class="fas fa-band-aid"></i></div><h3>Surgical</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="products">
-        <div class="container">
-            <h2 class="section-title fade-in">Featured Products & Best Deals</h2>
-            <div class="product-grid">
-                <div class="product-card fade-in">
-                    <img src="https://shorturl.at/O3Mv1" alt="Albumin">
-                    <div class="product-card-content">
-                        <h3>Human albumin</h3>
-                        <p class="category">Injections</p>
-                        <div class="price"><span>Bulk Price: ₹3800.00 / pen</span></div>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#technology" class="text-sm text-gray-400 hover:text-white transition-colors">Technology</a>
+                        <a href="#solutions" class="text-sm text-gray-400 hover:text-white transition-colors">Solutions</a>
+                        <a href="#platform" class="text-sm text-gray-400 hover:text-white transition-colors">Platform</a>
+                        <a href="#research" class="text-sm text-gray-400 hover:text-white transition-colors">Research</a>
                     </div>
                 </div>
-                <div class="product-card fade-in" style="transition-delay: 0.1s;">
-                    <div class="badge">Best Deal</div>
-                    <img src="https://shorturl.at/jaoa3" alt="Zyrop">
-                    <div class="product-card-content">
-                        <h3>Zyrop DX</h3>
-                        <p class="category">Zyrop</p>
-                        <div class="price"><span>Bulk Price: ₹600.00 / bottle</span></div>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Login</a>
+                    <a href="#contact" class="px-5 py-2.5 text-sm font-bold text-black bg-white rounded-full hover:bg-synapse-DEFAULT transition-all duration-300 hover:shadow-neon">
+                        Request Demo
+                    </a>
                 </div>
-                <div class="product-card fade-in" style="transition-delay: 0.2s;">
-                    <img src="https://shorturl.at/NjPsF" alt="Klacid">
-                    <div class="product-card-content">
-                        <h3>Klacid</h3>
-                        <p class="category">Klacid</p>
-                        <div class="price"><span>Bulk Price: ₹1600.00 / box</span></div>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-                 <div class="product-card fade-in" style="transition-delay: 0.3s;">
-                    <img src="https://shorturl.at/Oi8kf" alt="Tablets">
-                    <div class="product-card-content">
-                        <h3>Shelcal</h3>
-                        <p class="category">Tablets</p>
-                        <div class="price"><span>Bulk Price: ₹120.00 / strip</span></div>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
+
+                <div class="-mr-2 flex md:hidden">
+                    <button @click="open =!open" class="text-gray-400 hover:text-white p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
+        
+        <div x-show="open" class="md:hidden bg-neural-900 border-b border-white/10">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#technology" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Technology</a>
+                <a href="#solutions" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Solutions</a>
+                <a href="#platform" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Platform</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-synapse-DEFAULT">Request Demo</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div id="tsparticles" class="absolute inset-0 z-0 opacity-40"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
+            
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-fade-in-up">
+                <span class="w-1.5 h-1.5 rounded-full bg-synapse-DEFAULT animate-pulse"></span>
+                <span class="text-xs font-mono text-synapse-DEFAULT tracking-wider uppercase">System Operational v2.4</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6 leading-[1.1] max-w-4xl text-glow">
+                AI that Understands <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500">the Human Mind.</span>
+            </h1>
+
+            <p class="mt-4 max-w-2xl text-lg md:text-xl text-gray-400 font-light mb-10 leading-relaxed">
+                Mindxcope combines EEG, fNIRS, and machine learning to decode cognitive fatigue, predict burnout, and quantify focus. 
+                <span class="text-gray-200">Ethically. Scientifically. Responsibly.</span>
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                <a href="#contact" class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black bg-white rounded-full overflow-hidden transition-all duration-300 hover:bg-synapse-DEFAULT hover:shadow-neon">
+                    <span class="relative z-10">Start Decoding</span>
+                </a>
+                <a href="#research" class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-white/20 transition-all backdrop-blur-sm">
+                    View Research
+                </a>
+            </div>
+
+            <div class="mt-20 pt-10 border-t border-white/5 w-full max-w-4xl">
+                <p class="text-xs text-gray-600 uppercase tracking-[0.2em] font-mono mb-8">Trusting Partners & Research Labs</p>
+                <div class="flex flex-wrap justify-center gap-12 md:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+                    <span class="text-xl font-serif font-bold text-white">Stanford<span class="text-synapse-DEFAULT">Neuro</span></span>
+                    <span class="text-xl font-sans font-black tracking-tighter text-white">M.I.T.</span>
+                    <span class="text-xl font-mono font-bold text-white">OpenAI</span>
+                    <span class="text-xl font-bold text-white tracking-widest">NEURALINK</span>
+                    <span class="text-xl font-bold font-sans text-white">NVIDIA</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-neural-950 to-transparent z-20"></div>
     </section>
 
-    <section id="image-slider">
-        <div class="slider-container">
-            <div class="slider-track">
-                <div class="slide"><img src="https://shorturl.at/GSLUZ" alt="Modern Warehouse"></div>
-                <div class="slide"><img src="https://tinyurl.com/mr38c3sk" alt="Injection Vials"></div>
-                <div class="slide"><img src="https://shorturl.at/c8COa" alt="Pharmaceutical Logistics"></div>
-                <div class="slide"><img src="https://rb.gy/yntmio" alt="Pharmacist at work"></div>
-                <div class="slide"><img src="https://tinyurl.com/ymabbmxe" alt="Cold Storage"></div>
-                <div class="slide"><img src="https://tinyurl.com/pd4rc4pr" alt="Medical Supplies"></div>
-                <div class="slide"><img src="https://tinyurl.com/mpjtmbdr" alt="Modern Warehouse"></div>
-                <div class="slide"><img src="https://shorturl.at/qUUNj" alt="Injection Vials"></div>
-                <div class="slide"><img src="https://shorturl.at/c8COa" alt="Pharmaceutical Logistics"></div>
-                <div class="slide"><img src="https://shorturl.at/J5zX4" alt="Pharmacist at work"></div>
-                <div class="slide"><img src="https://tinyurl.com/pd4rc4pr" alt="Cold Storage"></div>
-                <div class="slide"><img src="https://shorturl.at/LCK44" alt="Medical Supplies"></div>
-            </div>
-        </div>
-    </section>
+    <section id="technology" class="py-24 bg-neural-950 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Multi-Layered <br/><span class="text-gray-500">Cognitive Decoding</span></h2>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        Our BCI pipeline fuses biological signals with behavioral metrics to create a holistic view of the human mind. We don't just read signals; we interpret context.
+                    </p>
 
-    <section id="why-us">
-        <div class="container">
-            <h2 class="section-title fade-in">Why Partner With Mediwell Healthcare?</h2>
-            <div class="features-grid">
-                <div class="feature-item fade-in" style="transition-delay: 0.1s;">
-                    <div class="icon"><i class="fas fa-check-circle"></i></div>
-                    <h3>Unmatched Quality</h3>
-                    <p>Every product is sourced from certified manufacturers and undergoes strict quality checks before dispatch.</p>
+                    <div class="space-y-8">
+                        <div class="flex gap-4 group">
+                            <div class="w-12 h-12 rounded-lg bg-neural-800 border border-white/10 flex items-center justify-center text-synapse-DEFAULT group-hover:border-synapse-DEFAULT transition-colors">
+                                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold mb-1 group-hover:text-synapse-DEFAULT transition-colors">Signal Capture (EEG + fNIRS)</h3>
+                                <p class="text-sm text-gray-500">High-resolution sensors detect electrical activity and hemodynamic responses in the prefrontal cortex.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 group">
+                            <div class="w-12 h-12 rounded-lg bg-neural-800 border border-white/10 flex items-center justify-center text-pulse-DEFAULT group-hover:border-pulse-DEFAULT transition-colors">
+                                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold mb-1 group-hover:text-pulse-DEFAULT transition-colors">AI Artifact Removal</h3>
+                                <p class="text-sm text-gray-500">Deep learning algorithms isolate cognitive signals from muscle movement and environmental noise.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 group">
+                            <div class="w-12 h-12 rounded-lg bg-neural-800 border border-white/10 flex items-center justify-center text-white group-hover:border-white transition-colors">
+                                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold mb-1">Predictive Modeling</h3>
+                                <p class="text-sm text-gray-500">Real-time classification of stress, flow state, and cognitive fatigue.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="feature-item fade-in" style="transition-delay: 0.2s;">
-                    <div class="icon"><i class="fas fa-truck-fast"></i></div>
-                    <h3>Bihar-Wide Logistics</h3>
-                    <p>Our robust logistics network ensures timely and secure delivery across Patna and all major districts of Bihar.</p>
-                </div>
-                <div class="feature-item fade-in" style="transition-delay: 0.3s;">
-                    <div class="icon"><i class="fas fa-temperature-three-quarters"></i></div>
-                    <h3>Specialized Injection Handling</h3>
-                    <p>We provide expert cold chain management for vaccines and critical care injections, ensuring 100% efficacy.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+
+                <div class="relative">
+                    <div class="absolute inset-0 bg-synapse-DEFAULT blur-[80px] opacity-10"></div>
+                    <div class="relative glass-panel rounded-xl p-6 border-l-2 border-synapse-DEFAULT">
+                        <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-4">
+                            <span class="text-xs font-mono text-gray-500">mxc_core_pipeline.py</span>
+                            <div class="flex gap-1.5">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                            </div>
+                        </div>
+                        <pre class="font-mono text-xs md:text-sm text-gray-300 overflow-x-auto">
+<code><span class="text-pulse-DEFAULT">import</span> mindxcope <span class="text-pulse-DEFAULT">as</span> mx
+
+<span class="text-gray-500"># Initialize the BCI stream</span>
+stream = mx.Stream(device=<span class="text-synapse-DEFAULT">'MX-Headset-Pro'</span>)
+
+<span class="text-gray-500"># Real-time cognitive load decoding</span>
+<span class="text-pulse-DEFAULT">async def</span> <span class="text-yellow-300">monitor_fatigue</span>(signal_buffer):
+    features = mx.extract_features(
+        signal_buffer, 
+        bands=['alpha', 'beta', 'theta']
+    )
     
-    <section id="testimonials">
-        <div class="container">
-            <h2 class="section-title fade-in">What Our Clients Say</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-card fade-in" style="transition-delay: 0.1s;">
-                    <p class="quote">"Mediwell Healthcare has transformed our procurement. Their on-time delivery of critical injections is unmatched in the region. A truly reliable partner."</p>
-                    <div class="author-info">
-                        <img src="https://c8.alamy.com/comp/2K9KEH5/take-these-trust-me-cropped-portrait-of-a-handsome-mature-male-pharmacist-working-in-a-pharmacy-2K9KEH5.jpg" alt="R. Kumar">
-                        <div class="author-details"> Prakash <span>Owner, Sarswati Pharma</span></div>
-                    </div>
-                </div>
-                <div class="testimonial-card fade-in" style="transition-delay: 0.2s;">
-                    <p class="quote">"The best part is the transparency in pricing and batch numbers. We always know we're getting authentic products for our hospital's needs."</p>
-                    <div class="author-info">
-                        <img src="https://tinyurl.com/3tmhfbnt" alt="Dr. Anjali Singh">
-                        <div class="author-details">Dr. Anjali Singh <span>Procurement Head, Paras Hospital</span></div>
-                    </div>
-                </div>
-                <div class="testimonial-card fade-in" style="transition-delay: 0.3s;">
-                    <p class="quote">"Their customer support is excellent. Any query or issue with our bulk order was resolved instantly through their WhatsApp chat. Highly recommended!"</p>
-                    <div class="author-info">
-                        <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="S. Ahmed">
-                        <div class="author-details">S. Ahmed <span>Manager, BHRC Hoaspital</span></div>
+    <span class="text-gray-500"># Proprietary Deep Model</span>
+    fatigue_index = model.predict(features)
+    
+    <span class="text-pulse-DEFAULT">if</span> fatigue_index > <span class="text-synapse-DEFAULT">0.85</span>:
+        <span class="text-pulse-DEFAULT">await</span> alert_manager.notify(
+            <span class="text-synapse-DEFAULT">"Burnout Risk Detected"</span>
+        )</code></pre>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="cta-order">
-        <div class="container fade-in">
-            <h2>Ready to order?</h2>
-            <p>Experience seamless ordering, competitive pricing, and the fastest delivery network in Bihar. Partner with us and elevate your healthcare business today.</p>
-            <a href="#contact" class="btn btn-cta">Order Now &nbsp; <i class="fas fa-arrow-right"></i></a>
+    <section id="solutions" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">Applications in <br/>High-Performance Environments</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
+                
+                <div class="md:col-span-2 relative group overflow-hidden rounded-3xl bg-neural-900 border border-white/5 hover:border-synapse-DEFAULT/50 transition-all p-8 flex flex-col justify-between">
+                    <div class="absolute inset-0 bg-gradient-to-br from-synapse-dim to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mb-4 text-synapse-DEFAULT">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Ethical, Bias-Free Hiring</h3>
+                        <p class="mt-2 text-gray-400 max-w-md">Evaluate candidates based on cognitive adaptability, problem-solving speed, and resilience. Move beyond resumes.</p>
+                    </div>
+                    <div class="absolute right-0 bottom-0 w-1/2 h-full bg-gradient-to-l from-neural-800/50 to-transparent"></div>
+                </div>
+
+                <div class="relative group overflow-hidden rounded-3xl bg-neural-900 border border-white/5 hover:border-alert-DEFAULT/50 transition-all p-8">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <h3 class="text-xl font-bold text-white mb-2">Burnout Prediction</h3>
+                    <p class="text-gray-400 text-sm mb-6">Detect physiological markers of cognitive fatigue before they impact performance.</p>
+                    <div class="flex items-end gap-1 h-32 opacity-70">
+                        <div class="w-1/5 bg-gray-800 h-[40%] rounded-t"></div>
+                        <div class="w-1/5 bg-gray-800 h-[60%] rounded-t"></div>
+                        <div class="w-1/5 bg-gray-800 h-[50%] rounded-t"></div>
+                        <div class="w-1/5 bg-alert-DEFAULT h-[90%] rounded-t animate-pulse shadow-"></div>
+                        <div class="w-1/5 bg-gray-800 h-[70%] rounded-t"></div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3 relative group overflow-hidden rounded-3xl bg-neural-900 border border-white/5 hover:border-white/30 transition-all p-8 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Research & Academic Access</h3>
+                        <p class="text-gray-400 text-sm max-w-2xl">Open standards for university partners. Export raw EDF+ data and access our Python SDK for custom analysis.</p>
+                    </div>
+                    <a href="#" class="hidden md:flex items-center gap-2 text-sm font-mono text-synapse-DEFAULT hover:underline">
+                        Documentation <span class="text-xs">→</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer class="footer" id="contact">
-        <div class="container">
-            <div class="footer-col">
-                <h4>Mediwell Healthcare</h4>
-                <p>Bihar's trusted wholesale partner for all medical supplies. Ensuring quality and timely delivery since 2019.</p>
+    <section id="platform" class="py-24 bg-neural-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 text-center">
+                <h2 class="text-3xl font-bold text-white">The Interface</h2>
+                <p class="text-gray-400 mt-4">Real-time cognitive metrics at 250Hz.</p>
             </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Support</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contact Us</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Near IGIMS gate number 2, Patna, Bihar, 800001</p>
-                <p><i class="fas fa-phone"></i> 9386518098</p>
-                <p><i class="fas fa-envelope"></i> mediwellhealthcare.com</p>
-            </div>
-            <div class="footer-col">
-                <h4>Follow Us</h4>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+            <div class="glass-panel rounded-2xl border border-white/10 p-2 md:p-8 max-w-5xl mx-auto shadow-2xl relative overflow-hidden">
+                <div class="flex justify-between items-center mb-8 px-4 border-b border-white/5 pb-4">
+                    <div>
+                        <h3 class="text-white font-mono text-sm uppercase tracking-widest">Subject: <span class="text-synapse-DEFAULT">MX-092</span></h3>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-xs text-gray-500">Live Stream Active</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-gray-500 block">Session Time</span>
+                        <span class="font-mono text-white">00:42:15</span>
+                    </div>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-neural-900/50 rounded-xl p-6 border border-white/5">
+                        <h4 class="text-xs font-mono text-gray-400 uppercase mb-4">Cognitive Load</h4>
+                        <div id="chart-radial" class="flex justify-center"></div>
+                    </div>
+
+                    <div class="md:col-span-2 bg-neural-900/50 rounded-xl p-6 border border-white/5">
+                        <h4 class="text-xs font-mono text-gray-400 uppercase mb-4">Focus State (Beta/Theta Ratio)</h4>
+                        <div id="chart-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" class="py-20 bg-neural-950 border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold text-white mb-8">Responsible Neuro-Technology</h2>
+            <div class="grid md:grid-cols-2 gap-12 text-left">
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-synapse-DEFAULT" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Privacy by Design
+                    </h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Neural data is encrypted locally on the headset. We utilize federated learning to improve models without transferring raw brainwave data to the cloud.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-synapse-DEFAULT" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Bias Mitigation
+                    </h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Algorithms are rigorously audited against diverse neuro-datasets to ensure fair assessment across all ages, genders, and neuro-types.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-black pt-16 pb-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1">
+                    <span class="text-xl font-bold tracking-tight text-white block mb-4">MINDXCOPE</span>
+                    <p class="text-gray-500 text-sm">Decoding the human mind to unlock potential.<br>San Francisco, CA.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-sm">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">Analytics</a></li>
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">Hardware</a></li>
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-sm">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">About</a></li>
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">Careers</a></li>
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-sm">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-synapse-DEFAULT">Neuro-Data Rights</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 text-center text-xs text-gray-700">
+                &copy; 2025 Mindxcope Inc. All Rights Reserved.
             </div>
         </div>
     </footer>
-    
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
-                });
-            }, {
-                threshold: 0.1
+        // 1. Initialize Particles (Neural Network Effect)
+        document.addEventListener('DOMContentLoaded', async () => {
+            await tsParticles.load("tsparticles", {
+                preset: "links",
+                fullScreen: { enable: false },
+                background: { color: { value: "transparent" } },
+                particles: {
+                    number: { value: 60, density: { enable: true, area: 800 } },
+                    color: { value: ["#00F0FF", "#ffffff"] },
+                    links: {
+                        enable: true,
+                        color: "#ffffff",
+                        opacity: 0.1,
+                        distance: 150
+                    },
+                    move: { enable: true, speed: 1 },
+                    opacity: { value: 0.3 },
+                    size: { value: { min: 1, max: 2 } }
+                },
+                interactivity: {
+                    events: { onHover: { enable: true, mode: "grab" } },
+                    modes: { grab: { distance: 140, links: { opacity: 0.5, color: "#00F0FF" } } }
+                }
             });
 
-            const targets = document.querySelectorAll('.fade-in');
-            targets.forEach(target => {
-                observer.observe(target);
-            });
+            // 2. Initialize Charts (ApexCharts)
+            
+            // Radial Bar (Cognitive Load)
+            var optionsRadial = {
+                series: [78],
+                chart: { height: 250, type: 'radialBar', fontFamily: 'Inter' },
+                plotOptions: {
+                    radialBar: {
+                        hollow: { size: '70%', background: 'transparent' },
+                        track: { background: '#1E1E1E' },
+                        dataLabels: {
+                            show: true,
+                            name: { show: false },
+                            value: { color: '#fff', fontSize: '30px', fontWeight: 700 }
+                        }
+                    }
+                },
+                colors: ['#00F0FF'],
+                stroke: { lineCap: 'round' },
+                labels: ['Load'],
+            };
+            new ApexCharts(document.querySelector("#chart-radial"), optionsRadial).render();
+
+            // Line Chart (Focus State)
+            var optionsLine = {
+                series: [{ name: "Focus Level", data: [40, 50, 45, 60, 55, 70, 65, 80, 75] }],
+                chart: {
+                    height: 250,
+                    type: 'area',
+                    fontFamily: 'Inter',
+                    toolbar: { show: false },
+                    background: 'transparent'
+                },
+                colors: ['#7B61FF'],
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth', width: 2 },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.4,
+                        opacityTo: 0.05,
+                        stops: [0, 90, 100]
+                    }
+                },
+                grid: { borderColor: '#1E1E1E', strokeDashArray: 4 },
+                xaxis: {
+                    categories: ['00:00', '00:05', '00:10', '00:15', '00:20', '00:25', '00:30', '00:35', '00:40'],
+                    labels: { style: { colors: '#666' } },
+                    axisBorder: { show: false },
+                    axisTicks: { show: false }
+                },
+                yaxis: { labels: { style: { colors: '#666' } } },
+                theme: { mode: 'dark' }
+            };
+            new ApexCharts(document.querySelector("#chart-line"), optionsLine).render();
         });
     </script>
-
 </body>
 </html>
