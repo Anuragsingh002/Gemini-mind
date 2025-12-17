@@ -3,432 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mindxcope | Cognitive Intelligence & BCI Interface</title>
-    <meta name="description" content="Advanced Brain-Computer Interface platform for quantifying focus, fatigue, and cognitive performance.">
+    <title>Mindxcope | The Cognitive Standard</title>
+    <meta name="description" content="The world's first Cognitive Hiring & Genetic Profiling platform for Elite Performance and Defense.">
 
-    <!-- Typography -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@100;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
+    <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Configuration -->
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Manrope', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
+                        serif: ['Playfair Display', 'serif'],
                     },
                     colors: {
-                        // "Void" Palette
-                        neural: {
-                            950: '#050505',
-                            900: '#0A0A0A',
-                            800: '#121212',
-                            700: '#1E1E1E',
-                            600: '#2D2D2D',
+                        obsidian: '#050505',
+                        charcoal: '#0a0a0a',
+                        gold: {
+                            DEFAULT: '#C5A059',
+                            light: '#E5C585',
+                            dim: 'rgba(197, 160, 89, 0.1)',
+                            glow: 'rgba(197, 160, 89, 0.4)',
                         },
-                        // "Signal" Palette
-                        synapse: {
-                            DEFAULT: '#00F0FF', // Cyan
-                            dim: 'rgba(0, 240, 255, 0.1)',
-                            glow: 'rgba(0, 240, 255, 0.5)',
-                        },
-                        pulse: {
-                            DEFAULT: '#7B61FF', // Violet
-                        },
-                        success: '#00FF94',
-                        alert: '#FFB020',
+                        danger: '#FF2A2A',
                     },
-                    boxShadow: {
-                        'neon': '0 0 20px rgba(0, 240, 255, 0.15)',
-                        'neon-strong': '0 0 30px rgba(0, 240, 255, 0.3)',
-                    },
-                    animation: {
-                        'scan': 'scan 4s linear infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    backgroundImage: {
+                        'grid-fade': 'linear-gradient(to bottom, transparent, #050505)',
                     },
                     keyframes: {
-                        scan: {
-                            '0%': { transform: 'translateY(-100%)' },
-                            '100%': { transform: 'translateY(100%)' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        'pulse-slow': {
+                            '0%, 100%': { opacity: '0.5' },
+                            '50%': { opacity: '0.8' },
                         }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
                     }
                 }
             }
         }
     </script>
 
-    <!-- Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-links@3/tsparticles.preset.links.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
     <style>
-        /* Base Styles */
-        body { background-color: #050505; color: #ffffff; overflow-x: hidden; }
+        body { background-color: #050505; color: #e2e2e2; overflow-x: hidden; }
         
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
+        /* Premium Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C5A059; }
+
+        /* Typography Utilities */
+        .text-glow-gold { text-shadow: 0 0 30px rgba(197, 160, 89, 0.3); }
+        .text-glow-white { text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
         
         /* Glassmorphism */
         .glass-panel {
-            background: rgba(18, 18, 18, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Canvas Layers */
+        #brain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        
+        /* Loader */
+        .loader-overlay {
+            position: fixed; inset: 0; background: #050505; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         
-        .glass-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(5px);
+        .scanline {
+            width: 100%; height: 2px; background: rgba(197, 160, 89, 0.2);
+            position: absolute; animation: scan 6s linear infinite; pointer-events: none;
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
         }
-
-        /* Typography Utilities */
-        .text-glow { text-shadow: 0 0 30px rgba(255, 255, 255, 0.3); }
-        .text-synapse-glow { text-shadow: 0 0 15px rgba(0, 240, 255, 0.5); }
-
-        /* Animation Classes for Alpine Intersect */
-        .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
+        @keyframes scan { from { top: -10%; } to { top: 110%; } }
     </style>
 </head>
+<body class="selection:bg-gold selection:text-black">
 
-<body class="antialiased selection:bg-synapse-DEFAULT selection:text-black">
+    <!-- 3D Background -->
+    <canvas id="brain-canvas"></canvas>
+
+    <!-- Initial Loader -->
+    <div class="loader-overlay" id="loader">
+        <div class="font-serif text-3xl text-white mb-4 tracking-widest">MINDXCOPE</div>
+        <div class="w-48 h-[1px] bg-gray-800 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gold w-full h-full -translate-x-full" id="load-bar"></div>
+        </div>
+        <div class="font-mono text-[10px] text-gray-500 mt-4 uppercase tracking-[0.3em]">Calibrating Neural Metrics</div>
+    </div>
 
     <!-- Navigation -->
-    <nav x-data="{ open: false, scrolled: false }" 
-         @scroll.window="scrolled = (window.pageYOffset > 50)"
-         :class="scrolled ? 'bg-neural-950/80 border-b border-white/5 backdrop-blur-xl' : 'bg-transparent border-transparent'"
-         class="fixed w-full z-50 transition-all duration-300 top-0 left-0">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
-                    <div class="w-8 h-8 rounded-lg border border-synapse-DEFAULT/50 flex items-center justify-center relative overflow-hidden group-hover:shadow-neon transition-all duration-500 bg-neural-900">
-                        <div class="w-1.5 h-1.5 bg-synapse-DEFAULT rounded-full"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-synapse-DEFAULT/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    </div>
-                    <span class="text-xl font-bold tracking-tight text-white group-hover:text-synapse-DEFAULT transition-colors">
-                        MINDXCOPE
-                    </span>
+    <nav class="fixed w-full z-50 top-0 left-0 transition-all duration-500 h-24 flex items-center" id="navbar">
+        <div class="absolute inset-0 bg-gradient-to-b from-obsidian/95 to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between relative z-10">
+            <!-- Brand -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="w-8 h-8 border border-gold/30 flex items-center justify-center bg-black/50 backdrop-blur-md">
+                    <span class="font-serif font-bold text-lg text-gold">M</span>
                 </div>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#technology" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Technology</a>
-                    <a href="#report-demo" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Analytics</a>
-                    <a href="#research" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Research</a>
-                    <a href="#about" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Company</a>
-                </div>
-
-                <!-- CTA -->
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="#contact" class="px-5 py-2.5 text-sm font-bold text-black bg-white rounded-full hover:bg-synapse-DEFAULT transition-all duration-300 hover:shadow-neon transform hover:-translate-y-0.5">
-                        Get Early Access
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="-mr-2 flex md:hidden">
-                    <button @click="open = !open" class="text-gray-400 hover:text-white p-2">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                <div class="flex flex-col">
+                    <span class="font-sans font-bold text-sm tracking-[0.2em] text-white">MINDXCOPE</span>
                 </div>
             </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div x-show="open" x-transition class="md:hidden bg-neural-900 border-b border-white/10 absolute w-full">
-            <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="#technology" class="block px-3 py-4 text-base font-medium text-gray-300 border-b border-white/5">Technology</a>
-                <a href="#report-demo" class="block px-3 py-4 text-base font-medium text-gray-300 border-b border-white/5">Analytics</a>
-                <a href="#research" class="block px-3 py-4 text-base font-medium text-gray-300 border-b border-white/5">Research</a>
-                <a href="#contact" class="block px-3 py-4 text-base font-bold text-synapse-DEFAULT">Request Access</a>
+
+            <!-- Links -->
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#assessment" class="text-[11px] font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-[0.15em]">Cognitive Profiling</a>
+                <a href="#platform" class="text-[11px] font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-[0.15em]">Platform</a>
+                <a href="#defense" class="text-[11px] font-bold text-gold/80 hover:text-gold transition-colors uppercase tracking-[0.15em] flex items-center gap-2 px-4 py-2 border border-gold/20 bg-gold/5">
+                    <i data-lucide="shield-alert" class="w-3 h-3"></i> Defense Directorate
+                </a>
             </div>
+            
+            <button class="md:hidden text-white"><i data-lucide="menu" class="w-6 h-6"></i></button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- Particle Background -->
-        <div id="tsparticles" class="absolute inset-0 z-0 opacity-40"></div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
-            
-            <!-- Status Badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-fade-in-up">
-                <span class="relative flex h-2 w-2">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-synapse-DEFAULT opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2 w-2 bg-synapse-DEFAULT"></span>
-                </span>
-                <span class="text-xs font-mono text-gray-300 tracking-wider uppercase">Neural Engine v2.4 Live</span>
+    <section class="relative h-screen w-full flex items-center justify-center overflow-hidden px-6">
+        <div class="relative z-20 text-center max-w-4xl">
+            <div class="inline-flex items-center gap-2 mb-8 opacity-0 hero-el border border-white/10 px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-md">
+                <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="font-mono text-[10px] uppercase tracking-widest text-gray-300">The New Standard in Human Capital</span>
             </div>
 
-            <!-- Headline -->
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white mb-8 leading-[1.05] max-w-5xl text-glow animate-fade-in-up" style="animation-delay: 0.1s;">
-                Decoding the <br />
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-400 to-gray-600">Architecture of Thought.</span>
+            <h1 class="font-sans font-light text-5xl md:text-8xl leading-[1.1] mb-8 opacity-0 hero-el text-white">
+                Stop Hiring Resumes. <br>
+                <span class="font-serif font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500 text-glow-white">Hire Neural Architecture.</span>
             </h1>
 
-            <!-- Subheadline -->
-            <p class="mt-2 max-w-2xl text-lg md:text-xl text-gray-400 font-light mb-12 leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
-                Mindxcope fuses <span class="text-white font-medium">fNIRS</span> hemodynamics and <span class="text-white font-medium">EEG</span> signals to quantify focus, predict burnout, and optimize human performance with clinical precision.
+            <p class="font-light text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 opacity-0 hero-el leading-relaxed">
+                We quantify the unquantifiable. Mindxcope uses non-invasive BCI technology to assess cognitive load, pattern recognition speed, and stress tolerance in elite candidates.
             </p>
 
-            <!-- Actions -->
-            <div class="flex flex-col sm:flex-row gap-5 w-full justify-center animate-fade-in-up" style="animation-delay: 0.3s;">
-                <a href="#report-demo" class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black bg-white rounded-full overflow-hidden transition-all duration-300 hover:bg-synapse-DEFAULT hover:shadow-neon">
-                    <span class="relative z-10 flex items-center gap-2">
-                        View Sample Report
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                    </span>
-                </a>
-                <a href="#technology" class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:border-white/20 transition-all backdrop-blur-sm">
-                    Explore Technology
-                </a>
-            </div>
-
-            <!-- Social Proof -->
-            <div class="mt-24 w-full max-w-6xl border-t border-white/5 pt-12 animate-fade-in-up" style="animation-delay: 0.4s;">
-                <p class="text-xs text-gray-600 uppercase tracking-[0.2em] font-mono mb-8">Trusted by Research Labs & Enterprises</p>
-                <div class="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
-                    <h3 class="text-2xl font-serif font-bold text-white">Stanford</h3>
-                    <h3 class="text-2xl font-sans font-black tracking-tighter text-white">M.I.T. Media Lab</h3>
-                    <h3 class="text-xl font-mono font-bold text-white">OpenAI</h3>
-                    <h3 class="text-xl font-bold tracking-widest text-white">NEURALINK</h3>
-                    <h3 class="text-xl font-bold font-sans text-white">NVIDIA <span class="font-normal text-xs">Inception</span></h3>
-                </div>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center opacity-0 hero-el">
+                <button class="px-10 py-4 bg-white text-black font-bold tracking-[0.2em] uppercase hover:bg-gray-200 transition-all text-[11px]">
+                    Start Assessment
+                </button>
+                <button class="px-10 py-4 border border-white/20 text-white font-medium tracking-[0.2em] uppercase hover:bg-white/5 transition-all backdrop-blur-md text-[11px]">
+                    Enterprise Demo
+                </button>
             </div>
         </div>
         
-        <!-- Gradient Fade -->
-        <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-neural-950 to-transparent z-20"></div>
+        <!-- Bottom Data Ticker -->
+        <div class="absolute bottom-0 left-0 w-full border-t border-white/10 bg-black/80 backdrop-blur-sm py-4 overflow-hidden z-20">
+            <div class="flex items-center gap-12 animate-marquee whitespace-nowrap opacity-50 font-mono text-[10px] text-gray-400">
+                <span>PROCESSING: CANDIDATE_892 [TOP 1%]</span>
+                <span>//</span>
+                <span>NEURAL LOAD: 45TB/s</span>
+                <span>//</span>
+                <span>AVG. LATENCY: 12ms</span>
+                <span>//</span>
+                <span>GLOBAL NODES: 4,021</span>
+                <span>//</span>
+                <span>PREDICTIVE VALIDITY: 99.8%</span>
+                <span>//</span>
+                <span>SECTOR: HIGH FREQUENCY TRADING</span>
+            </div>
+        </div>
     </section>
 
-    <!-- The Problem / Context Section -->
-    <section class="py-24 bg-neural-950 relative overflow-hidden">
+    <!-- Value Prop / Assessment Visualizer -->
+    <section id="assessment" class="py-32 bg-obsidian relative border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div x-data x-intersect="$el.classList.add('active')" class="reveal-on-scroll">
-                    <h2 class="text-synapse-DEFAULT font-mono text-sm tracking-widest uppercase mb-4">The Cognitive Crisis</h2>
-                    <h3 class="text-3xl md:text-5xl font-bold text-white mb-6">The Invisible Cost of <br>Mental Fatigue.</h3>
-                    <div class="space-y-6 text-gray-400 leading-relaxed">
-                        <p>
-                            In the high-performance economy, cognitive burnout is the primary failure point. Traditional metrics track *output* (tasks completed), but fail to measure the *input* (neural effort).
-                        </p>
-                        <p>
-                            When cognitive load exceeds capacity, decision quality plummets, bias increases, and critical errors occur.
-                        </p>
-                    </div>
-                    
-                    <div class="mt-10 grid grid-cols-2 gap-6">
-                        <div class="p-4 border-l border-white/10">
-                            <span class="block text-3xl font-bold text-white mb-1">$1T+</span>
-                            <span class="text-sm text-gray-500">Lost globally to burnout</span>
-                        </div>
-                        <div class="p-4 border-l border-white/10">
-                            <span class="block text-3xl font-bold text-white mb-1">40%</span>
-                            <span class="text-sm text-gray-500">Decline in focus post-lunch</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
                 
-                <div x-data x-intersect="$el.classList.add('active')" class="reveal-on-scroll relative">
-                    <!-- Abstract Brain Viz -->
-                    <div class="relative w-full aspect-square max-w-md mx-auto">
-                        <div class="absolute inset-0 bg-synapse-DEFAULT/20 rounded-full blur-[100px]"></div>
-                        <div class="relative z-10 border border-white/10 bg-neural-900/50 backdrop-blur-lg rounded-2xl p-8 h-full flex flex-col justify-center">
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-gray-400">PFC Oxygenation</span>
-                                    <span class="text-alert">Critical</span>
-                                </div>
-                                <div class="h-2 bg-neural-800 rounded-full overflow-hidden">
-                                    <div class="h-full bg-alert w-[85%] animate-pulse"></div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between text-sm mt-6">
-                                    <span class="text-gray-400">Beta Wave Activity</span>
-                                    <span class="text-synapse-DEFAULT">Optimal</span>
-                                </div>
-                                <div class="h-2 bg-neural-800 rounded-full overflow-hidden">
-                                    <div class="h-full bg-synapse-DEFAULT w-[60%]"></div>
-                                </div>
-
-                                <div class="flex items-center justify-between text-sm mt-6">
-                                    <span class="text-gray-400">Theta/Beta Ratio</span>
-                                    <span class="text-gray-500">Drifting</span>
-                                </div>
-                                <div class="h-2 bg-neural-800 rounded-full overflow-hidden">
-                                    <div class="h-full bg-white/30 w-[45%]"></div>
-                                </div>
-                            </div>
-                            <p class="mt-8 text-center text-xs font-mono text-gray-500">
-                                FIG 1.1: Untracked Cognitive Load
+                <!-- Content -->
+                <div class="order-2 lg:order-1">
+                    <span class="text-gold font-mono text-[10px] tracking-[0.3em] uppercase mb-4 block">Beyond The Interview</span>
+                    <h2 class="text-4xl md:text-5xl font-sans font-light mb-8 text-white">Quantifiable <span class="font-serif italic text-gray-400">Genius</span>.</h2>
+                    
+                    <div class="space-y-12">
+                        <div class="group">
+                            <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition-colors">Cognitive Throughput</h3>
+                            <p class="text-sm text-gray-500 leading-relaxed max-w-md">
+                                Traditional IQ tests are static. We measure dynamic processing speed—how fast a candidate creates neural pathways when facing novel problems.
+                            </p>
+                        </div>
+                        <div class="group">
+                            <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition-colors">Emotional Regulation</h3>
+                            <p class="text-sm text-gray-500 leading-relaxed max-w-md">
+                                Through amygdala response monitoring, we verify grace under pressure. Essential for C-Suite executives and algorithmic traders.
+                            </p>
+                        </div>
+                        <div class="group">
+                            <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition-colors">Flow State Accessibility</h3>
+                            <p class="text-sm text-gray-500 leading-relaxed max-w-md">
+                                Determine how quickly a candidate enters 'Deep Work' states (Beta/Gamma wave coupling) and how long they can sustain it.
                             </p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Technology Section -->
-    <section id="technology" class="py-32 bg-neural-900 border-y border-white/5 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20" x-data x-intersect="$el.classList.add('active')" class="reveal-on-scroll">
-                <h2 class="text-sm font-mono text-synapse-DEFAULT tracking-widest uppercase mb-4">Our Technology</h2>
-                <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">Multi-Modal Sensor Fusion</h3>
-                <p class="text-gray-400 max-w-2xl mx-auto">
-                    We combine electrical and hemodynamic monitoring to create the world's most robust cognitive model.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tech Card 1 -->
-                <div class="group glass-card p-8 rounded-2xl hover:bg-white/5 transition-all duration-500" x-data x-intersect="$el.classList.add('active')" class="reveal-on-scroll">
-                    <div class="w-14 h-14 bg-neural-800 rounded-xl border border-white/10 flex items-center justify-center mb-6 text-synapse-DEFAULT group-hover:border-synapse-DEFAULT group-hover:shadow-neon transition-all">
-                        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">EEG (Electrical)</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Measures voltage fluctuations resulting from ionic current within the neurons of the brain.
-                    </p>
-                    <ul class="text-xs text-gray-500 space-y-2 font-mono">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-synapse-DEFAULT rounded-full"></span>Temporal Resolution: ~1ms</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-synapse-DEFAULT rounded-full"></span>Detects: Focus, Alertness</li>
-                    </ul>
-                </div>
-
-                <!-- Tech Card 2 -->
-                <div class="group glass-card p-8 rounded-2xl hover:bg-white/5 transition-all duration-500" x-data x-intersect="$el.classList.add('active')" class="reveal-on-scroll" style="transition-delay: 100ms;">
-                    <div class="w-14 h-14 bg-neural-800 rounded-xl border border-white/10 flex items-center justify-center mb-6 text-pulse-DEFAULT group-hover:border-pulse-DEFAULT transition-all">
-                        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">fNIRS (Hemodynamic)</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Uses near-infrared light to measure blood oxygenation levels in the prefrontal cortex.
-                    </p>
-                    <ul class="text-xs text-gray-500 space-y-2 font-mono">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-pulse-DEFAULT rounded-full"></span>Spatial Resolution: High</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-pulse-DEFAULT rounded-full"></span>Detects: Workload, Fatigue</li>
-                    </ul>
-                </div>
-
-                <!-- Tech Card 3 -->
-                <div class="group glass-card p-8 rounded-2xl hover:bg-white/5 transition-all duration-500" x-data x-intersect="$el.classList.add('active')" class="reveal-on-scroll" style="transition-delay: 200ms;">
-                    <div class="w-14 h-14 bg-neural-800 rounded-xl border border-white/10 flex items-center justify-center mb-6 text-white group-hover:border-white transition-all">
-                        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">Behavioral AI</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Correlates biological signals with keystroke dynamics, mouse movement, and task performance.
-                    </p>
-                    <ul class="text-xs text-gray-500 space-y-2 font-mono">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-white rounded-full"></span>Contextual Awareness</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-white rounded-full"></span>Detects: Stress, Hesitation</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEW: Interactive Sample Report Section -->
-    <section id="report-demo" class="py-24 bg-neural-950">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-12 text-center" x-data x-intersect="$el.classList.add('active')" class="reveal-on-scroll">
-                <h2 class="text-3xl font-bold text-white">Actionable Intelligence</h2>
-                <p class="text-gray-400 mt-4">From raw signals to executive summaries.</p>
-            </div>
-
-            <!-- The Report Container -->
-            <div class="bg-white text-black rounded-xl max-w-4xl mx-auto overflow-hidden shadow-2xl" x-data x-intersect="$el.classList.add('active')" class="reveal-on-scroll">
-                <!-- Toolbar -->
-                <div class="bg-gray-100 border-b border-gray-300 p-3 flex justify-between items-center">
-                    <div class="flex items-center gap-2">
-                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
-                        <span class="ml-2 text-xs font-mono text-gray-500">Mindxcope_Report_Q3.pdf</span>
-                    </div>
-                    <button class="text-xs bg-black text-white px-3 py-1 rounded hover:bg-gray-800 transition">Download PDF</button>
-                </div>
-
-                <!-- Report Body -->
-                <div class="p-8 md:p-12">
-                    <!-- Header -->
-                    <div class="flex justify-between items-start mb-10 border-b border-gray-200 pb-8">
+                    <div class="mt-12 pt-8 border-t border-white/5 flex gap-8">
                         <div>
-                            <h3 class="text-2xl font-bold tracking-tight">Cognitive Performance Assessment</h3>
-                            <p class="text-gray-500 text-sm mt-1">Session ID: #MX-9928-ALPHA</p>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-xs font-mono text-gray-500 uppercase">Date</div>
-                            <div class="font-bold">Dec 16, 2025</div>
-                        </div>
-                    </div>
-
-                    <!-- Scores Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-100 text-center">
-                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Focus Score</span>
-                            <div class="text-5xl font-bold text-black mt-2">88<span class="text-lg text-gray-400">/100</span></div>
-                            <div class="text-green-600 text-xs font-bold mt-2">↑ 12% vs Baseline</div>
-                        </div>
-                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-100 text-center">
-                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Cognitive Load</span>
-                            <div class="text-5xl font-bold text-black mt-2">42<span class="text-lg text-gray-400">%</span></div>
-                            <div class="text-gray-500 text-xs mt-2">Optimal Range</div>
-                        </div>
-                        <div class="bg-gray-50 p-6 rounded-lg border border-gray-100 text-center">
-                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Flow State</span>
-                            <div class="text-5xl font-bold text-black mt-2">1.5<span class="text-lg text-gray-400">hrs</span></div>
-                            <div class="text-xs text-gray-500 mt-2">Continuous Duration</div>
-                        </div>
-                    </div>
-
-                    <!-- Chart & Insights -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <div>
-                            <h4 class="font-bold mb-4">Neural Profile</h4>
-                            <!-- Chart Container -->
-                            <div id="radar-chart" class="w-full h-64"></div>
+                            <div class="text-3xl font-serif text-white">93%</div>
+                            <div class="text-[10px] font-mono text-gray-500 mt-1">RETENTION RATE</div>
                         </div>
                         <div>
-                            <h4 class="font-bold mb-4">Key Insights</h4>
-                            <ul class="space-y-4">
-                                <li class="flex gap-3">
-                                    <div class="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center flex-shrink-0 text-xs">✓</div>
-                                    <p class="text-sm text-gray-600">Peak cognitive efficiency achieved between <span class="font-bold text-black">10:00 AM - 11:30 AM</span>.</p>
-                                </li>
-                                <li class="flex gap-3">
-                                    <div class="w-6 h-6 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center flex-shrink-0 text-xs">!</div>
-                                    <p class="text-sm text-gray-600">Sign of <span class="font-bold text-black">Mental Fatigue</span> detected at 2:00 PM. Recommend micro-break implementation.</p>
-                                </li>
-                                <li class="flex gap-3">
-                                    <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 text-xs">i</div>
-                                    <p class="text-sm text-gray-600">Stress markers remain <span class="font-bold text-black">Low</span> despite increased task complexity.</p>
-                                </li>
-                            </ul>
+                            <div class="text-3xl font-serif text-white">3x</div>
+                            <div class="text-[10px] font-mono text-gray-500 mt-1">ROI PER HIRE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualizer -->
+                <div class="order-1 lg:order-2 relative h-[600px] glass-panel p-1">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10 pointer-events-none"></div>
+                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1965&auto=format&fit=crop" class="w-full h-full object-cover opacity-60 grayscale" alt="Brain Scan Data">
+                    
+                    <!-- HUD Overlay -->
+                    <div class="absolute inset-0 z-20 p-8 flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <div class="font-mono text-[9px] text-gray-400 border border-white/10 px-2 py-1 bg-black/50">
+                                SUBJ: A. VANCE<br>
+                                ROLE: CTO CANDIDATE
+                            </div>
+                            <i data-lucide="activity" class="text-gold w-5 h-5 animate-pulse"></i>
+                        </div>
+
+                        <!-- Charts (CSS Grid) -->
+                        <div class="space-y-4">
+                            <div class="bg-black/60 p-4 border border-white/10 backdrop-blur-md">
+                                <div class="flex justify-between text-[10px] font-mono text-gray-400 mb-2">
+                                    <span>PATTERN RECOGNITION</span>
+                                    <span class="text-white">98.2%</span>
+                                </div>
+                                <div class="w-full h-1 bg-gray-800">
+                                    <div class="h-full bg-white w-[98%] shadow-[0_0_10px_white]"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-black/60 p-4 border border-white/10 backdrop-blur-md">
+                                <div class="flex justify-between text-[10px] font-mono text-gray-400 mb-2">
+                                    <span>STRESS TOLERANCE</span>
+                                    <span class="text-gold">EXCEPTIONAL</span>
+                                </div>
+                                <div class="w-full h-1 bg-gray-800">
+                                    <div class="h-full bg-gold w-[92%] shadow-[0_0_10px_#C5A059]"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -436,235 +265,401 @@
         </div>
     </section>
 
-    <!-- Research Hub Section -->
-    <section id="research" class="py-24 bg-neural-900 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                <div>
-                    <h2 class="text-3xl font-bold text-white">Research & Validation</h2>
-                    <p class="text-gray-400 mt-2">Peer-reviewed studies underpinning our technology.</p>
-                </div>
-                <a href="#" class="text-synapse-DEFAULT font-mono text-sm hover:underline">View all 14 papers -></a>
+    <!-- Products / Platform -->
+    <section id="platform" class="py-32 bg-charcoal relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-white/5 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="mb-20">
+                <span class="text-gray-500 font-mono text-[10px] tracking-[0.3em] uppercase mb-4 block">The Ecosystem</span>
+                <h2 class="text-4xl font-sans font-light text-white">Hardware & Software <br>Integration</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Research Paper 1 -->
-                <div class="bg-neural-800 border border-white/5 p-8 rounded-xl hover:border-synapse-DEFAULT/30 transition-colors group">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="px-2 py-1 bg-synapse-dim text-synapse-DEFAULT text-xs rounded font-mono">IEEE Transactions</span>
-                        <span class="text-gray-500 text-xs">2024</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-synapse-DEFAULT transition-colors">fNIRS-based prefrontal cortex workload assessment in high-stakes environments</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        A study demonstrating 94% accuracy in distinguishing between cognitive overload and optimal flow states using hemodynamic response functions.
+            <div class="grid md:grid-cols-3 gap-px bg-white/10 border border-white/10">
+                <!-- Product 1 -->
+                <div class="bg-obsidian p-10 group hover:bg-black transition-colors duration-500">
+                    <i data-lucide="brain-circuit" class="w-8 h-8 text-white/50 mb-8 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-serif text-white mb-4">Mindxcope Headset</h3>
+                    <p class="text-xs text-gray-500 font-mono leading-relaxed mb-8">
+                        24-channel dry-electrode EEG. Military-grade signal acquisition. Setup in under 60 seconds.
                     </p>
-                    <a href="#" class="text-white text-sm font-medium border-b border-white/20 pb-0.5 hover:border-white transition-colors">Read Abstract</a>
+                    <a href="#" class="text-[10px] uppercase tracking-widest text-gold hover:text-white transition-colors flex items-center gap-2">
+                        Specs <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </a>
                 </div>
 
-                <!-- Research Paper 2 -->
-                <div class="bg-neural-800 border border-white/5 p-8 rounded-xl hover:border-synapse-DEFAULT/30 transition-colors group">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="px-2 py-1 bg-synapse-dim text-synapse-DEFAULT text-xs rounded font-mono">Nature Neuroscience</span>
-                        <span class="text-gray-500 text-xs">2023</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-synapse-DEFAULT transition-colors">Real-time Artifact Removal in Mobile EEG using Deep Convolutional Networks</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        Introducing "NeuroClean", our proprietary algorithm for removing muscle artifacts and environmental noise from ambulatory EEG recordings.
+                <!-- Product 2 -->
+                <div class="bg-obsidian p-10 group hover:bg-black transition-colors duration-500">
+                    <i data-lucide="bar-chart-2" class="w-8 h-8 text-white/50 mb-8 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-serif text-white mb-4">Analytics Dashboard</h3>
+                    <p class="text-xs text-gray-500 font-mono leading-relaxed mb-8">
+                        Real-time candidate comparison. Predictive modeling for team synergy and leadership potential.
                     </p>
-                    <a href="#" class="text-white text-sm font-medium border-b border-white/20 pb-0.5 hover:border-white transition-colors">Read Abstract</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Platform / Use Cases -->
-    <section class="py-24 bg-neural-950">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-white mb-16 text-center">Built for Scale</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="relative group overflow-hidden rounded-2xl bg-neural-900 border border-white/5 p-8 hover:border-white/20 transition-all">
-                    <div class="absolute top-0 right-0 p-4 opacity-20">
-                        <svg class="w-16 h-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Enterprise</h3>
-                    <p class="text-gray-400 text-sm mb-6">Optimizing workforce productivity and reducing burnout risk in real-time.</p>
-                    <ul class="space-y-2 text-sm text-gray-500">
-                        <li>• Team Analytics Dashboard</li>
-                        <li>• API Integration</li>
-                        <li>• SOC2 Compliance</li>
-                    </ul>
+                    <a href="#" class="text-[10px] uppercase tracking-widest text-gold hover:text-white transition-colors flex items-center gap-2">
+                        Demo <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </a>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="relative group overflow-hidden rounded-2xl bg-neural-900 border border-white/5 p-8 hover:border-white/20 transition-all">
-                    <div class="absolute top-0 right-0 p-4 opacity-20">
-                        <svg class="w-16 h-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Academia</h3>
-                    <p class="text-gray-400 text-sm mb-6">High-fidelity raw data access for psychology and neuroscience labs.</p>
-                    <ul class="space-y-2 text-sm text-gray-500">
-                        <li>• EDF+ Export</li>
-                        <li>• Python SDK</li>
-                        <li>• IRB-ready Protocols</li>
-                    </ul>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="relative group overflow-hidden rounded-2xl bg-neural-900 border border-white/5 p-8 hover:border-white/20 transition-all">
-                    <div class="absolute top-0 right-0 p-4 opacity-20">
-                        <svg class="w-16 h-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Defense</h3>
-                    <p class="text-gray-400 text-sm mb-6">Performance monitoring for pilots and operators in critical environments.</p>
-                    <ul class="space-y-2 text-sm text-gray-500">
-                        <li>• Ruggedized Hardware</li>
-                        <li>• Offline Processing</li>
-                        <li>• Latency &lt; 20ms</li>
-                    </ul>
+                <!-- Product 3 -->
+                <div class="bg-obsidian p-10 group hover:bg-black transition-colors duration-500">
+                    <i data-lucide="layers" class="w-8 h-8 text-white/50 mb-8 group-hover:text-white transition-colors"></i>
+                    <h3 class="text-xl font-serif text-white mb-4">API Integration</h3>
+                    <p class="text-xs text-gray-500 font-mono leading-relaxed mb-8">
+                        Seamlessly integrates with Workday, Greenhouse, and proprietary HRIS systems.
+                    </p>
+                    <a href="#" class="text-[10px] uppercase tracking-widest text-gold hover:text-white transition-colors flex items-center gap-2">
+                        Docs <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Ethics / About -->
-    <section id="about" class="py-20 bg-neural-900 border-t border-white/5">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-2xl font-bold text-white mb-8">Responsible Neuro-Technology</h2>
-            <div class="grid md:grid-cols-2 gap-12 text-left">
+    <!-- DEFENSE & INTELLIGENCE SECTION (GENETIC ENGINEERING) -->
+    <section id="defense" class="py-40 bg-[#020202] relative overflow-hidden">
+        <!-- Visuals -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')] opacity-20"></div>
+        <div class="scanline z-10"></div>
+        
+        <!-- Red/Gold Ambient Glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-20">
+            <!-- Classified Header -->
+            <div class="flex justify-center mb-16">
+                 <div class="border border-red-900/30 bg-red-950/10 px-6 py-2 flex items-center gap-3 backdrop-blur-md">
+                    <i data-lucide="lock" class="w-3 h-3 text-danger animate-pulse"></i>
+                    <span class="font-mono text-[10px] text-danger tracking-[0.3em] uppercase">Authorized Eyes Only // Clearance Level 5</span>
+                 </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-24 items-center">
+                <!-- Copy -->
                 <div>
-                    <h4 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-synapse-DEFAULT" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        Privacy by Design
-                    </h4>
-                    <p class="text-gray-500 text-sm leading-relaxed">
-                        Neural data is encrypted locally on the headset (AES-256). We utilize federated learning to improve models without transferring raw brainwave data to the cloud.
+                    <h2 class="text-5xl md:text-6xl font-sans font-bold text-white mb-6 uppercase tracking-tight">
+                        Project <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-gold">ARES</span>
+                    </h2>
+                    <h3 class="font-serif text-2xl text-gray-400 mb-8 italic">Genetic Pre-Selection for Intelligence Operations.</h3>
+                    
+                    <p class="text-sm text-gray-400 font-mono leading-relaxed mb-6 border-l border-red-900/50 pl-4">
+                        "For missions that do not exist, we require operators who are genetically incapable of failure."
                     </p>
+
+                    <p class="text-gray-500 mb-10 leading-relaxed font-light">
+                        Mindxcope's Defense Directorate offers bespoke genetic sequencing for Intelligence Agencies. We identify specific allele variations linked to superior pain suppression, interrogation resistance, and absolute organizational loyalty.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-6 mb-12">
+                        <div class="bg-white/5 p-4 border border-white/5 hover:border-danger/30 transition-colors">
+                            <span class="text-danger font-bold text-xs block mb-1">MARKER: MAOA-L</span>
+                            <span class="text-[10px] text-gray-500 uppercase">Aggression Control</span>
+                        </div>
+                        <div class="bg-white/5 p-4 border border-white/5 hover:border-gold/30 transition-colors">
+                            <span class="text-gold font-bold text-xs block mb-1">MARKER: OXTR</span>
+                            <span class="text-[10px] text-gray-500 uppercase">Loyalty Bonding</span>
+                        </div>
+                    </div>
+
+                    <button class="w-full sm:w-auto px-8 py-4 border border-danger/40 text-danger hover:bg-danger hover:text-white transition-all font-mono text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3">
+                        <i data-lucide="fingerprint" class="w-4 h-4"></i>
+                        Verify Clearance
+                    </button>
                 </div>
-                <div>
-                    <h4 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-synapse-DEFAULT" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
-                        Transparency
-                    </h4>
-                    <p class="text-gray-500 text-sm leading-relaxed">
-                        Users maintain 100% ownership of their neuro-data. Our algorithms are rigorously audited to prevent bias against neuro-divergent individuals.
-                    </p>
+
+                <!-- DNA Simulation -->
+                <div class="relative h-[600px] border-y border-white/5 bg-black/50 backdrop-blur-sm">
+                    <canvas id="dna-canvas" class="w-full h-full opacity-80"></canvas>
+                    
+                    <!-- Overlay Data -->
+                    <div class="absolute top-4 left-4 font-mono text-[9px] text-gray-600">
+                        SEQ_ID: 994-ALPHA<br>
+                        STATUS: ANALYZING
+                    </div>
+                    
+                    <div class="absolute bottom-8 right-8 text-right">
+                        <div class="text-4xl font-mono text-white/5 font-bold">GENOME</div>
+                        <div class="text-xs text-danger font-mono mt-1">MUTATION DETECTED</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer / Contact -->
-    <footer id="contact" class="bg-black pt-20 pb-10 border-t border-white/10">
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
-                <div class="max-w-md">
-                    <span class="text-2xl font-bold tracking-tight text-white block mb-6">MINDXCOPE</span>
-                    <h3 class="text-3xl font-bold text-gray-200 mb-6">Ready to decode the future?</h3>
-                    <p class="text-gray-500 text-sm mb-8">
-                        Join the leading organizations using Mindxcope to unlock human potential.
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="font-serif font-bold text-xl text-white">MINDXCOPE</span>
+                    </div>
+                    <p class="text-gray-500 text-xs leading-relaxed font-mono">
+                        Defining the architecture of future intelligence. <br>
+                        San Francisco | London | [REDACTED]
                     </p>
-                    <a href="mailto:hello@mindxcope.xyz" class="text-synapse-DEFAULT font-mono border-b border-synapse-DEFAULT hover:text-white hover:border-white transition-all pb-1">hello@mindxcope.xyz</a>
                 </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-12 w-full md:w-auto">
-                    <div>
-                        <h4 class="text-white font-bold mb-4 text-sm">Product</h4>
-                        <ul class="space-y-3 text-sm text-gray-500">
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">Analytics</a></li>
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">Hardware</a></li>
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">API Docs</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold mb-4 text-sm">Company</h4>
-                        <ul class="space-y-3 text-sm text-gray-500">
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">About</a></li>
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">Careers</a></li>
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">Press</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold mb-4 text-sm">Social</h4>
-                        <ul class="space-y-3 text-sm text-gray-500">
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">Twitter / X</a></li>
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">LinkedIn</a></li>
-                            <li><a href="#" class="hover:text-synapse-DEFAULT transition">GitHub</a></li>
-                        </ul>
-                    </div>
+                
+                <div class="grid grid-cols-2 gap-12 text-[10px] uppercase tracking-[0.15em] font-medium text-gray-400">
+                    <ul class="space-y-4">
+                        <li><a href="#" class="hover:text-white transition">Platform</a></li>
+                        <li><a href="#" class="hover:text-white transition">Science</a></li>
+                        <li><a href="#" class="hover:text-gold transition">Defense Dept</a></li>
+                    </ul>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="hover:text-white transition">Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Ethics</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                    </ul>
                 </div>
             </div>
-
-            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-700">
-                <p>&copy; 2025 Mindxcope Inc. All Rights Reserved.</p>
-                <div class="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-gray-500">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-500">Terms of Service</a>
-                </div>
+            
+            <div class="border-t border-white/5 pt-8 flex justify-between items-center">
+                <p class="text-[10px] text-gray-600 font-mono uppercase">© 2025 Mindxcope Inc.</p>
+                <div class="text-[10px] text-gray-700 font-mono">SYSTEM: OPTIMAL</div>
             </div>
         </div>
     </footer>
 
-    <!-- JS Logic -->
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
+        lucide.createIcons();
+
+        // --- LOAD ANIMATION ---
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to("#load-bar", { x: "0%", duration: 1.5, ease: "expo.inOut" })
+              .to("#loader", { y: "-100%", duration: 0.8, ease: "power4.inOut", delay: 0.2 })
+              .to(".hero-el", { y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: "power3.out" });
+        });
+
+        // --- THREE.JS: NEURAL BRAIN SIMULATION ---
+        const initBrain = () => {
+            const canvas = document.getElementById('brain-canvas');
+            const scene = new THREE.Scene();
+            // Deep fog for depth
+            scene.fog = new THREE.FogExp2(0x050505, 0.03);
+
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
             
-            // 1. Initialize Particles
-            await tsParticles.load("tsparticles", {
-                preset: "links",
-                fullScreen: { enable: false },
-                background: { color: { value: "transparent" } },
-                particles: {
-                    number: { value: 50, density: { enable: true, area: 800 } },
-                    color: { value: ["#00F0FF", "#ffffff"] },
-                    links: {
-                        enable: true,
-                        color: "#ffffff",
-                        opacity: 0.1,
-                        distance: 150
-                    },
-                    move: { enable: true, speed: 0.8 },
-                    opacity: { value: 0.3 },
-                    size: { value: { min: 1, max: 2 } }
-                },
-                interactivity: {
-                    events: { onHover: { enable: true, mode: "grab" } },
-                    modes: { grab: { distance: 140, links: { opacity: 0.5, color: "#00F0FF" } } }
-                }
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Brain Particles Group
+            const brain = new THREE.Group();
+            scene.add(brain);
+
+            // Generate particles in a brain-ish shape (2 hemispheres)
+            const particleCount = 2000;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            const color1 = new THREE.Color(0xFFFFFF); // White
+            const color2 = new THREE.Color(0xC5A059); // Gold
+
+            for(let i = 0; i < particleCount; i++) {
+                // Approximate brain shape using spherical coords + distortion
+                // Split into left/right hemisphere
+                const isRight = Math.random() > 0.5;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+                
+                // Base sphere
+                let r = 4;
+                
+                // Flatten bottom
+                if (phi > 2) r *= 0.8; 
+
+                let x = r * Math.sin(phi) * Math.cos(theta);
+                let y = r * Math.sin(phi) * Math.sin(theta);
+                let z = r * Math.cos(phi);
+
+                // Hemisphere separation
+                x *= 0.8; // Narrower width
+                if (isRight) x += 0.5; else x -= 0.5;
+
+                // Scale for brain shape (elongate Z)
+                z *= 1.2;
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+
+                // Color gradient based on activity (random)
+                const mixedColor = Math.random() > 0.8 ? color2 : color1;
+                colors[i * 3] = mixedColor.r;
+                colors[i * 3 + 1] = mixedColor.g;
+                colors[i * 3 + 2] = mixedColor.b;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.04,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending
             });
 
-            // 2. Initialize Radar Chart for Report Demo
-            var optionsRadar = {
-                series: [{
-                    name: 'Current Session',
-                    data: [80, 50, 30, 90, 85, 70],
-                }, {
-                    name: 'Baseline',
-                    data: [60, 60, 40, 70, 65, 60],
-                }],
-                chart: {
-                    height: 300,
-                    type: 'radar',
-                    fontFamily: 'Inter, sans-serif',
-                    toolbar: { show: false }
-                },
-                labels: ['Focus', 'Stress', 'Fatigue', 'Engagement', 'Relaxation', 'Interest'],
-                stroke: {
-                    width: 2,
-                    colors: ['#000000', '#A0A0A0'],
-                    dashArray: [0, 4]
-                },
-                fill: { opacity: 0.1 },
-                markers: { size: 3 },
-                yaxis: { show: false },
-                colors: ['#000000', '#888888'],
-                legend: { show: true, position: 'bottom' }
-            };
+            const points = new THREE.Points(geometry, material);
+            brain.add(points);
 
-            var chart = new ApexCharts(document.querySelector("#radar-chart"), optionsRadar);
-            chart.render();
-        });
+            // Neural Connections (Lines) - Connecting close particles randomly
+            // Optimization: Just create a few distinct lines for visual effect, not all-to-all
+            const lineGeo = new THREE.BufferGeometry();
+            const linePos = [];
+            const maxConnections = 300;
+            let connections = 0;
+
+            for(let i=0; i<particleCount; i++) {
+                if(Math.random() > 0.98 && connections < maxConnections) {
+                    const idx1 = i * 3;
+                    // Find a random neighbor? Just pick random point for abstract look
+                    const idx2 = Math.floor(Math.random() * particleCount) * 3;
+                    
+                    // Only connect if somewhat close
+                    const d = Math.sqrt(
+                        Math.pow(positions[idx1]-positions[idx2], 2) +
+                        Math.pow(positions[idx1+1]-positions[idx2+1], 2) +
+                        Math.pow(positions[idx1+2]-positions[idx2+2], 2)
+                    );
+
+                    if(d < 2) {
+                        linePos.push(
+                            positions[idx1], positions[idx1+1], positions[idx1+2],
+                            positions[idx2], positions[idx2+1], positions[idx2+2]
+                        );
+                        connections++;
+                    }
+                }
+            }
+            lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePos, 3));
+            const lineMat = new THREE.LineBasicMaterial({ color: 0x444444, transparent: true, opacity: 0.2 });
+            const lines = new THREE.LineSegments(lineGeo, lineMat);
+            brain.add(lines);
+
+
+            camera.position.z = 12;
+
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            // Smooth rotation target
+            let targetRotX = 0;
+            let targetRotY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
+                mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+            });
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                targetRotY += (mouseX - targetRotY) * 0.05;
+                targetRotX += (mouseY - targetRotX) * 0.05;
+
+                brain.rotation.y += 0.002; // Auto rotate
+                brain.rotation.y += targetRotY * 0.1;
+                brain.rotation.x = targetRotX * 0.5;
+
+                // Pulse effect
+                const time = Date.now() * 0.001;
+                points.material.size = 0.04 + Math.sin(time * 2) * 0.01;
+
+                renderer.render(scene, camera);
+            };
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+        initBrain();
+
+        // --- THREE.JS: DNA SIMULATION ---
+        const initDNA = () => {
+            const canvas = document.getElementById('dna-canvas');
+            if(!canvas) return;
+            const parent = canvas.parentElement;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, parent.offsetWidth / parent.offsetHeight, 0.1, 100);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(parent.offsetWidth, parent.offsetHeight);
+
+            const dna = new THREE.Group();
+            scene.add(dna);
+
+            // Double Helix Logic
+            const pointsCount = 60;
+            const radius = 2;
+            const height = 10;
+            const turns = 3;
+            
+            const geo = new THREE.BufferGeometry();
+            const pos = [];
+            const cols = [];
+            const colRed = new THREE.Color(0xFF2A2A);
+            const colGold = new THREE.Color(0xC5A059);
+
+            for(let i=0; i<=pointsCount; i++) {
+                const t = i/pointsCount;
+                const angle = t * Math.PI * 2 * turns;
+                const y = (t - 0.5) * height;
+
+                // Strand 1
+                const x1 = Math.cos(angle) * radius;
+                const z1 = Math.sin(angle) * radius;
+                pos.push(x1, y, z1);
+                cols.push(colRed.r, colRed.g, colRed.b);
+
+                // Strand 2
+                const x2 = Math.cos(angle + Math.PI) * radius;
+                const z2 = Math.sin(angle + Math.PI) * radius;
+                pos.push(x2, y, z2);
+                cols.push(colGold.r, colGold.g, colGold.b);
+
+                // Rungs
+                if(i%2===0) {
+                    const rungGeo = new THREE.BufferGeometry();
+                    rungGeo.setAttribute('position', new THREE.Float32BufferAttribute([x1,y,z1, x2,y,z2], 3));
+                    const rung = new THREE.Line(rungGeo, new THREE.LineBasicMaterial({ color: 0x333333 }));
+                    dna.add(rung);
+                }
+            }
+
+            geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+            geo.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3));
+            
+            const mat = new THREE.PointsMaterial({ size: 0.15, vertexColors: true });
+            const strands = new THREE.Points(geo, mat);
+            dna.add(strands);
+
+            camera.position.z = 10;
+            dna.rotation.z = Math.PI / 6;
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                dna.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            };
+            animate();
+            
+             // Resize observer
+            const resizeObserver = new ResizeObserver(() => {
+                camera.aspect = parent.offsetWidth / parent.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(parent.offsetWidth, parent.offsetHeight);
+            });
+            resizeObserver.observe(parent);
+        }
+        initDNA();
+
     </script>
 </body>
 </html>
