@@ -1,665 +1,635 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mindxcope | The Cognitive Standard</title>
-    <meta name="description" content="The world's first Cognitive Hiring & Genetic Profiling platform for Elite Performance and Defense.">
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Brain, 
+  Dna, 
+  Cpu, 
+  Activity, 
+  Network, 
+  ShieldAlert, 
+  Lock, 
+  Scan, 
+  Binary, 
+  ChevronRight, 
+  Menu, 
+  X, 
+  Terminal,
+  Zap,
+  Globe,
+  FileText,
+  BarChart3,
+  Crosshair,
+  AlertTriangle
+} from 'lucide-react';
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@100;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+// --- ANIMATION UTILITIES ---
 
-    <!-- Libraries -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+const ScrambleText = ({ text, className }) => {
+  const [display, setDisplay] = useState('');
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Manrope', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        obsidian: '#050505',
-                        charcoal: '#0a0a0a',
-                        gold: {
-                            DEFAULT: '#C5A059',
-                            light: '#E5C585',
-                            dim: 'rgba(197, 160, 89, 0.1)',
-                            glow: 'rgba(197, 160, 89, 0.4)',
-                        },
-                        danger: '#FF2A2A',
-                    },
-                    backgroundImage: {
-                        'grid-fade': 'linear-gradient(to bottom, transparent, #050505)',
-                    },
-                    keyframes: {
-                        'pulse-slow': {
-                            '0%, 100%': { opacity: '0.5' },
-                            '50%': { opacity: '0.8' },
-                        }
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
-                    }
-                }
-            }
+  useEffect(() => {
+    let iteration = 0;
+    const interval = setInterval(() => {
+      setDisplay(
+        text.split('').map((letter, index) => {
+          if (index < iteration) return text[index];
+          return chars[Math.floor(Math.random() * chars.length)];
+        }).join('')
+      );
+      if (iteration >= text.length) clearInterval(interval);
+      iteration += 1 / 3;
+    }, 30);
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return <span className={className}>{display}</span>;
+};
+
+const Reveal = ({ children, className = "", delay = 0 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
         }
-    </script>
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
-    <style>
-        body { background-color: #050505; color: #e2e2e2; overflow-x: hidden; }
-        
-        /* Premium Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-        ::-webkit-scrollbar-thumb:hover { background: #C5A059; }
-
-        /* Typography Utilities */
-        .text-glow-gold { text-shadow: 0 0 30px rgba(197, 160, 89, 0.3); }
-        .text-glow-white { text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
-        
-        /* Glassmorphism */
-        .glass-panel {
-            background: rgba(15, 15, 15, 0.6);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        /* Canvas Layers */
-        #brain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-        
-        /* Loader */
-        .loader-overlay {
-            position: fixed; inset: 0; background: #050505; z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        
-        .scanline {
-            width: 100%; height: 2px; background: rgba(197, 160, 89, 0.2);
-            position: absolute; animation: scan 6s linear infinite; pointer-events: none;
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
-        }
-        @keyframes scan { from { top: -10%; } to { top: 110%; } }
-    </style>
-</head>
-<body class="selection:bg-gold selection:text-black">
-
-    <!-- 3D Background -->
-    <canvas id="brain-canvas"></canvas>
-
-    <!-- Initial Loader -->
-    <div class="loader-overlay" id="loader">
-        <div class="font-serif text-3xl text-white mb-4 tracking-widest">MINDXCOPE</div>
-        <div class="w-48 h-[1px] bg-gray-800 relative overflow-hidden">
-            <div class="absolute inset-0 bg-gold w-full h-full -translate-x-full" id="load-bar"></div>
-        </div>
-        <div class="font-mono text-[10px] text-gray-500 mt-4 uppercase tracking-[0.3em]">Calibrating Neural Metrics</div>
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-1000 transform ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      } ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
     </div>
+  );
+};
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 left-0 transition-all duration-500 h-24 flex items-center" id="navbar">
-        <div class="absolute inset-0 bg-gradient-to-b from-obsidian/95 to-transparent pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between relative z-10">
-            <!-- Brand -->
-            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
-                <div class="w-8 h-8 border border-gold/30 flex items-center justify-center bg-black/50 backdrop-blur-md">
-                    <span class="font-serif font-bold text-lg text-gold">M</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-sans font-bold text-sm tracking-[0.2em] text-white">MINDXCOPE</span>
-                </div>
+// --- SIMULATION ENGINES ---
+
+const NeuralCortex = () => {
+  const canvasRef = useRef(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let particles = [];
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    const initParticles = () => {
+      particles = [];
+      const count = Math.min(window.innerWidth / 15, 100);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 2,
+          color: Math.random() > 0.5 ? 'cyan' : 'indigo'
+        });
+      }
+    };
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(2, 2, 4, 0.2)'; 
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        const dx = mouseRef.current.x - p.x;
+        const dy = mouseRef.current.y - p.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 200) {
+          p.x += dx * 0.01;
+          p.y += dy * 0.01;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color === 'cyan' ? '#06b6d4' : '#6366f1';
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx2 = p.x - p2.x;
+          const dy2 = p.y - p2.y;
+          const dist2 = Math.sqrt(dx2*dx2 + dy2*dy2);
+
+          if (dist2 < 100) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist2/1000})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      });
+      animationFrameId = requestAnimationFrame(draw);
+    };
+
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', (e) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    });
+    
+    resize();
+    draw();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0 opacity-60" />;
+};
+
+const DNASimulation = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let frame = 0;
+    
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+    };
+
+    const draw = () => {
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const particlesPerStrand = 15;
+      const amplitude = 30;
+      const separation = 20;
+      const speed = 0.02;
+
+      for (let i = 0; i < particlesPerStrand; i++) {
+        const y = (i - particlesPerStrand/2) * separation + cy;
+        const phase = i * 0.5 + frame * speed;
+        
+        const x1 = cx + Math.sin(phase) * amplitude;
+        const z1 = Math.cos(phase);
+        
+        const x2 = cx + Math.sin(phase + Math.PI) * amplitude;
+        const z2 = Math.cos(phase + Math.PI);
+
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(245, 158, 11, ${0.2})`; 
+        ctx.moveTo(x1, y);
+        ctx.lineTo(x2, y);
+        ctx.stroke();
+
+        const drawNode = (x, y, z) => {
+          const size = (z + 2) * 2; 
+          const opacity = (z + 2) / 3;
+          ctx.beginPath();
+          ctx.arc(x, y, size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(245, 158, 11, ${opacity})`;
+          ctx.fill();
+        };
+
+        drawNode(x1, y, z1);
+        drawNode(x2, y, z2);
+      }
+
+      frame++;
+      requestAnimationFrame(draw);
+    };
+
+    resize();
+    draw();
+    window.addEventListener('resize', resize);
+    return () => window.removeEventListener('resize', resize);
+  }, []);
+
+  return <canvas ref={canvasRef} className="w-full h-full" style={{ width: '100%', height: '100%' }} />;
+};
+
+// --- UI COMPONENTS ---
+
+const HudTag = ({ text, color = "cyan" }) => {
+  const styles = {
+    cyan: "text-cyan-500 border-cyan-500/30 bg-cyan-950/10 shadow-[0_0_10px_rgba(6,182,212,0.2)]",
+    amber: "text-amber-500 border-amber-500/30 bg-amber-950/10 shadow-[0_0_10px_rgba(245,158,11,0.2)]",
+  };
+  return (
+    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-sm border ${styles[color]} backdrop-blur-md`}>
+      <div className={`w-1.5 h-1.5 rounded-full ${color === 'amber' ? 'bg-amber-500' : 'bg-cyan-500'} animate-pulse`}></div>
+      <span className="font-mono text-[10px] tracking-widest uppercase">{text}</span>
+    </div>
+  );
+};
+
+const SectionHeading = ({ number, title, subtitle }) => (
+  <Reveal>
+    <div className="mb-16 relative pl-6 border-l border-neutral-800">
+      <span className="font-mono text-xs text-neutral-500 mb-2 block tracking-[0.2em]">0{number} // {title.toUpperCase()}</span>
+      <h2 className="text-4xl md:text-6xl font-light text-white mb-2 tracking-tight">
+        {subtitle}
+      </h2>
+      <div className="h-1 w-20 bg-gradient-to-r from-cyan-600 to-transparent mt-4"></div>
+    </div>
+  </Reveal>
+);
+
+const TechCard = ({ title, items, color = "cyan" }) => (
+  <Reveal className="h-full">
+    <div className="h-full border border-white/5 bg-white/[0.02] backdrop-blur-md p-8 hover:bg-white/[0.05] hover:border-white/10 transition-all duration-500 group relative overflow-hidden">
+      <div className={`absolute -right-20 -top-20 w-40 h-40 bg-${color}-500/10 rounded-full blur-3xl group-hover:bg-${color}-500/20 transition-all`}></div>
+      <h3 className={`text-xl font-medium text-white mb-6 flex items-center gap-2`}>
+        <span className={`w-1 h-4 bg-${color}-500 inline-block`}></span>
+        {title}
+      </h3>
+      <ul className="space-y-4 relative z-10">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-start gap-3 text-sm text-neutral-400 group-hover:text-neutral-300 transition-colors">
+            <ChevronRight size={14} className={`mt-1 text-${color}-500`} />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Reveal>
+);
+
+// --- MAIN APP ---
+
+export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const total = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      setScrollProgress(total / height);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#030305] text-neutral-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-100 overflow-x-hidden">
+      <NeuralCortex />
+      
+      {/* Scroll Progress */}
+      <div className="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-cyan-500 via-indigo-500 to-amber-500 z-[100]" style={{ width: `${scrollProgress * 100}%` }}></div>
+
+      {/* Nav */}
+      <nav className="fixed w-full z-50 border-b border-white/5 bg-[#030305]/80 backdrop-blur-xl transition-all duration-300">
+        <div className="container mx-auto px-6 h-20 flex justify-between items-center">
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <div className="relative w-10 h-10 flex items-center justify-center bg-white/5 rounded-sm border border-white/10 group-hover:border-cyan-500/50 transition-colors">
+              <Brain size={20} className="text-cyan-400" />
             </div>
+            <div>
+              <h1 className="text-lg font-bold tracking-tighter text-white leading-none">MINDXCOPE</h1>
+              <span className="text-[9px] font-mono text-cyan-500 tracking-[0.2em] uppercase block mt-1">Cognitive Labs</span>
+            </div>
+          </div>
 
-            <!-- Links -->
-            <div class="hidden md:flex items-center gap-10">
-                <a href="#assessment" class="text-[11px] font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-[0.15em]">Cognitive Profiling</a>
-                <a href="#platform" class="text-[11px] font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-[0.15em]">Platform</a>
-                <a href="#defense" class="text-[11px] font-bold text-gold/80 hover:text-gold transition-colors uppercase tracking-[0.15em] flex items-center gap-2 px-4 py-2 border border-gold/20 bg-gold/5">
-                    <i data-lucide="shield-alert" class="w-3 h-3"></i> Defense Directorate
-                </a>
+          <div className="hidden lg:flex items-center gap-10">
+            {['Vision', 'Stack', 'Report', 'Gene-Ops'].map((item) => (
+              <a key={item} href={`#${item.toLowerCase()}`} className="text-[11px] font-bold font-mono uppercase tracking-widest text-neutral-400 hover:text-white transition-colors relative group">
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-cyan-500 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-6">
+            <button className="hidden lg:flex items-center gap-2 bg-white text-black px-5 py-2 text-[10px] font-bold uppercase tracking-widest hover:bg-cyan-400 transition-all">
+              <Lock size={12} /> Access Portal
+            </button>
+            <button className="lg:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <header className="relative pt-40 pb-20 lg:pt-64 lg:pb-40 z-10 overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col items-start max-w-4xl">
+            <div className="flex items-center gap-4 mb-8 animate-fade-in-up">
+              <HudTag text="Bio-Intelligence" />
+              <span className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest">System Ready</span>
             </div>
             
-            <button class="md:hidden text-white"><i data-lucide="menu" class="w-6 h-6"></i></button>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="relative h-screen w-full flex items-center justify-center overflow-hidden px-6">
-        <div class="relative z-20 text-center max-w-4xl">
-            <div class="inline-flex items-center gap-2 mb-8 opacity-0 hero-el border border-white/10 px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-md">
-                <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
-                <span class="font-mono text-[10px] uppercase tracking-widest text-gray-300">The New Standard in Human Capital</span>
-            </div>
-
-            <h1 class="font-sans font-light text-5xl md:text-8xl leading-[1.1] mb-8 opacity-0 hero-el text-white">
-                Stop Hiring Resumes. <br>
-                <span class="font-serif font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500 text-glow-white">Hire Neural Architecture.</span>
+            <h1 className="text-5xl md:text-7xl lg:text-9xl font-light tracking-tighter text-white leading-[0.9] mb-8">
+              <ScrambleText text="DECODING" className="block text-neutral-500" />
+              <span className="block text-white">HUMAN</span>
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500 font-medium">POTENTIAL</span>
             </h1>
-
-            <p class="font-light text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 opacity-0 hero-el leading-relaxed">
-                We quantify the unquantifiable. Mindxcope uses non-invasive BCI technology to assess cognitive load, pattern recognition speed, and stress tolerance in elite candidates.
+            
+            <p className="text-lg text-neutral-400 max-w-xl leading-relaxed mb-10 border-l-2 border-white/10 pl-6">
+              Mindxcope integrates AI, Neuroscience, and Genetic data to measure, understand, and enhance human cognitive performance.
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center opacity-0 hero-el">
-                <button class="px-10 py-4 bg-white text-black font-bold tracking-[0.2em] uppercase hover:bg-gray-200 transition-all text-[11px]">
-                    Start Assessment
-                </button>
-                <button class="px-10 py-4 border border-white/20 text-white font-medium tracking-[0.2em] uppercase hover:bg-white/5 transition-all backdrop-blur-md text-[11px]">
-                    Enterprise Demo
-                </button>
+            <div className="flex flex-wrap gap-4">
+              <button className="px-8 py-4 bg-cyan-600 text-white font-mono text-xs uppercase tracking-widest hover:bg-cyan-500 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center gap-2">
+                Initialize Demo <ChevronRight size={14} />
+              </button>
             </div>
+          </div>
         </div>
-        
-        <!-- Bottom Data Ticker -->
-        <div class="absolute bottom-0 left-0 w-full border-t border-white/10 bg-black/80 backdrop-blur-sm py-4 overflow-hidden z-20">
-            <div class="flex items-center gap-12 animate-marquee whitespace-nowrap opacity-50 font-mono text-[10px] text-gray-400">
-                <span>PROCESSING: CANDIDATE_892 [TOP 1%]</span>
-                <span>//</span>
-                <span>NEURAL LOAD: 45TB/s</span>
-                <span>//</span>
-                <span>AVG. LATENCY: 12ms</span>
-                <span>//</span>
-                <span>GLOBAL NODES: 4,021</span>
-                <span>//</span>
-                <span>PREDICTIVE VALIDITY: 99.8%</span>
-                <span>//</span>
-                <span>SECTOR: HIGH FREQUENCY TRADING</span>
-            </div>
-        </div>
-    </section>
+      </header>
 
-    <!-- Value Prop / Assessment Visualizer -->
-    <section id="assessment" class="py-32 bg-obsidian relative border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                
-                <!-- Content -->
-                <div class="order-2 lg:order-1">
-                    <span class="text-gold font-mono text-[10px] tracking-[0.3em] uppercase mb-4 block">Beyond The Interview</span>
-                    <h2 class="text-4xl md:text-5xl font-sans font-light mb-8 text-white">Quantifiable <span class="font-serif italic text-gray-400">Genius</span>.</h2>
-                    
-                    <div class="space-y-12">
-                        <div class="group">
-                            <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition-colors">Cognitive Throughput</h3>
-                            <p class="text-sm text-gray-500 leading-relaxed max-w-md">
-                                Traditional IQ tests are static. We measure dynamic processing speed—how fast a candidate creates neural pathways when facing novel problems.
-                            </p>
-                        </div>
-                        <div class="group">
-                            <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition-colors">Emotional Regulation</h3>
-                            <p class="text-sm text-gray-500 leading-relaxed max-w-md">
-                                Through amygdala response monitoring, we verify grace under pressure. Essential for C-Suite executives and algorithmic traders.
-                            </p>
-                        </div>
-                        <div class="group">
-                            <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition-colors">Flow State Accessibility</h3>
-                            <p class="text-sm text-gray-500 leading-relaxed max-w-md">
-                                Determine how quickly a candidate enters 'Deep Work' states (Beta/Gamma wave coupling) and how long they can sustain it.
-                            </p>
-                        </div>
+      {/* Philosophy */}
+      <section id="vision" className="py-24 border-t border-white/5 bg-black z-10 relative">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-20">
+            <div>
+              <SectionHeading number="01" title="Philosophy" subtitle="Objective Truth." />
+              <Reveal delay={200}>
+                <p className="text-xl text-neutral-300 leading-relaxed mb-8">
+                  Cognition is not magic; it is biology. Mindxcope measures the 
+                  <span className="text-cyan-400"> electrical and genetic substrates</span> of thought.
+                </p>
+                <div className="space-y-8">
+                  <div className="flex gap-4">
+                    <div className="p-3 bg-neutral-900 h-fit rounded-sm"><Brain className="text-white" size={24} /></div>
+                    <div>
+                      <h4 className="text-white text-lg font-medium mb-2">The Vision</h4>
+                      <p className="text-neutral-500 leading-relaxed">To become the world’s most trusted authority on cognitive intelligence, replacing subjective surveys with hard biological data.</p>
                     </div>
-
-                    <div class="mt-12 pt-8 border-t border-white/5 flex gap-8">
-                        <div>
-                            <div class="text-3xl font-serif text-white">93%</div>
-                            <div class="text-[10px] font-mono text-gray-500 mt-1">RETENTION RATE</div>
-                        </div>
-                        <div>
-                            <div class="text-3xl font-serif text-white">3x</div>
-                            <div class="text-[10px] font-mono text-gray-500 mt-1">ROI PER HIRE</div>
-                        </div>
-                    </div>
+                  </div>
                 </div>
-
-                <!-- Visualizer -->
-                <div class="order-1 lg:order-2 relative h-[600px] glass-panel p-1">
-                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10 pointer-events-none"></div>
-                    <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1965&auto=format&fit=crop" class="w-full h-full object-cover opacity-60 grayscale" alt="Brain Scan Data">
-                    
-                    <!-- HUD Overlay -->
-                    <div class="absolute inset-0 z-20 p-8 flex flex-col justify-between">
-                        <div class="flex justify-between items-start">
-                            <div class="font-mono text-[9px] text-gray-400 border border-white/10 px-2 py-1 bg-black/50">
-                                SUBJ: A. VANCE<br>
-                                ROLE: CTO CANDIDATE
-                            </div>
-                            <i data-lucide="activity" class="text-gold w-5 h-5 animate-pulse"></i>
-                        </div>
-
-                        <!-- Charts (CSS Grid) -->
-                        <div class="space-y-4">
-                            <div class="bg-black/60 p-4 border border-white/10 backdrop-blur-md">
-                                <div class="flex justify-between text-[10px] font-mono text-gray-400 mb-2">
-                                    <span>PATTERN RECOGNITION</span>
-                                    <span class="text-white">98.2%</span>
-                                </div>
-                                <div class="w-full h-1 bg-gray-800">
-                                    <div class="h-full bg-white w-[98%] shadow-[0_0_10px_white]"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="bg-black/60 p-4 border border-white/10 backdrop-blur-md">
-                                <div class="flex justify-between text-[10px] font-mono text-gray-400 mb-2">
-                                    <span>STRESS TOLERANCE</span>
-                                    <span class="text-gold">EXCEPTIONAL</span>
-                                </div>
-                                <div class="w-full h-1 bg-gray-800">
-                                    <div class="h-full bg-gold w-[92%] shadow-[0_0_10px_#C5A059]"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </Reveal>
             </div>
-        </div>
-    </section>
-
-    <!-- Products / Platform -->
-    <section id="platform" class="py-32 bg-charcoal relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-white/5 to-transparent"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="mb-20">
-                <span class="text-gray-500 font-mono text-[10px] tracking-[0.3em] uppercase mb-4 block">The Ecosystem</span>
-                <h2 class="text-4xl font-sans font-light text-white">Hardware & Software <br>Integration</h2>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-px bg-white/10 border border-white/10">
-                <!-- Product 1 -->
-                <div class="bg-obsidian p-10 group hover:bg-black transition-colors duration-500">
-                    <i data-lucide="brain-circuit" class="w-8 h-8 text-white/50 mb-8 group-hover:text-white transition-colors"></i>
-                    <h3 class="text-xl font-serif text-white mb-4">Mindxcope Headset</h3>
-                    <p class="text-xs text-gray-500 font-mono leading-relaxed mb-8">
-                        24-channel dry-electrode EEG. Military-grade signal acquisition. Setup in under 60 seconds.
-                    </p>
-                    <a href="#" class="text-[10px] uppercase tracking-widest text-gold hover:text-white transition-colors flex items-center gap-2">
-                        Specs <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="bg-obsidian p-10 group hover:bg-black transition-colors duration-500">
-                    <i data-lucide="bar-chart-2" class="w-8 h-8 text-white/50 mb-8 group-hover:text-white transition-colors"></i>
-                    <h3 class="text-xl font-serif text-white mb-4">Analytics Dashboard</h3>
-                    <p class="text-xs text-gray-500 font-mono leading-relaxed mb-8">
-                        Real-time candidate comparison. Predictive modeling for team synergy and leadership potential.
-                    </p>
-                    <a href="#" class="text-[10px] uppercase tracking-widest text-gold hover:text-white transition-colors flex items-center gap-2">
-                        Demo <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="bg-obsidian p-10 group hover:bg-black transition-colors duration-500">
-                    <i data-lucide="layers" class="w-8 h-8 text-white/50 mb-8 group-hover:text-white transition-colors"></i>
-                    <h3 class="text-xl font-serif text-white mb-4">API Integration</h3>
-                    <p class="text-xs text-gray-500 font-mono leading-relaxed mb-8">
-                        Seamlessly integrates with Workday, Greenhouse, and proprietary HRIS systems.
-                    </p>
-                    <a href="#" class="text-[10px] uppercase tracking-widest text-gold hover:text-white transition-colors flex items-center gap-2">
-                        Docs <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DEFENSE & INTELLIGENCE SECTION (GENETIC ENGINEERING) -->
-    <section id="defense" class="py-40 bg-[#020202] relative overflow-hidden">
-        <!-- Visuals -->
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')] opacity-20"></div>
-        <div class="scanline z-10"></div>
-        
-        <!-- Red/Gold Ambient Glow -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/10 blur-[120px] rounded-full pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-6 relative z-20">
-            <!-- Classified Header -->
-            <div class="flex justify-center mb-16">
-                 <div class="border border-red-900/30 bg-red-950/10 px-6 py-2 flex items-center gap-3 backdrop-blur-md">
-                    <i data-lucide="lock" class="w-3 h-3 text-danger animate-pulse"></i>
-                    <span class="font-mono text-[10px] text-danger tracking-[0.3em] uppercase">Authorized Eyes Only // Clearance Level 5</span>
+            <Reveal delay={400} className="relative h-full min-h-[400px] border border-white/10 bg-[#060608] flex items-center justify-center overflow-hidden">
+               <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+               <div className="relative w-64 h-64">
+                 <div className="absolute inset-0 border border-cyan-500/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                 <div className="absolute inset-0 flex items-center justify-center text-cyan-500/10">
+                   <Network size={96} strokeWidth={0.5} />
                  </div>
+               </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Tech Stack */}
+      <section id="stack" className="py-24 bg-[#030305] relative">
+        <div className="container mx-auto px-6">
+          <SectionHeading number="02" title="The Stack" subtitle="Cognitive Engine." />
+          <div className="grid md:grid-cols-3 gap-6">
+            <TechCard 
+              title="Signal Acquisition" 
+              items={["Multi-modal Fusion (EEG + fNIRS)", "Medical-grade sensors (128ch)", "Sub-millisecond latency"]}
+              color="cyan"
+            />
+             <TechCard 
+              title="Deep Learning Core" 
+              items={["Scientific Machine Learning (SciML)", "Transformer-based Time Series", "Anomaly Detection Engines"]}
+              color="indigo"
+            />
+             <TechCard 
+              title="Privacy Layer" 
+              items={["Edge-Computing (Local Processing)", "Federated Learning", "GDPR / HIPAA Compliant"]}
+              color="emerald"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* --- NEW: SAMPLE REPORT VISUALIZATION --- */}
+      <section id="report" className="py-24 bg-neutral-950 border-y border-white/5 relative">
+        <div className="container mx-auto px-6">
+          <SectionHeading number="03" title="Intelligence" subtitle="The Output." />
+          
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-xl text-neutral-300 mb-8">
+                Raw data is noise. Our platform synthesizes millions of data points into a clear, actionable <span className="text-cyan-400">Cognitive Report Card</span>.
+              </p>
+              <ul className="space-y-6">
+                {[
+                  { title: "Cognitive Load Index", desc: "Real-time measurement of mental effort vs capacity." },
+                  { title: "Fatigue Prediction", desc: "AI forecasts of when performance will degrade." },
+                  { title: "Flow State Analysis", desc: "Identifying peak performance windows." }
+                ].map((item, i) => (
+                  <li key={i} className="flex gap-4">
+                    <div className="mt-1 text-cyan-500"><BarChart3 size={20} /></div>
+                    <div>
+                      <h4 className="text-white font-medium">{item.title}</h4>
+                      <p className="text-sm text-neutral-500">{item.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-24 items-center">
-                <!-- Copy -->
+            {/* Visual Report Component */}
+            <div className="relative font-mono text-xs">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-indigo-600 rounded-lg blur opacity-20"></div>
+              <div className="relative bg-[#08080a] border border-white/10 rounded-lg p-6 shadow-2xl">
+                {/* Header */}
+                <div className="flex justify-between items-start border-b border-white/10 pb-4 mb-6">
+                  <div>
+                    <div className="text-neutral-500 uppercase tracking-widest mb-1">Confidential Intelligence Report</div>
+                    <div className="text-white text-lg font-bold">SUBJECT: 894-ALPHA</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-cyan-500">STATUS: ACTIVE</div>
+                    <div className="text-neutral-600">ID: #MK-9921-X</div>
+                  </div>
+                </div>
+
+                {/* Grid */}
+                <div className="grid grid-cols-2 gap-6 mb-6">
+                  <div className="bg-white/5 p-4 rounded-sm border border-white/5">
+                    <div className="text-neutral-500 mb-2">COGNITIVE LOAD AVG</div>
+                    <div className="text-3xl text-white font-light">84<span className="text-sm text-neutral-600">%</span></div>
+                    <div className="w-full bg-neutral-800 h-1 mt-3">
+                      <div className="bg-cyan-500 h-1 w-[84%]"></div>
+                    </div>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-sm border border-white/5">
+                    <div className="text-neutral-500 mb-2">STRESS RESILIENCE</div>
+                    <div className="text-3xl text-white font-light">9.2<span className="text-sm text-neutral-600">/10</span></div>
+                    <div className="w-full bg-neutral-800 h-1 mt-3">
+                      <div className="bg-emerald-500 h-1 w-[92%]"></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Graph Representation */}
+                <div className="mb-6">
+                  <div className="flex justify-between mb-2">
+                    <span className="text-neutral-500">FOCUS DURABILITY (60 MIN)</span>
+                    <span className="text-cyan-500">+12% vs Baseline</span>
+                  </div>
+                  <div className="h-32 flex items-end gap-1 border-b border-l border-white/10 p-1">
+                    {[30, 45, 50, 40, 60, 75, 80, 85, 70, 65, 80, 90, 95, 85, 80, 70, 60, 50, 40, 30].map((h, i) => (
+                      <div key={i} className="flex-1 bg-cyan-500/20 hover:bg-cyan-500 transition-colors" style={{ height: `${h}%` }}></div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Genetic Snippet */}
+                <div className="border-t border-white/10 pt-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Dna size={14} className="text-indigo-500" />
+                    <span className="text-indigo-400">GENOMIC MARKERS DETECTED</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 text-[10px] text-neutral-400">
+                    <div className="bg-indigo-950/30 p-2 border border-indigo-500/20">BDNF: Met/Met<br/>Plasticity: HIGH</div>
+                    <div className="bg-indigo-950/30 p-2 border border-indigo-500/20">COMT: Val/Val<br/>Stress: ELITE</div>
+                    <div className="bg-indigo-950/30 p-2 border border-indigo-500/20">ACTN3: RR<br/>Reaction: FAST</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- RESTRICTED: GENE OPS EXPANDED --- */}
+      <section id="gene-ops" className="py-32 relative overflow-hidden bg-[#050300] border-y border-amber-900/30">
+        <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent opacity-50"></div>
+        <div className="container mx-auto px-6 relative z-10">
+          
+          <div className="flex items-center gap-4 mb-12">
+            <ShieldAlert className="text-amber-600 animate-pulse" />
+            <div>
+              <div className="font-mono text-xs text-amber-600 tracking-[0.3em] uppercase">Restricted Access // Tier 1</div>
+              <div className="font-mono text-[10px] text-amber-900/60">MILITARY & INTELLIGENCE DEPARTMENTS ONLY</div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <Reveal>
+              <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tighter leading-none">
+                ADVANCED <br/>
+                <span className="text-amber-600 text-stroke-amber">GENE-OPS</span>
+              </h2>
+              <p className="text-lg text-amber-500/70 mb-8 border-l border-amber-900/50 pl-6 font-light">
+                We analyze genetic substrates to predict operator resilience. Beyond measurement, we research <strong>bio-augmentation pathways</strong> for elite personnel.
+              </p>
+
+              <div className="space-y-8">
+                {/* Accordion Style Content */}
                 <div>
-                    <h2 class="text-5xl md:text-6xl font-sans font-bold text-white mb-6 uppercase tracking-tight">
-                        Project <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-gold">ARES</span>
-                    </h2>
-                    <h3 class="font-serif text-2xl text-gray-400 mb-8 italic">Genetic Pre-Selection for Intelligence Operations.</h3>
-                    
-                    <p class="text-sm text-gray-400 font-mono leading-relaxed mb-6 border-l border-red-900/50 pl-4">
-                        "For missions that do not exist, we require operators who are genetically incapable of failure."
-                    </p>
-
-                    <p class="text-gray-500 mb-10 leading-relaxed font-light">
-                        Mindxcope's Defense Directorate offers bespoke genetic sequencing for Intelligence Agencies. We identify specific allele variations linked to superior pain suppression, interrogation resistance, and absolute organizational loyalty.
-                    </p>
-
-                    <div class="grid grid-cols-2 gap-6 mb-12">
-                        <div class="bg-white/5 p-4 border border-white/5 hover:border-danger/30 transition-colors">
-                            <span class="text-danger font-bold text-xs block mb-1">MARKER: MAOA-L</span>
-                            <span class="text-[10px] text-gray-500 uppercase">Aggression Control</span>
-                        </div>
-                        <div class="bg-white/5 p-4 border border-white/5 hover:border-gold/30 transition-colors">
-                            <span class="text-gold font-bold text-xs block mb-1">MARKER: OXTR</span>
-                            <span class="text-[10px] text-gray-500 uppercase">Loyalty Bonding</span>
-                        </div>
+                  <h3 className="text-amber-500 font-mono text-sm uppercase mb-3 flex items-center gap-2">
+                    <Crosshair size={14} /> Performance Markers
+                  </h3>
+                  <div className="bg-amber-950/10 border border-amber-900/30 p-4 space-y-3">
+                    <div className="flex justify-between border-b border-amber-900/20 pb-2">
+                      <span className="text-white text-sm font-bold">COMT (Warrior Gene)</span>
+                      <span className="text-amber-600 text-xs">Stress Regulation</span>
                     </div>
-
-                    <button class="w-full sm:w-auto px-8 py-4 border border-danger/40 text-danger hover:bg-danger hover:text-white transition-all font-mono text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3">
-                        <i data-lucide="fingerprint" class="w-4 h-4"></i>
-                        Verify Clearance
-                    </button>
+                    <p className="text-xs text-neutral-400">Analysis of Val158Met polymorphism. Operators with Val/Val genotype show superior performance in high-stakes, chaotic environments (Special Forces profile).</p>
+                    
+                    <div className="flex justify-between border-b border-amber-900/20 pb-2 pt-2">
+                      <span className="text-white text-sm font-bold">BDNF</span>
+                      <span className="text-amber-600 text-xs">Neuroplasticity</span>
+                    </div>
+                    <p className="text-xs text-neutral-400">Brain-Derived Neurotrophic Factor levels correlate with the speed of acquiring new skills (language, tactical movement) under pressure.</p>
+                  </div>
                 </div>
 
-                <!-- DNA Simulation -->
-                <div class="relative h-[600px] border-y border-white/5 bg-black/50 backdrop-blur-sm">
-                    <canvas id="dna-canvas" class="w-full h-full opacity-80"></canvas>
-                    
-                    <!-- Overlay Data -->
-                    <div class="absolute top-4 left-4 font-mono text-[9px] text-gray-600">
-                        SEQ_ID: 994-ALPHA<br>
-                        STATUS: ANALYZING
-                    </div>
-                    
-                    <div class="absolute bottom-8 right-8 text-right">
-                        <div class="text-4xl font-mono text-white/5 font-bold">GENOME</div>
-                        <div class="text-xs text-danger font-mono mt-1">MUTATION DETECTED</div>
-                    </div>
+                <div>
+                  <h3 className="text-amber-500 font-mono text-sm uppercase mb-3 flex items-center gap-2">
+                    <AlertTriangle size={14} /> Augmentation Research (Classified)
+                  </h3>
+                  <div className="bg-amber-950/10 border border-amber-900/30 p-4">
+                    <p className="text-xs text-neutral-400 mb-2">
+                      <strong className="text-white">CRISPR/Cas9 Vectors:</strong> Theoretical frameworks for upregulating oxygen efficiency genes (EPAS1) for high-altitude operations.
+                    </p>
+                    <p className="text-xs text-neutral-400">
+                      <strong className="text-white">Synthetic Biology:</strong> Developing microbial gut-flora implants to enhance neurotransmitter production (Serotonin/Dopamine) for sustained morale without pharmaceuticals.
+                    </p>
+                  </div>
                 </div>
+              </div>
+
+              <div className="mt-8 flex items-center gap-4">
+                 <button className="flex items-center gap-2 px-6 py-3 bg-amber-900/10 border border-amber-600/30 text-amber-500 font-mono text-xs uppercase tracking-widest hover:bg-amber-900/30 hover:border-amber-500 transition-all">
+                   <Lock size={12} /> Request Clearance
+                 </button>
+              </div>
+            </Reveal>
+
+            {/* 3D Visualizer */}
+            <div className="relative h-[600px] w-full border border-amber-900/20 bg-black/50 rounded-lg overflow-hidden">
+               <div className="absolute top-4 left-4 z-20 font-mono text-[9px] text-amber-700">
+                 TARGET: 894-Alpha <br/>
+                 MARKER: BDNF-A <br/>
+                 EDIT-VECTOR: SIMULATING...
+               </div>
+               
+               <DNASimulation />
+
+               {/* Overlays */}
+               <div className="absolute inset-0 bg-[linear-gradient(rgba(245,158,11,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(245,158,11,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+               <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
+                 <div className="flex gap-2">
+                   <div className="h-1 w-1/3 bg-amber-600 animate-pulse"></div>
+                   <div className="h-1 w-1/3 bg-amber-800"></div>
+                   <div className="h-1 w-1/3 bg-amber-900"></div>
+                 </div>
+                 <div className="text-amber-500 font-mono text-xs mt-2 text-right">SEQUENCE MATCH: 99.8%</div>
+               </div>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Footer -->
-    <footer class="bg-black border-t border-white/10 pt-24 pb-12">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
-                <div class="max-w-sm">
-                    <div class="flex items-center gap-3 mb-6">
-                        <span class="font-serif font-bold text-xl text-white">MINDXCOPE</span>
-                    </div>
-                    <p class="text-gray-500 text-xs leading-relaxed font-mono">
-                        Defining the architecture of future intelligence. <br>
-                        San Francisco | London | [REDACTED]
-                    </p>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-12 text-[10px] uppercase tracking-[0.15em] font-medium text-gray-400">
-                    <ul class="space-y-4">
-                        <li><a href="#" class="hover:text-white transition">Platform</a></li>
-                        <li><a href="#" class="hover:text-white transition">Science</a></li>
-                        <li><a href="#" class="hover:text-gold transition">Defense Dept</a></li>
-                    </ul>
-                    <ul class="space-y-4">
-                        <li><a href="#" class="hover:text-white transition">Privacy</a></li>
-                        <li><a href="#" class="hover:text-white transition">Ethics</a></li>
-                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-white/5 pt-8 flex justify-between items-center">
-                <p class="text-[10px] text-gray-600 font-mono uppercase">© 2025 Mindxcope Inc.</p>
-                <div class="text-[10px] text-gray-700 font-mono">SYSTEM: OPTIMAL</div>
-            </div>
+      {/* Footer */}
+      <footer className="py-20 bg-black border-t border-white/5 text-sm z-10 relative">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center text-xs font-mono text-neutral-600">
+            <p>© 2024-2030 MINDXCOPE INC. // TIER 1 RESEARCH</p>
+            <p>DESIGNED FOR THE ADVANCEMENT OF HUMANITY</p>
+          </div>
         </div>
-    </footer>
+      </footer>
 
-    <script>
-        lucide.createIcons();
-
-        // --- LOAD ANIMATION ---
-        window.addEventListener('load', () => {
-            const tl = gsap.timeline();
-            tl.to("#load-bar", { x: "0%", duration: 1.5, ease: "expo.inOut" })
-              .to("#loader", { y: "-100%", duration: 0.8, ease: "power4.inOut", delay: 0.2 })
-              .to(".hero-el", { y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: "power3.out" });
-        });
-
-        // --- THREE.JS: NEURAL BRAIN SIMULATION ---
-        const initBrain = () => {
-            const canvas = document.getElementById('brain-canvas');
-            const scene = new THREE.Scene();
-            // Deep fog for depth
-            scene.fog = new THREE.FogExp2(0x050505, 0.03);
-
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-            
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            // Brain Particles Group
-            const brain = new THREE.Group();
-            scene.add(brain);
-
-            // Generate particles in a brain-ish shape (2 hemispheres)
-            const particleCount = 2000;
-            const geometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-
-            const color1 = new THREE.Color(0xFFFFFF); // White
-            const color2 = new THREE.Color(0xC5A059); // Gold
-
-            for(let i = 0; i < particleCount; i++) {
-                // Approximate brain shape using spherical coords + distortion
-                // Split into left/right hemisphere
-                const isRight = Math.random() > 0.5;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos((Math.random() * 2) - 1);
-                
-                // Base sphere
-                let r = 4;
-                
-                // Flatten bottom
-                if (phi > 2) r *= 0.8; 
-
-                let x = r * Math.sin(phi) * Math.cos(theta);
-                let y = r * Math.sin(phi) * Math.sin(theta);
-                let z = r * Math.cos(phi);
-
-                // Hemisphere separation
-                x *= 0.8; // Narrower width
-                if (isRight) x += 0.5; else x -= 0.5;
-
-                // Scale for brain shape (elongate Z)
-                z *= 1.2;
-
-                positions[i * 3] = x;
-                positions[i * 3 + 1] = y;
-                positions[i * 3 + 2] = z;
-
-                // Color gradient based on activity (random)
-                const mixedColor = Math.random() > 0.8 ? color2 : color1;
-                colors[i * 3] = mixedColor.r;
-                colors[i * 3 + 1] = mixedColor.g;
-                colors[i * 3 + 2] = mixedColor.b;
-            }
-
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-            const material = new THREE.PointsMaterial({
-                size: 0.04,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.6,
-                blending: THREE.AdditiveBlending
-            });
-
-            const points = new THREE.Points(geometry, material);
-            brain.add(points);
-
-            // Neural Connections (Lines) - Connecting close particles randomly
-            // Optimization: Just create a few distinct lines for visual effect, not all-to-all
-            const lineGeo = new THREE.BufferGeometry();
-            const linePos = [];
-            const maxConnections = 300;
-            let connections = 0;
-
-            for(let i=0; i<particleCount; i++) {
-                if(Math.random() > 0.98 && connections < maxConnections) {
-                    const idx1 = i * 3;
-                    // Find a random neighbor? Just pick random point for abstract look
-                    const idx2 = Math.floor(Math.random() * particleCount) * 3;
-                    
-                    // Only connect if somewhat close
-                    const d = Math.sqrt(
-                        Math.pow(positions[idx1]-positions[idx2], 2) +
-                        Math.pow(positions[idx1+1]-positions[idx2+1], 2) +
-                        Math.pow(positions[idx1+2]-positions[idx2+2], 2)
-                    );
-
-                    if(d < 2) {
-                        linePos.push(
-                            positions[idx1], positions[idx1+1], positions[idx1+2],
-                            positions[idx2], positions[idx2+1], positions[idx2+2]
-                        );
-                        connections++;
-                    }
-                }
-            }
-            lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePos, 3));
-            const lineMat = new THREE.LineBasicMaterial({ color: 0x444444, transparent: true, opacity: 0.2 });
-            const lines = new THREE.LineSegments(lineGeo, lineMat);
-            brain.add(lines);
-
-
-            camera.position.z = 12;
-
-            let mouseX = 0;
-            let mouseY = 0;
-            
-            // Smooth rotation target
-            let targetRotX = 0;
-            let targetRotY = 0;
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
-                mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
-            });
-
-            const animate = () => {
-                requestAnimationFrame(animate);
-                
-                targetRotY += (mouseX - targetRotY) * 0.05;
-                targetRotX += (mouseY - targetRotX) * 0.05;
-
-                brain.rotation.y += 0.002; // Auto rotate
-                brain.rotation.y += targetRotY * 0.1;
-                brain.rotation.x = targetRotX * 0.5;
-
-                // Pulse effect
-                const time = Date.now() * 0.001;
-                points.material.size = 0.04 + Math.sin(time * 2) * 0.01;
-
-                renderer.render(scene, camera);
-            };
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        };
-        initBrain();
-
-        // --- THREE.JS: DNA SIMULATION ---
-        const initDNA = () => {
-            const canvas = document.getElementById('dna-canvas');
-            if(!canvas) return;
-            const parent = canvas.parentElement;
-            
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, parent.offsetWidth / parent.offsetHeight, 0.1, 100);
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-            renderer.setSize(parent.offsetWidth, parent.offsetHeight);
-
-            const dna = new THREE.Group();
-            scene.add(dna);
-
-            // Double Helix Logic
-            const pointsCount = 60;
-            const radius = 2;
-            const height = 10;
-            const turns = 3;
-            
-            const geo = new THREE.BufferGeometry();
-            const pos = [];
-            const cols = [];
-            const colRed = new THREE.Color(0xFF2A2A);
-            const colGold = new THREE.Color(0xC5A059);
-
-            for(let i=0; i<=pointsCount; i++) {
-                const t = i/pointsCount;
-                const angle = t * Math.PI * 2 * turns;
-                const y = (t - 0.5) * height;
-
-                // Strand 1
-                const x1 = Math.cos(angle) * radius;
-                const z1 = Math.sin(angle) * radius;
-                pos.push(x1, y, z1);
-                cols.push(colRed.r, colRed.g, colRed.b);
-
-                // Strand 2
-                const x2 = Math.cos(angle + Math.PI) * radius;
-                const z2 = Math.sin(angle + Math.PI) * radius;
-                pos.push(x2, y, z2);
-                cols.push(colGold.r, colGold.g, colGold.b);
-
-                // Rungs
-                if(i%2===0) {
-                    const rungGeo = new THREE.BufferGeometry();
-                    rungGeo.setAttribute('position', new THREE.Float32BufferAttribute([x1,y,z1, x2,y,z2], 3));
-                    const rung = new THREE.Line(rungGeo, new THREE.LineBasicMaterial({ color: 0x333333 }));
-                    dna.add(rung);
-                }
-            }
-
-            geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-            geo.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3));
-            
-            const mat = new THREE.PointsMaterial({ size: 0.15, vertexColors: true });
-            const strands = new THREE.Points(geo, mat);
-            dna.add(strands);
-
-            camera.position.z = 10;
-            dna.rotation.z = Math.PI / 6;
-
-            const animate = () => {
-                requestAnimationFrame(animate);
-                dna.rotation.y += 0.01;
-                renderer.render(scene, camera);
-            };
-            animate();
-            
-             // Resize observer
-            const resizeObserver = new ResizeObserver(() => {
-                camera.aspect = parent.offsetWidth / parent.offsetHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(parent.offsetWidth, parent.offsetHeight);
-            });
-            resizeObserver.observe(parent);
+      <style>{`
+        @keyframes scan {
+          0% { top: -10%; }
+          100% { top: 110%; }
         }
-        initDNA();
-
-    </script>
-</body>
-</html>
+        .text-stroke-amber {
+          -webkit-text-stroke: 1px #d97706;
+          color: transparent;
+        }
+      `}</style>
+    </div>
+  );
+}
